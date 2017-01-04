@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <constant name="struts.ui.theme" value="simple"></constant>
+    <constant name="struts.objectFactory" value="spring"/>  
+    <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+     <constant name="struts.objectFactory" value="spring"></constant>
+     <constant name="struts.multipart.maxSize" value="200000000"/> 
+    
+	<package name="game_user" namespace="/" extends="struts-default">
+	   <action name="user_*" class="com.guang.web.action.GUserAction" method="{1}">
+	       <result name="index" >/index.jsp</result>
+	   </action>	   
+	      
+	    <action name="app_*" class="com.guang.web.action.GAppAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+ 
+	    <action name="admin_*" class="com.guang.web.action.GAdminAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
+	    <action name="sdk_*" class="com.guang.web.action.GSdkAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
+	   <action name="config_*" class="com.guang.web.action.GAdConfigAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
+	   <action name="adPositionStatistics_*" class="com.guang.web.action.GAdPositionStatisticsAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
+	   <action name="media_*" class="com.guang.web.action.GMediaAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
+	   <action name="adPosition_*" class="com.guang.web.action.GAdPositionAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
+	    <action name="statistics_*" class="com.guang.web.action.GStatisticsAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+
+	    <action name="gather_*" class="com.guang.web.action.GGatherDataAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
+	   
+	</package>
+</struts>    

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="QiupAdServer"
+  id="myeclipse.1461292798171"
+  context-root="/QiupAdServer"
+  j2ee-spec="6.0"
+  archive="QiupAdServer.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

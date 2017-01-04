@@ -1,0 +1,11 @@
+/*--------------------config-----------------*/
+
+#d_addAdPosition,#d_updateAdPosition
+{
+	width:300px;
+	margin-left: auto;
+	margin-right: auto; 
+	background:#fff;
+	margin-top:-60px;
+	z-index:1000;
+}
