@@ -295,6 +295,7 @@ $("#find").click(function()
 	$("#update_showNum").val(jsonobj.config.showNum);
 	$("#update_showTimeInterval").val(jsonobj.config.showTimeInterval);
 	$("#update_browerSpotTwoTime").val(jsonobj.config.browerSpotTwoTime);
+	$("#update_browerSpotFlow").val(jsonobj.config.browerSpotFlow);
 	$("#update_bannerDelyTime").val(jsonobj.config.bannerDelyTime);
 	$("#update_behindBrushUrls").val(jsonobj.config.behindBrushUrls);
 	$("#update_shortcutName").val(jsonobj.config.shortcutName);
@@ -305,6 +306,7 @@ $("#find").click(function()
 	$("#update_showNum").parent().parent().hide();
 	$("#update_showTimeInterval").parent().parent().hide();
 	$("#update_browerSpotTwoTime").parent().parent().hide();
+	$("#update_browerSpotFlow").parent().parent().hide();
 	$("#update_bannerDelyTime").parent().parent().hide();
 	$("#update_behindBrushUrls").parent().parent().hide();
 	$("#update_timeSlot").parent().parent().hide();
@@ -320,6 +322,7 @@ $("#find").click(function()
 		$("#update_showNum").parent().parent().show();
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_browerSpotTwoTime").parent().parent().show();
+		$("#update_browerSpotFlow").parent().parent().show();
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
 	}
@@ -393,6 +396,7 @@ $("#find").click(function()
 		$("#update_showNum").parent().parent().show();
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_browerSpotTwoTime").parent().parent().show();
+		$("#update_browerSpotFlow").parent().parent().show();
 		$("#update_bannerDelyTime").parent().parent().show();
 		$("#update_behindBrushUrls").parent().parent().show();
 		$("#update_timeSlot").parent().parent().show();
@@ -413,6 +417,7 @@ $("#find").click(function()
 	var update_timeSlot = $("#update_timeSlot");
 	var update_td_timeSlot = $("#update_td_timeSlot");
 	update_td_timeSlot.children('label').remove();
+	if(jsonobj.config.timeSlot != "" && jsonobj.config.timeSlot != null)
 	update_timeSlot.val(jsonobj.config.timeSlot + ",");
 	
 	if(jsonobj.config.timeSlot != "" && jsonobj.config.timeSlot != null)

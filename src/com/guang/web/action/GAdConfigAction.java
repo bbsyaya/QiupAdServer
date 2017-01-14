@@ -12,6 +12,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GAdConfig;
+import com.guang.web.mode.GAdPosition;
 import com.guang.web.mode.GAdPositionConfig;
 import com.guang.web.mode.GMedia;
 import com.guang.web.service.GAdConfigService;
@@ -141,6 +142,11 @@ public class GAdConfigAction extends ActionSupport{
 						GAdPositionConfig config = adPositionConfigService.findByPositionId(Long.parseLong(id));
 						if(config != null)
 						{
+							GAdPosition gdPosition = adPositionService.find(Long.parseLong(id));
+							if(gdPosition != null)
+							{
+								config.setAdPositionType(gdPosition.getType());
+							}
 							media.getConfigs().add(config);
 						}
 					}

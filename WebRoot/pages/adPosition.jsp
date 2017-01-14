@@ -152,6 +152,13 @@
 			</tr>
 			
 			<tr >
+				<td>流量限制:</td>
+				<td><input type="text" id="update_browerSpotFlow" name="browerSpotFlow"
+					value="" style="width:80px;" />M
+				</td>
+			</tr>
+			
+			<tr >
 				<td>延迟时间:</td>
 				<td><input type="text" id="update_bannerDelyTime" name="bannerDelyTime"
 					value="" style="width:80px;" />分钟

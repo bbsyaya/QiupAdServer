@@ -102,6 +102,7 @@ public class GAdPositionAction extends ActionSupport {
 		String showTimeInterval = ServletActionContext.getRequest().getParameter("showTimeInterval");
 		String timeSlot = ServletActionContext.getRequest().getParameter("timeSlot");
 		String browerSpotTwoTime = ServletActionContext.getRequest().getParameter("browerSpotTwoTime");
+		String browerSpotFlow = ServletActionContext.getRequest().getParameter("browerSpotFlow");
 		String bannerDelyTime = ServletActionContext.getRequest().getParameter("bannerDelyTime");
 		String behindBrushUrls = ServletActionContext.getRequest().getParameter("behindBrushUrls");
 		String shortcutName = ServletActionContext.getRequest().getParameter("shortcutName");
@@ -130,6 +131,10 @@ public class GAdPositionAction extends ActionSupport {
 			float browerSpotTwoTime2 = 0;
 			if(!StringTools.isEmpty(browerSpotTwoTime))
 				browerSpotTwoTime2 = Float.parseFloat(browerSpotTwoTime);
+			
+			float browerSpotFlow2 = 0;
+			if(!StringTools.isEmpty(browerSpotFlow))
+				browerSpotFlow2 = Float.parseFloat(browerSpotFlow);
 			
 			float bannerDelyTime2 = 0;
 			if(!StringTools.isEmpty(bannerDelyTime))
@@ -166,6 +171,7 @@ public class GAdPositionAction extends ActionSupport {
 			config.setShowTimeInterval(showTime);
 			config.setTimeSlot(timeSlot);
 			config.setBrowerSpotTwoTime(browerSpotTwoTime2);
+			config.setBrowerSpotFlow(browerSpotFlow2);
 			config.setBannerDelyTime(bannerDelyTime2);
 			config.setBehindBrushUrls(behindBrushUrls);
 			config.setShortcutIconPath(shortcutIconPath);

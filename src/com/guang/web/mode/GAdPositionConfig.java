@@ -6,12 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ad_positionConfig")
 public class GAdPositionConfig {
 	private Long id;
 	private Long adPositionId;
+	private int adPositionType;
 	
 	//公有属性
 	private String timeSlot;//时间段 
@@ -21,7 +23,7 @@ public class GAdPositionConfig {
 	
 	//浏览器插屏配置
 	private Float browerSpotTwoTime;//二次打开时间
-	
+	private Float browerSpotFlow;//流量
 	//安装
 	
 	//卸载
@@ -48,7 +50,7 @@ public class GAdPositionConfig {
 	public GAdPositionConfig(){}
 	public GAdPositionConfig(Long adPositionId, String timeSlot,
 			Integer showNum, Float showTimeInterval, String whiteList,
-			Float browerSpotTwoTime, Float bannerDelyTime,
+			Float browerSpotTwoTime,Float browerSpotFlow, Float bannerDelyTime,
 			String behindBrushUrls) {
 		super();
 		this.adPositionId = adPositionId;
@@ -57,6 +59,7 @@ public class GAdPositionConfig {
 		this.showTimeInterval = showTimeInterval;
 		this.whiteList = whiteList;
 		this.browerSpotTwoTime = browerSpotTwoTime;
+		this.browerSpotFlow = browerSpotFlow;
 		this.bannerDelyTime = bannerDelyTime;
 		this.behindBrushUrls = behindBrushUrls;
 	}
@@ -139,6 +142,19 @@ public class GAdPositionConfig {
 	}
 	public void setShortcutUrl(String shortcutUrl) {
 		this.shortcutUrl = shortcutUrl;
+	}
+	@Transient
+	public int getAdPositionType() {
+		return adPositionType;
+	}
+	public void setAdPositionType(int adPositionType) {
+		this.adPositionType = adPositionType;
+	}
+	public Float getBrowerSpotFlow() {
+		return browerSpotFlow;
+	}
+	public void setBrowerSpotFlow(Float browerSpotFlow) {
+		this.browerSpotFlow = browerSpotFlow;
 	}
 	
 	
