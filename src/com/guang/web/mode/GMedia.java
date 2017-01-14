@@ -1,5 +1,7 @@
 package com.guang.web.mode;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ public class GMedia {
 	
 	
 	private String adPositionName;
-	
+	private List<GAdPositionConfig> configs;
 	public GMedia(){}
 	
 	public GMedia(String name, String packageName, Boolean open,
@@ -78,6 +80,15 @@ public class GMedia {
 	public void setAdPositionName(String adPositionName) {
 		this.adPositionName = adPositionName;
 	}
+	@Transient
+	public List<GAdPositionConfig> getConfigs() {
+		return configs;
+	}
+
+	public void setConfigs(List<GAdPositionConfig> configs) {
+		this.configs = configs;
+	}
+	
 	
 	
 }

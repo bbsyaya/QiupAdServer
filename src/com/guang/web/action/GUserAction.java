@@ -1,7 +1,9 @@
 package com.guang.web.action;
 
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -11,6 +13,7 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 
@@ -40,6 +43,7 @@ import com.guang.web.service.GNetworkOperatorService;
 import com.guang.web.service.GPhoneModelService;
 import com.guang.web.service.GUserService;
 import com.guang.web.service.GUserSttService;
+import com.guang.web.tools.GZipTool;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -55,6 +59,9 @@ public class GUserAction extends ActionSupport{
 	@Resource private GAreaService areaService;
 	@Resource private GNetworkOperatorService gNetworkOperatorService;
 	@Resource private GPhoneModelService gPhoneModelService;
+	
+	private File source;
+	private String sourceFileName;
 	
 	public String list()
 	{
@@ -245,7 +252,7 @@ public class GUserAction extends ActionSupport{
 		{
 			result.put("result", false);
 		}
-		print(obj.toString());
+		print(result.toString());
 	}
 	
 	//登录
@@ -285,9 +292,8 @@ public class GUserAction extends ActionSupport{
 		gNetworkOperatorService.add(new GNetworkOperator(user.getNetworkOperatorName()));
 		gPhoneModelService.add(new GPhoneModel(user.getModel()));
 		
-		print("1");	
-		
 		loginSuccess(user.getName());
+		print("1");	
 	}
 	//登录成功
 	public void loginSuccess(String name)
@@ -362,4 +368,56 @@ public class GUserAction extends ActionSupport{
 		
 		userSttService.update(userStt);
 	}
+	
+	public String debug()
+	{
+		ActionContext.getContext().put("pages", "debug");
+		return "index";
+	}
+	
+	public String uploadSource()
+	{
+		if(source == null)
+		{
+			ActionContext.getContext().put("uploadSource", "上传失败！");
+			ActionContext.getContext().put("pages", "debug");
+			return "index";
+		}
+		
+		URL url = GUserAction.class.getClassLoader().getResource("log4j.properties");
+		String relpath = url.getPath().replace("classes/log4j.properties", "");
+		//上传
+		File file = new File(new File(relpath), sourceFileName);
+		if (!file.getParentFile().exists())
+			file.getParentFile().mkdirs();
+		try {
+			FileUtils.copyFile(source, file);
+			//解压
+			GZipTool.unzip(file.getAbsolutePath());
+			file.delete();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ActionContext.getContext().put("uploadSource", "上传成功！");
+		ActionContext.getContext().put("pages", "debug");
+		return "index";
+	}
+
+	public File getSource() {
+		return source;
+	}
+
+	public void setSource(File source) {
+		this.source = source;
+	}
+
+	public String getSourceFileName() {
+		return sourceFileName;
+	}
+
+	public void setSourceFileName(String sourceFileName) {
+		this.sourceFileName = sourceFileName;
+	}
+	
+	
 }

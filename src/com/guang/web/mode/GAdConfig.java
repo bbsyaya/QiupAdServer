@@ -127,6 +127,5 @@ public class GAdConfig {
 	public void setBrowerWhiteList(String browerWhiteList) {
 		this.browerWhiteList = browerWhiteList;
 	}
-
 	
 }

@@ -16,7 +16,7 @@ public class GStatistics {
 	private Integer type;//统计类型 
 	private Long userId;	
 	private Integer adPositionType;
-	private Long offerId;
+	private String offerId;
 	private String packageName;
 	private String appName;
 	private Date uploadTime;
@@ -27,7 +27,7 @@ public class GStatistics {
 	
 	public GStatistics(){}
 	public GStatistics(Integer type, Long userId, Integer adPositionType,
-			Long offerId, String packageName, String appName) {
+			String offerId, String packageName, String appName) {
 		super();
 		this.type = type;
 		this.userId = userId;
@@ -63,10 +63,11 @@ public class GStatistics {
 	public void setAdPositionType(Integer adPositionType) {
 		this.adPositionType = adPositionType;
 	}
-	public Long getOfferId() {
+	@Column(length = 64)
+	public String getOfferId() {
 		return offerId;
 	}
-	public void setOfferId(Long offerId) {
+	public void setOfferId(String offerId) {
 		this.offerId = offerId;
 	}
 	@Column(length = 64)

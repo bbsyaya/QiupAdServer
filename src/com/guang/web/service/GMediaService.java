@@ -10,6 +10,7 @@ public interface GMediaService {
 	void delete(Long id);
 	void update(GMedia media);
 	GMedia find(Long id);
+	GMedia findByPackageName(String packageName);
 	QueryResult<GMedia> findAlls(int firstindex);
 	QueryResult<GMedia> findAlls();
 }

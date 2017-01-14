@@ -1,6 +1,7 @@
 package com.guang.web.serviceimpl;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -39,5 +40,12 @@ public class GMediaServiceImpl implements GMediaService{
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
 		return daoTools.find(GMedia.class, null, null, 0, 100, lhm);
+	}
+
+	public GMedia findByPackageName(String packageName) {
+		List<GMedia> list = daoTools.find(GMedia.class, "packageName", packageName, 0, 1, null).getList();
+		if(list != null && list.size() > 0)
+			return list.get(0);
+		return null;
 	}
 }

@@ -61,11 +61,11 @@
 						</li>
 					</s:if>
 					
-					<s:if test="#session.admin.permission.model_admin == true">
+					<%-- <s:if test="#session.admin.permission.model_admin == true">
 						<li><a href="config_list"
 						class="<s:if test="#request.pages == 'config'">current</s:if>">配置</a>
 						</li>
-					</s:if>
+					</s:if> --%>
 					
 					<s:if test="#session.admin.permission.model_admin == true">
 						<li><a href="media_list"
@@ -91,11 +91,11 @@
 					</li>
 					</s:if>
 																			
-					<s:if test="#session.admin.permission.model_admin == true">
+					<%-- <s:if test="#session.admin.permission.model_admin == true">
 						<li><a href="gather_list"
 						class="<s:if test="#request.pages == 'gather'">current</s:if>">数据收集</a>
 						</li>
-					</s:if>
+					</s:if> --%>
 					
 					<s:if test="#session.admin.permission.model_admin == true">
 						<li><a href="statistics_list"

@@ -1,6 +1,7 @@
 package com.guang.web.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,8 +12,10 @@ import org.apache.struts2.ServletActionContext;
 
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GAdConfig;
+import com.guang.web.mode.GAdPositionConfig;
 import com.guang.web.mode.GMedia;
 import com.guang.web.service.GAdConfigService;
+import com.guang.web.service.GAdPositionConfigService;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GMediaService;
 import com.guang.web.tools.StringTools;
@@ -26,6 +29,7 @@ public class GAdConfigAction extends ActionSupport{
 	@Resource private GAdConfigService adConfigService;
 	@Resource private GAdPositionService adPositionService;
 	@Resource private GMediaService mediaService;
+	@Resource private GAdPositionConfigService adPositionConfigService;
 	
 	public String list() {
 		QueryResult<GAdConfig>  qr = adConfigService.findAlls(0);
@@ -120,6 +124,38 @@ public class GAdConfigAction extends ActionSupport{
 	}
 	
 	public void findCurrConfig()
+	{
+		String packageName = ServletActionContext.getRequest().getParameter("data");
+		if(!StringTools.isEmpty(packageName))
+		{
+			GMedia media = mediaService.findByPackageName(packageName);
+			if(media != null)
+			{
+				String adPosition = media.getAdPosition();
+				if(!StringTools.isEmpty(adPosition))
+				{
+					media.setConfigs(new ArrayList<GAdPositionConfig>());
+					String []ids = adPosition.split(",");
+					for(String id : ids)
+					{
+						GAdPositionConfig config = adPositionConfigService.findByPositionId(Long.parseLong(id));
+						if(config != null)
+						{
+							media.getConfigs().add(config);
+						}
+					}
+				}
+				
+			}
+			print(JSONObject.fromObject(media).toString());
+		}
+		else
+		{
+			print(0);
+		}
+	}
+	
+	public void findCurrConfig2()
 	{
 		GAdConfig adConfig = adConfigService.find();
 		//媒体

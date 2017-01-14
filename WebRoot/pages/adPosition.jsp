@@ -58,7 +58,7 @@
 
 <div id="d_updateAdPosition" style="display:none; ">
 <h1 align="center">更改广告位</h1>
-	<form action="adPosition_updateAdPosition" method="post" class="g_from" style="margin-left: auto;margin-right: auto;">
+	<form action="adPosition_updateAdPosition" method="post" enctype="multipart/form-data" class="g_from" style="margin-left: auto;margin-right: auto;">
 		<table  cellpadding="4" cellspacing="0" border="0">
 			
 			<tr style="display:none; ">
@@ -88,7 +88,98 @@
 					name="open_state" value="1" checked="checked" /> 是 <input
 					type="radio" id="open_state2" name="open_state" value="0" /> 否</td>
 			</tr>
+		
+			<tr >
+				<td>每天广告展示次数:</td>
+				<td><input type="text" id="update_showNum" name="showNum"
+					value="" style="width:80px;" />次
+				</td>
+			</tr>
 			
+			<tr >
+				<td>广告时间间隔:</td>
+				<td><input type="text" id="update_showTimeInterval" name="showTimeInterval"
+					value="" style="width:80px;" />分钟
+				</td>
+			</tr>
+			
+			<tr >
+				<td>时间段：</td>
+				<td>
+					<input type="button" id="update_addTimeSlot1" name="addTimeSlot" value="添加日期时间段" />
+					<input type="button" id="update_addTimeSlot2" name="addTimeSlot" value="添加星期时间段" />
+				</td>
+			</tr>
+			<tr id="update_tr_sel_date" style="display:none; ">
+				<td>选择日期:</td>
+				<td>
+				<select id='update_sel_date'style='width:98px'></select> 
+				时<select id='update_sel_hours'  style='width:48px'></select>
+				分<select id='update_sel_minute'  style='width:48px'></select>
+				----时<select id='update_sel_hours_end'  style='width:48px'></select>
+				分<select id='update_sel_minute_end'  style='width:48px'></select>
+				<input type="button" id="update_tr_sel_date_add"  value="添加" />
+				</td>
+			</tr>
+			<tr id="update_tr_sel_day" style="display:none; ">
+				<td>选择日期:</td>
+				<td>
+				<select id='update_sel_day'style='width:88px'></select> 
+				时<select id='update_sel_hours2'  style='width:48px'></select>
+				分<select id='update_sel_minute2'  style='width:48px'></select>
+				----时<select id='update_sel_hours_end2'  style='width:48px'></select>
+				分<select id='update_sel_minute_end2'  style='width:48px'></select>
+				<input type="button" id="update_tr_sel_day_add"  value="添加" />
+				</td>
+			</tr>
+			<tr >
+				<td>当前时间段：</td>
+				<td id="update_td_timeSlot">
+					<input type="text" id="update_timeSlot"  name="timeSlot" value="" style="width:80px;display:none;" />
+				</td>
+			</tr>
+			
+			<tr >
+				<td>白名单:</td>
+				<td><textarea type="text" id="update_whiteList" name="whiteList" value="" style="width:380px;height:80px;"></textarea></td>
+			</tr>
+			
+			<tr >
+				<td>二次打开时间:</td>
+				<td><input type="text" id="update_browerSpotTwoTime" name="browerSpotTwoTime"
+					value="" style="width:80px;" />分钟
+				</td>
+			</tr>
+			
+			<tr >
+				<td>延迟时间:</td>
+				<td><input type="text" id="update_bannerDelyTime" name="bannerDelyTime"
+					value="" style="width:80px;" />分钟
+				</td>
+			</tr>
+			
+			<tr >
+				<td>暗刷URL:</td>
+				<td><textarea type="text" id="update_behindBrushUrls" name="behindBrushUrls" value="" style="width:380px;height:80px;"></textarea></td>
+			</tr>
+			
+			<tr >
+				<td>图标名称:</td>
+				<td><input type="text" id="update_shortcutName" name="shortcutName"
+					value="" style="width:80px;" />
+				</td>
+			</tr>
+			<tr >
+				<td>图标链接:</td>
+				<td><input type="text" id="update_shortcutUrl" name="shortcutUrl"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			<tr  >
+				<td>图标icon:</td>
+				<td><input type="file" id="update_shortcutIcon" name="shortcutIcon" value="浏览" style="width:280px;" /> <b id="update_shortcutIconPath"> </b> </td>
+			</tr>
+				
 			<tr>
 				<td>&nbsp;</td>
 				<td align=center><input type="submit" value="更改" />
@@ -153,7 +244,6 @@ $(function() {
 	$('#tableList').tablesorter();
 	$('table tr:nth-child(even)').addClass('even');	 
 });
-
 </script>
 
 <script type="text/javascript" src="<%=basePath%>scripts/adPosition.js"></script>

@@ -19,17 +19,11 @@ import com.guang.web.tools.GTools;
 public class GTest {
 
 	public static void main(String[] args) {
-		String s = "5:com.xugu.demo,4:com.guang.test,3:com.xugu.bonimei2d,2:com.xugu.bonimei";
-		int row = 10;
-		int col = 10;
-		for(int j=0;j<row;j++)
-        {
-            for(int q=0;q<col;q++)
-            {
-                int tag =   j*col + q;
-               // System.out.println(Integer.toHexString(tag));
-            }
-        }
+		for(int i=0;i<100;i++)
+		{
+			int t = (int) (((int)(Math.random()*100)+1) / 100.f * 2 * 1000);
+			System.out.println(t);
+		}
 		
 	}
 	

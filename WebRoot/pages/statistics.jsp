@@ -30,7 +30,7 @@
 				<td><s:property value="#val.userId" /></td>
 				<td><s:property value="#val.statisticsType" /></td>
 				<td><s:property value="#val.adPosition" /></td>
-				<td><s:property value="#val.offer" /></td>
+				<td><s:property value="#val.offerId" /></td>
 				<td><s:property value="#val.appName" /></td>
 				<td><s:property value="#val.packageName" /></td>
 				<td align="center"><s:date name="#val.uploadTime" format="yyyy-MM-dd HH:mm:ss" /></td>

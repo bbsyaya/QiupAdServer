@@ -1,5 +1,6 @@
 package com.guang.web.action;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -7,10 +8,13 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GAdPosition;
+import com.guang.web.mode.GAdPositionConfig;
+import com.guang.web.service.GAdPositionConfigService;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
@@ -20,6 +24,10 @@ public class GAdPositionAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 
 	@Resource private GAdPositionService adPositionService;
+	@Resource private GAdPositionConfigService adPositionConfigService;
+	
+	private File shortcutIcon;
+	private String shortcutIconFileName;
 	
 	public String list()
 	{
@@ -89,7 +97,15 @@ public class GAdPositionAction extends ActionSupport {
 		String name = ServletActionContext.getRequest().getParameter("name");
 		String type = ServletActionContext.getRequest().getParameter("type");
 		String open_state = ServletActionContext.getRequest().getParameter("open_state");
-		
+		String whiteList = ServletActionContext.getRequest().getParameter("whiteList");
+		String showNum = ServletActionContext.getRequest().getParameter("showNum");
+		String showTimeInterval = ServletActionContext.getRequest().getParameter("showTimeInterval");
+		String timeSlot = ServletActionContext.getRequest().getParameter("timeSlot");
+		String browerSpotTwoTime = ServletActionContext.getRequest().getParameter("browerSpotTwoTime");
+		String bannerDelyTime = ServletActionContext.getRequest().getParameter("bannerDelyTime");
+		String behindBrushUrls = ServletActionContext.getRequest().getParameter("behindBrushUrls");
+		String shortcutName = ServletActionContext.getRequest().getParameter("shortcutName");
+		String shortcutUrl = ServletActionContext.getRequest().getParameter("shortcutUrl");
 		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(name) && !StringTools.isEmpty(type))
 		{
 			boolean open = false;
@@ -102,6 +118,62 @@ public class GAdPositionAction extends ActionSupport {
 			adPosition.setOpen(open);
 			
 			adPositionService.update(adPosition);
+			
+			int showN = 0;
+			if(!StringTools.isEmpty(showNum))
+				showN = Integer.parseInt(showNum);
+				
+			float showTime = 0;
+			if(!StringTools.isEmpty(showTimeInterval))
+				showTime = Float.parseFloat(showTimeInterval);
+			
+			float browerSpotTwoTime2 = 0;
+			if(!StringTools.isEmpty(browerSpotTwoTime))
+				browerSpotTwoTime2 = Float.parseFloat(browerSpotTwoTime);
+			
+			float bannerDelyTime2 = 0;
+			if(!StringTools.isEmpty(bannerDelyTime))
+				bannerDelyTime2 = Float.parseFloat(bannerDelyTime);
+			//时间段
+			if(timeSlot.endsWith(","))
+				timeSlot = timeSlot.substring(0, timeSlot.length()-1);
+			
+			String shortcutIconPath = "";
+			if(shortcutIcon != null && !StringTools.isEmpty(shortcutIconFileName))
+			{
+				String img_relpath = ServletActionContext.getServletContext().getRealPath(
+						"images/icons/");
+				try {
+					//上传图片
+					File file = new File(new File(img_relpath), shortcutIconFileName);
+					if (!file.getParentFile().exists())
+						file.getParentFile().mkdirs();
+					FileUtils.copyFile(shortcutIcon, file);
+					shortcutIconPath = "images/icons/" + shortcutIconFileName;
+				} catch (Exception e) {
+				}
+			}
+			
+			GAdPositionConfig config = adPositionConfigService.findByPositionId(adPosition.getId());
+			if(config==null)
+			{
+				config = new GAdPositionConfig();
+				config.setAdPositionId(adPosition.getId());
+				adPositionConfigService.add(config);
+			}
+			config.setWhiteList(whiteList);
+			config.setShowNum(showN);
+			config.setShowTimeInterval(showTime);
+			config.setTimeSlot(timeSlot);
+			config.setBrowerSpotTwoTime(browerSpotTwoTime2);
+			config.setBannerDelyTime(bannerDelyTime2);
+			config.setBehindBrushUrls(behindBrushUrls);
+			config.setShortcutIconPath(shortcutIconPath);
+			config.setShortcutName(shortcutName);
+			config.setShortcutUrl(shortcutUrl);
+			
+			adPositionConfigService.update(config);
+			
 			ActionContext.getContext().put("updateAdPosition", "更改成功！");
 		}
 		else
@@ -117,7 +189,30 @@ public class GAdPositionAction extends ActionSupport {
 		if(!StringTools.isEmpty(id))
 		{
 			GAdPosition adPosition = adPositionService.find(Long.parseLong(id));
+			GAdPositionConfig config = adPositionConfigService.findByPositionId(adPosition.getId());
+			if(config == null)
+				config = new GAdPositionConfig();
+			adPosition.setConfig(config);
 			print(JSONObject.fromObject(adPosition).toString());
 		}
 	}
+
+	public File getShortcutIcon() {
+		return shortcutIcon;
+	}
+
+	public void setShortcutIcon(File shortcutIcon) {
+		this.shortcutIcon = shortcutIcon;
+	}
+
+	public String getShortcutIconFileName() {
+		return shortcutIconFileName;
+	}
+
+	public void setShortcutIconFileName(String shortcutIconFileName) {
+		this.shortcutIconFileName = shortcutIconFileName;
+	}
+	
+	
+	
 }

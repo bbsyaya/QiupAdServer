@@ -51,7 +51,7 @@
 				<td>广告位开关：</td>
 				<td >
 				<s:iterator value="adPositions" var="val">	
-				<label><input type="checkbox" name="adPositionSwitch_<s:property value="#val.type" />" value="1" /><s:property value="#val.name" /></label>
+				<label><input type="checkbox" name="adPositionSwitch_<s:property value="#val.id" />" value="1" /><s:property value="#val.name" /></label>
 				</s:iterator>
 				</td>
 			</tr>			
@@ -103,7 +103,7 @@
 				<td>广告位开关：</td>
 				<td >
 				<s:iterator value="adPositions" var="val">	
-				<label><input type="checkbox" id="update_adPositionSwitch_<s:property value="#val.type" />" name="adPositionSwitch_<s:property value="#val.type" />" value="1" /><s:property value="#val.name" />
+				<label><input type="checkbox" id="update_adPositionSwitch_<s:property value="#val.id" />" name="adPositionSwitch_<s:property value="#val.id" />" value="1" /><s:property value="#val.name" />
 				</label>
 				</s:iterator>
 				</td>

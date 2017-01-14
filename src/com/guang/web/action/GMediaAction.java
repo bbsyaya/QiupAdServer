@@ -42,14 +42,14 @@ public class GMediaAction extends ActionSupport{
 		
 		for(GMedia media : list)
 		{
-			String types = media.getAdPosition();
+			String ids = media.getAdPosition();
 			String adPositionName = "";
-			if(!StringTools.isEmpty(types))
+			if(!StringTools.isEmpty(ids))
 			{
-				String[] arr = types.split(",");
-				for(String type : arr)
+				String[] arr = ids.split(",");
+				for(String id : arr)
 				{
-					adPositionName += adPositionService.find(Integer.parseInt(type)).getName() + " ";
+					adPositionName += adPositionService.find(Long.parseLong(id)).getName() + " ";
 				}
 			}
 			media.setAdPositionName(adPositionName);
@@ -88,9 +88,9 @@ public class GMediaAction extends ActionSupport{
 			String adPositionSwitch = "";
 			for(GAdPosition adPosition : adPositions)
 			{
-				String p = ServletActionContext.getRequest().getParameter("adPositionSwitch_"+adPosition.getType());
+				String p = ServletActionContext.getRequest().getParameter("adPositionSwitch_"+adPosition.getId());
 				if(p != null)
-					adPositionSwitch = adPositionSwitch + adPosition.getType() + ",";
+					adPositionSwitch = adPositionSwitch + adPosition.getId() + ",";
 			}
 			if(adPositionSwitch.endsWith(","))
 				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
@@ -132,9 +132,9 @@ public class GMediaAction extends ActionSupport{
 			String adPositionSwitch = "";
 			for(GAdPosition adPosition : adPositions)
 			{
-				String p = ServletActionContext.getRequest().getParameter("adPositionSwitch_"+adPosition.getType());
+				String p = ServletActionContext.getRequest().getParameter("adPositionSwitch_"+adPosition.getId());
 				if(p != null)
-					adPositionSwitch = adPositionSwitch + adPosition.getType() + ",";
+					adPositionSwitch = adPositionSwitch + adPosition.getId() + ",";
 			}
 			if(adPositionSwitch.endsWith(","))
 				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);

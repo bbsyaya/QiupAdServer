@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ad_position")
@@ -15,6 +16,7 @@ public class GAdPosition {
 	private String name;
 	private Boolean open;
 	
+	private GAdPositionConfig config;
 	public GAdPosition(){}
 	public GAdPosition(Integer type, String name,Boolean open) {
 		super();
@@ -48,6 +50,13 @@ public class GAdPosition {
 	}
 	public void setOpen(Boolean open) {
 		this.open = open;
+	}
+	@Transient
+	public GAdPositionConfig getConfig() {
+		return config;
+	}
+	public void setConfig(GAdPositionConfig config) {
+		this.config = config;
 	}
 	
 	

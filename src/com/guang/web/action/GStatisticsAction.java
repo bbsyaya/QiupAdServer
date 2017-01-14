@@ -70,7 +70,7 @@ public class GStatisticsAction extends ActionSupport{
 		JSONObject obj = JSONObject.fromObject(data); 
 		int type = obj.getInt("type");
 		int adPositionType = obj.getInt("adPositionType");
-		long offerId = obj.getLong("offerId");
+		String offerId = obj.getString("offerId");
 		String packageName = obj.getString("packageName");
 		String appName = obj.getString("appName");
 		String userName = obj.getString("userName");
