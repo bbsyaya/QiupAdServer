@@ -107,6 +107,7 @@ public class GAdPositionAction extends ActionSupport {
 		String behindBrushUrls = ServletActionContext.getRequest().getParameter("behindBrushUrls");
 		String shortcutName = ServletActionContext.getRequest().getParameter("shortcutName");
 		String shortcutUrl = ServletActionContext.getRequest().getParameter("shortcutUrl");
+		String browerBreakUrl = ServletActionContext.getRequest().getParameter("browerBreakUrl");
 		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(name) && !StringTools.isEmpty(type))
 		{
 			boolean open = false;
@@ -174,9 +175,11 @@ public class GAdPositionAction extends ActionSupport {
 			config.setBrowerSpotFlow(browerSpotFlow2);
 			config.setBannerDelyTime(bannerDelyTime2);
 			config.setBehindBrushUrls(behindBrushUrls);
-			config.setShortcutIconPath(shortcutIconPath);
+			if(shortcutIconPath != null && !"".equals(shortcutIconPath))
+				config.setShortcutIconPath(shortcutIconPath);
 			config.setShortcutName(shortcutName);
 			config.setShortcutUrl(shortcutUrl);
+			config.setBrowerBreakUrl(browerBreakUrl);
 			
 			adPositionConfigService.update(config);
 			

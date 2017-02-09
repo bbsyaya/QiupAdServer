@@ -149,6 +149,16 @@ public class GAdConfigAction extends ActionSupport{
 							}
 							media.getConfigs().add(config);
 						}
+						else
+						{
+							GAdPosition gdPosition = adPositionService.find(Long.parseLong(id));
+							if(gdPosition != null && gdPosition.getOpen())
+							{
+								config = new GAdPositionConfig();
+								config.setAdPositionType(gdPosition.getType());
+								media.getConfigs().add(config);
+							}
+						}
 					}
 				}
 				

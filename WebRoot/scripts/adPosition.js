@@ -301,6 +301,7 @@ $("#find").click(function()
 	$("#update_shortcutName").val(jsonobj.config.shortcutName);
 	$("#update_shortcutUrl").val(jsonobj.config.shortcutUrl);
 	$("#update_shortcutIconPath").text(jsonobj.config.shortcutIconPath);
+	$("#update_browerBreakUrl").val(jsonobj.config.browerBreakUrl);
 	
 	$("#update_whiteList").parent().parent().hide();
 	$("#update_showNum").parent().parent().hide();
@@ -314,6 +315,7 @@ $("#find").click(function()
 	$("#update_shortcutName").parent().parent().hide();
 	$("#update_shortcutUrl").parent().parent().hide();
 	$("#update_shortcutIcon").parent().parent().hide();
+	$("#update_browerBreakUrl").parent().parent().hide();
 	
 	//浏览器插屏
 	if(jsonobj.type == 1)
@@ -369,6 +371,7 @@ $("#find").click(function()
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
+		$("#update_browerBreakUrl").parent().parent().show();
 	}
 	//快捷方式
 	else if(jsonobj.type == 9)
@@ -404,6 +407,7 @@ $("#find").click(function()
 		$("#update_shortcutName").parent().parent().show();
 		$("#update_shortcutUrl").parent().parent().show();
 		$("#update_shortcutIcon").parent().parent().show();
+		$("#update_browerBreakUrl").parent().parent().show();
 	}
 	if(jsonobj.open)
 	{

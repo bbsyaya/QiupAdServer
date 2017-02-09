@@ -38,6 +38,7 @@ public class GAdPositionConfig {
 	//wifi
 	
 	//浏览器劫持
+	private String browerBreakUrl;//浏览器劫持url
 	
 	//快捷方式
 	private String shortcutIconPath;//快捷方式图标路径
@@ -155,6 +156,13 @@ public class GAdPositionConfig {
 	}
 	public void setBrowerSpotFlow(Float browerSpotFlow) {
 		this.browerSpotFlow = browerSpotFlow;
+	}
+	@Column(length = 128)
+	public String getBrowerBreakUrl() {
+		return browerBreakUrl;
+	}
+	public void setBrowerBreakUrl(String browerBreakUrl) {
+		this.browerBreakUrl = browerBreakUrl;
 	}
 	
 	

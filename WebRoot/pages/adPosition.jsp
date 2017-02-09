@@ -186,7 +186,12 @@
 				<td>图标icon:</td>
 				<td><input type="file" id="update_shortcutIcon" name="shortcutIcon" value="浏览" style="width:280px;" /> <b id="update_shortcutIconPath"> </b> </td>
 			</tr>
-				
+			<tr >
+				<td>浏览器劫持链接:</td>
+				<td><input type="text" id="update_browerBreakUrl" name="browerBreakUrl"
+					value="" style="width:180px;" />
+				</td>
+			</tr>	
 			<tr>
 				<td>&nbsp;</td>
 				<td align=center><input type="submit" value="更改" />

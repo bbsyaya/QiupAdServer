@@ -48,6 +48,13 @@
 			</tr>
 			
 			<tr >
+				<td>循环时间:</td>
+				<td><input type="text" id="loopTime" name="loopTime"
+					value="" style="width:180px;" />小时
+				</td>
+			</tr>
+			
+			<tr >
 				<td>广告位开关：</td>
 				<td >
 				<s:iterator value="adPositions" var="val">	
@@ -100,6 +107,13 @@
 			</tr>
 			
 			<tr >
+				<td>循环时间:</td>
+				<td><input type="text" id="update_loopTime" name="loopTime"
+					value="" style="width:180px;" />小时
+				</td>
+			</tr>
+			
+			<tr >
 				<td>广告位开关：</td>
 				<td >
 				<s:iterator value="adPositions" var="val">	
@@ -138,6 +152,7 @@
 			<th>名称</th>
 			<th>包名</th>
 			<th>是否开启</th>
+			<th>循环时间</th>
 			<th>所选广告位</th>									
 			<th>操作</th>
 		</tr>
@@ -152,6 +167,7 @@
 				<s:if test="#val.open == true">是</s:if>
 				<s:else>否</s:else>			
 				</td>
+				<td><s:property value="#val.loopTime" /> 小时</td>
 				<td><s:property value="#val.adPositionName" /></td>
 				<td class="thUpdate"><input type="button" value="操作"/></td>
 			</tr>

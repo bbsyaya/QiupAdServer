@@ -18,6 +18,7 @@ public class GMedia {
 	private String packageName;// 包名
 	private Boolean open;//是否开启
 	private String adPosition;
+	private Float loopTime;
 	
 	
 	private String adPositionName;
@@ -31,6 +32,7 @@ public class GMedia {
 		this.packageName = packageName;
 		this.open = open;
 		this.adPosition = adPosition;
+		this.loopTime = 24.f;
 	}
 
 	@Id
@@ -87,6 +89,14 @@ public class GMedia {
 
 	public void setConfigs(List<GAdPositionConfig> configs) {
 		this.configs = configs;
+	}
+
+	public Float getLoopTime() {
+		return loopTime;
+	}
+
+	public void setLoopTime(Float loopTime) {
+		this.loopTime = loopTime;
 	}
 	
 	

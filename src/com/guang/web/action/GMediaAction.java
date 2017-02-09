@@ -77,6 +77,7 @@ public class GMediaAction extends ActionSupport{
 		String name = ServletActionContext.getRequest().getParameter("name");
 		String packageName = ServletActionContext.getRequest().getParameter("packageName");
 		String open_state = ServletActionContext.getRequest().getParameter("open_state");
+		String loopTime = ServletActionContext.getRequest().getParameter("loopTime");
 		if(!StringTools.isEmpty(name) && !StringTools.isEmpty(packageName))
 		{
 			boolean open = false;
@@ -95,7 +96,12 @@ public class GMediaAction extends ActionSupport{
 			if(adPositionSwitch.endsWith(","))
 				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
 			
-			mediaService.add(new GMedia(name, packageName,open,adPositionSwitch));
+			GMedia media = new GMedia(name, packageName,open,adPositionSwitch);
+			if(loopTime != null && !"".equals(loopTime))
+			{
+				media.setLoopTime(Float.parseFloat(loopTime));
+			}
+			mediaService.add(media);
 			ActionContext.getContext().put("addMedia", "添加成功！");
 		}
 		else
@@ -120,6 +126,7 @@ public class GMediaAction extends ActionSupport{
 		String name = ServletActionContext.getRequest().getParameter("name");
 		String packageName = ServletActionContext.getRequest().getParameter("packageName");
 		String open_state = ServletActionContext.getRequest().getParameter("open_state");
+		String loopTime = ServletActionContext.getRequest().getParameter("loopTime");
 		
 		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(name) && !StringTools.isEmpty(packageName))
 		{
@@ -144,6 +151,11 @@ public class GMediaAction extends ActionSupport{
 			media.setPackageName(packageName);
 			media.setOpen(open);
 			media.setAdPosition(adPositionSwitch);
+			
+			if(loopTime != null && !"".equals(loopTime))
+			{
+				media.setLoopTime(Float.parseFloat(loopTime));
+			}
 			
 			mediaService.update(media);
 			ActionContext.getContext().put("updateMedia", "更改成功！");

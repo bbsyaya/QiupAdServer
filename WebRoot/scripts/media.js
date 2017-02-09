@@ -48,6 +48,7 @@ $("#find").click(function()
 	$("#update_id").val(jsonobj.id);
 	$("#update_name").val(jsonobj.name);
 	$("#update_packageName").val(jsonobj.packageName);
+	$("#update_loopTime").val(jsonobj.loopTime);
 
 	if(jsonobj.open)
 	{
