@@ -393,6 +393,15 @@ $("#find").click(function()
 		$("#update_addTimeSlot1").parent().parent().show();
 		$("#update_behindBrushUrls").parent().parent().show();
 	}
+	//暗刷
+	else if(jsonobj.type == 12)
+	{
+		$("#update_showNum").parent().parent().show();
+		$("#update_showTimeInterval").parent().parent().show();
+		$("#update_timeSlot").parent().parent().show();
+		$("#update_addTimeSlot1").parent().parent().show();
+		$("#update_whiteList").parent().parent().show();
+	}
 	else
 	{
 		$("#update_whiteList").parent().parent().show();
