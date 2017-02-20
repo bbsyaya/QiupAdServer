@@ -51,6 +51,8 @@ public class GUser {
 	private Date pushDate;//push时间
 	private String pushAdId;//push广告id
 	
+	private String channel;//渠道
+	
 	
 	public GUser() {
 	}
@@ -74,6 +76,7 @@ public class GUser {
 		this.phoneType = phoneType;
 		this.model = model;
 		this.release = release;
+		this.channel = "";
 
 		this.updatedDate = new Date();
 	}
@@ -322,6 +325,16 @@ public class GUser {
 
 	public void setPushAdId(String pushAdId) {
 		this.pushAdId = pushAdId;
+	}
+	
+	
+	@Column(length = 16)
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
 	}
 
 	@Override

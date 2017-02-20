@@ -1,4 +1,16 @@
 var baseUrl =  window.location.protocol + "//" + window.location.host+ "/QiupAdServer/";
+
+var updateTable = function(type)
+{
+	
+}
+
+$("#filed_sel").change(function(){
+	var type = $(this).val();
+	updateTable(type);
+});
+
+
 $("#delete").click(function()
 {
 	var data = $("#div_update").attr("title");

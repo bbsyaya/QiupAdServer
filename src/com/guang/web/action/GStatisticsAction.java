@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import com.guang.web.common.GStatisticsType;
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GStatistics;
+import com.guang.web.mode.GUser;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GUserService;
@@ -75,9 +76,11 @@ public class GStatisticsAction extends ActionSupport{
 		String appName = obj.getString("appName");
 		String userName = obj.getString("userName");
 		String password = packageName;
-		long userId = userService.find(userName,password).getId();
+		GUser user = userService.find(userName,password);
+		long userId = user.getId();
+		String channel = user.getChannel();
 		
-		GStatistics statistics = new GStatistics(type, userId, adPositionType, offerId, packageName, appName);
+		GStatistics statistics = new GStatistics(type, userId, adPositionType, offerId, packageName, appName,channel);
 		statisticsService.add(statistics);
 	}
 }

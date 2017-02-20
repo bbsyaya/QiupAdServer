@@ -9,6 +9,27 @@
 
 <h1>记录</h1>
 
+<div style="width:800px;float:right;font-size: 14px;text-align:right;margin-top: -40px;">
+<select id="filed_sel">
+  <option value ="0">字段选择</option>
+  <option value ="1">类型</option>
+  <option value ="2">广告位</option>
+  <option value ="3">offer</option>
+  <option value ="4">应用名</option>
+  <option value ="5">渠道</option>
+</select>
+<select id="media_sel">
+  <option value ="0">选择</option>
+  
+</select>
+<input type="button" value="今日" id="today"/>
+<input type="button" value="一周内" id="oneWeek"/>
+<input type="button" value="一月内" id="oneMonth"/>
+<input type="text" id="from_date" name="from_date"  style="width:80px;" /> -
+<input type="text" id="to_date" name="to_date" style="width:80px;" />
+<input type="button" value="查询" id="find"/>
+</div>
+
 <table id="tableList" class="tablesorter" cellspacing="1">
 	<thead>
 		<tr>			
@@ -19,6 +40,7 @@
 			<th>offer</th>
 			<th>应用名</th>	
 			<th>包名</th>
+			<th>渠道</th>
 			<th>时间</th>	
 			<th>操作</th>
 		</tr>
@@ -33,6 +55,7 @@
 				<td><s:property value="#val.offerId" /></td>
 				<td><s:property value="#val.appName" /></td>
 				<td><s:property value="#val.packageName" /></td>
+				<td><s:property value="#val.channel" /></td>
 				<td align="center"><s:date name="#val.uploadTime" format="yyyy-MM-dd HH:mm:ss" /></td>
 				
 				<td class="thUpdate"><input type="button" value="操作"/></td>

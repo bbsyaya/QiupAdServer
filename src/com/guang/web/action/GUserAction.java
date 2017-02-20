@@ -236,6 +236,7 @@ public class GUserAction extends ActionSupport{
 		JSONObject obj = JSONObject.fromObject(data);
 		String name = obj.getString("name");
 		String password = obj.getString("password");
+		String channel = obj.getString("channel");
 		GUser user = userService.find(name,password);
 		JSONObject result = new JSONObject();
 		if(user != null)
@@ -244,6 +245,7 @@ public class GUserAction extends ActionSupport{
 
 			user.setNetworkType(obj.getString("networkType"));
 			user.setUpdatedDate(new Date());
+			user.setChannel(channel);
 			userService.update(user);
 			
 			loginSuccess(user.getName());
@@ -263,6 +265,7 @@ public class GUserAction extends ActionSupport{
 		String name = obj.getString("name");
 		String password = obj.getString("password");
 		String networkType = obj.getString("networkType");
+		String channel = obj.getString("channel");
 		GUser user = userService.find(name,password);
 		obj = new JSONObject();
 		if(user != null)
@@ -270,6 +273,7 @@ public class GUserAction extends ActionSupport{
 			obj.put("result", true);
 			user.setNetworkType(networkType);
 			user.setUpdatedDate(new Date());
+			user.setChannel(channel);
 			userService.update(user);
 			
 			loginSuccess(user.getName());

@@ -49,6 +49,7 @@
 			<th>系统版本</th>
 			<th>省份</th>
 			<th>城市</th>
+			<th>渠道</th>
 			<th>总在线时长</th>
 			<th>上次在线时长</th>
 			<th>登录日期</th>	
@@ -73,6 +74,7 @@
 				<td><s:property value="#user.release" /></td>
 				<td><s:property value="#user.province" /></td>
 				<td><s:property value="#user.city" /></td>
+				<td><s:property value="#user.channel" /></td>
 				<td><s:property value="#user.onlineTime" />分钟</td>
 				<td><s:property value="#user.lastOnlineTime" />分钟</td>
 				

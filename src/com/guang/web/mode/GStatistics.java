@@ -24,10 +24,11 @@ public class GStatistics {
 	private String statisticsType;
 	private String adPosition;
 	private String offer;
+	private String channel;
 	
 	public GStatistics(){}
 	public GStatistics(Integer type, Long userId, Integer adPositionType,
-			String offerId, String packageName, String appName) {
+			String offerId, String packageName, String appName,String channel) {
 		super();
 		this.type = type;
 		this.userId = userId;
@@ -35,6 +36,7 @@ public class GStatistics {
 		this.offerId = offerId;
 		this.packageName = packageName;
 		this.appName = appName;
+		this.channel = channel;
 		this.uploadTime = new Date();
 	}
 	@Id
@@ -111,6 +113,13 @@ public class GStatistics {
 	}
 	public void setOffer(String offer) {
 		this.offer = offer;
+	}
+	@Column(length = 16)
+	public String getChannel() {
+		return channel;
+	}
+	public void setChannel(String channel) {
+		this.channel = channel;
 	}
 	
 	
