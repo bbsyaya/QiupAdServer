@@ -99,6 +99,7 @@ public class GAdPositionAction extends ActionSupport {
 		String open_state = ServletActionContext.getRequest().getParameter("open_state");
 		String whiteList = ServletActionContext.getRequest().getParameter("whiteList");
 		String showNum = ServletActionContext.getRequest().getParameter("showNum");
+		String adShowNum = ServletActionContext.getRequest().getParameter("adShowNum");
 		String showTimeInterval = ServletActionContext.getRequest().getParameter("showTimeInterval");
 		String timeSlot = ServletActionContext.getRequest().getParameter("timeSlot");
 		String browerSpotTwoTime = ServletActionContext.getRequest().getParameter("browerSpotTwoTime");
@@ -124,6 +125,10 @@ public class GAdPositionAction extends ActionSupport {
 			int showN = 0;
 			if(!StringTools.isEmpty(showNum))
 				showN = Integer.parseInt(showNum);
+			
+			int adShowN = 0;
+			if(!StringTools.isEmpty(adShowNum))
+				adShowN = Integer.parseInt(adShowNum);
 				
 			float showTime = 0;
 			if(!StringTools.isEmpty(showTimeInterval))
@@ -169,6 +174,7 @@ public class GAdPositionAction extends ActionSupport {
 			}
 			config.setWhiteList(whiteList);
 			config.setShowNum(showN);
+			config.setAdShowNum(adShowN);
 			config.setShowTimeInterval(showTime);
 			config.setTimeSlot(timeSlot);
 			config.setBrowerSpotTwoTime(browerSpotTwoTime2);

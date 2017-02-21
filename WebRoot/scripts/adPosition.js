@@ -293,6 +293,7 @@ $("#find").click(function()
 	$("#update_type").val(jsonobj.type);
 	$("#update_whiteList").val(jsonobj.config.whiteList);
 	$("#update_showNum").val(jsonobj.config.showNum);
+	$("#update_adShowNum").val(jsonobj.config.adShowNum);
 	$("#update_showTimeInterval").val(jsonobj.config.showTimeInterval);
 	$("#update_browerSpotTwoTime").val(jsonobj.config.browerSpotTwoTime);
 	$("#update_browerSpotFlow").val(jsonobj.config.browerSpotFlow);
@@ -305,6 +306,7 @@ $("#find").click(function()
 	
 	$("#update_whiteList").parent().parent().hide();
 	$("#update_showNum").parent().parent().hide();
+	$("#update_adShowNum").parent().parent().hide();
 	$("#update_showTimeInterval").parent().parent().hide();
 	$("#update_browerSpotTwoTime").parent().parent().hide();
 	$("#update_browerSpotFlow").parent().parent().hide();
@@ -322,6 +324,7 @@ $("#find").click(function()
 	{
 		$("#update_whiteList").parent().parent().show();
 		$("#update_showNum").parent().parent().show();
+		$("#update_adShowNum").parent().parent().show();
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_browerSpotTwoTime").parent().parent().show();
 		$("#update_browerSpotFlow").parent().parent().show();
@@ -337,6 +340,7 @@ $("#find").click(function()
 	{
 		$("#update_whiteList").parent().parent().show();
 		$("#update_showNum").parent().parent().show();
+		$("#update_adShowNum").parent().parent().show();
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_bannerDelyTime").parent().parent().show();
 		$("#update_timeSlot").parent().parent().show();
@@ -345,12 +349,14 @@ $("#find").click(function()
 	//充电锁
 	else if(jsonobj.type == 5)
 	{
+		$("#update_adShowNum").parent().parent().show();
 	}
 	//应用插屏
 	else if(jsonobj.type == 6)
 	{
 		$("#update_whiteList").parent().parent().show();
 		$("#update_showNum").parent().parent().show();
+		$("#update_adShowNum").parent().parent().show();
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
@@ -406,6 +412,7 @@ $("#find").click(function()
 	{
 		$("#update_whiteList").parent().parent().show();
 		$("#update_showNum").parent().parent().show();
+		$("#update_adShowNum").parent().parent().show();
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_browerSpotTwoTime").parent().parent().show();
 		$("#update_browerSpotFlow").parent().parent().show();

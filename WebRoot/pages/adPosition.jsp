@@ -97,6 +97,13 @@
 			</tr>
 			
 			<tr >
+				<td>相同广告展示次数:</td>
+				<td><input type="text" id="update_adShowNum" name="adShowNum"
+					value="" style="width:80px;" />次
+				</td>
+			</tr>
+			
+			<tr >
 				<td>广告时间间隔:</td>
 				<td><input type="text" id="update_showTimeInterval" name="showTimeInterval"
 					value="" style="width:80px;" />分钟
