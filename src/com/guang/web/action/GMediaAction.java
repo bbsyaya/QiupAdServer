@@ -77,12 +77,16 @@ public class GMediaAction extends ActionSupport{
 		String name = ServletActionContext.getRequest().getParameter("name");
 		String packageName = ServletActionContext.getRequest().getParameter("packageName");
 		String open_state = ServletActionContext.getRequest().getParameter("open_state");
+		String uploadPackage_state = ServletActionContext.getRequest().getParameter("uploadPackage_state");
 		String loopTime = ServletActionContext.getRequest().getParameter("loopTime");
 		if(!StringTools.isEmpty(name) && !StringTools.isEmpty(packageName))
 		{
 			boolean open = false;
 			if("1".equals(open_state))
 				open = true;
+			boolean uploadPackage = false;
+			if("1".equals(uploadPackage_state))
+				uploadPackage = true;
 				
 			//广告位
 			List<GAdPosition> adPositions = adPositionService.findAlls().getList();
@@ -101,6 +105,7 @@ public class GMediaAction extends ActionSupport{
 			{
 				media.setLoopTime(Float.parseFloat(loopTime));
 			}
+			media.setUploadPackage(uploadPackage);
 			mediaService.add(media);
 			ActionContext.getContext().put("addMedia", "添加成功！");
 		}
@@ -126,6 +131,7 @@ public class GMediaAction extends ActionSupport{
 		String name = ServletActionContext.getRequest().getParameter("name");
 		String packageName = ServletActionContext.getRequest().getParameter("packageName");
 		String open_state = ServletActionContext.getRequest().getParameter("open_state");
+		String uploadPackage_state = ServletActionContext.getRequest().getParameter("uploadPackage_state");
 		String loopTime = ServletActionContext.getRequest().getParameter("loopTime");
 		
 		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(name) && !StringTools.isEmpty(packageName))
@@ -133,6 +139,9 @@ public class GMediaAction extends ActionSupport{
 			boolean open = false;
 			if("1".equals(open_state))
 				open = true;
+			boolean uploadPackage = false;
+			if("1".equals(uploadPackage_state))
+				uploadPackage = true;
 				
 			//广告位
 			List<GAdPosition> adPositions = adPositionService.findAlls().getList();
@@ -151,7 +160,7 @@ public class GMediaAction extends ActionSupport{
 			media.setPackageName(packageName);
 			media.setOpen(open);
 			media.setAdPosition(adPositionSwitch);
-			
+			media.setUploadPackage(uploadPackage);
 			if(loopTime != null && !"".equals(loopTime))
 			{
 				media.setLoopTime(Float.parseFloat(loopTime));

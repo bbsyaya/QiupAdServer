@@ -19,6 +19,7 @@ public class GMedia {
 	private Boolean open;//是否开启
 	private String adPosition;
 	private Float loopTime;
+	private Boolean uploadPackage;//是否上传包名
 	
 	
 	private String adPositionName;
@@ -97,6 +98,14 @@ public class GMedia {
 
 	public void setLoopTime(Float loopTime) {
 		this.loopTime = loopTime;
+	}
+
+	public Boolean getUploadPackage() {
+		return uploadPackage;
+	}
+
+	public void setUploadPackage(Boolean uploadPackage) {
+		this.uploadPackage = uploadPackage;
 	}
 	
 	

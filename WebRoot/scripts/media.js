@@ -59,6 +59,15 @@ $("#find").click(function()
 		$("#open_state1").attr("checked", "");
 	}
 	
+	if(jsonobj.uploadPackage)
+	{
+		$("#uploadPackage_state1").attr("checked", "checked");
+		$("#uploadPackage_state2").attr("checked", "");
+	} else {
+		$("#uploadPackage_state2").attr("checked", "checked");
+		$("#uploadPackage_state1").attr("checked", "");
+	}
+	
 	if(jsonobj.adPosition != "" && jsonobj.adPosition != null)
 	{
 		var arr = jsonobj.adPosition.split(",");

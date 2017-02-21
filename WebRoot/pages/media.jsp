@@ -55,6 +55,13 @@
 			</tr>
 			
 			<tr >
+				<td>是否上传包:</td>
+				<td ><input type="radio" 
+					name="uploadPackage_state" value="1" checked="checked" /> 是 <input
+					type="radio"  name="uploadPackage_state" value="0" /> 否</td>
+			</tr>
+			
+			<tr >
 				<td>广告位开关：</td>
 				<td >
 				<s:iterator value="adPositions" var="val">	
@@ -107,6 +114,13 @@
 			</tr>
 			
 			<tr >
+				<td>是否上传包:</td>
+				<td ><input type="radio" id="uploadPackage_state1"
+					name="uploadPackage_state" value="1" checked="checked" /> 是 <input
+					type="radio" id="uploadPackage_state2" name="uploadPackage_state" value="0" /> 否</td>
+			</tr>
+			
+			<tr >
 				<td>循环时间:</td>
 				<td><input type="text" id="update_loopTime" name="loopTime"
 					value="" style="width:180px;" />小时
@@ -152,6 +166,7 @@
 			<th>名称</th>
 			<th>包名</th>
 			<th>是否开启</th>
+			<th>是否上传包</th>
 			<th>循环时间</th>
 			<th>所选广告位</th>									
 			<th>操作</th>
@@ -165,6 +180,10 @@
 				<td><s:property value="#val.packageName" /></td>
 				<td align="center">				
 				<s:if test="#val.open == true">是</s:if>
+				<s:else>否</s:else>			
+				</td>
+				<td align="center">				
+				<s:if test="#val.uploadPackage == true">是</s:if>
 				<s:else>否</s:else>			
 				</td>
 				<td><s:property value="#val.loopTime" /> 小时</td>

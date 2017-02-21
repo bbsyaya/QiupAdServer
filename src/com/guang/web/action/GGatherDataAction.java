@@ -166,4 +166,14 @@ public class GGatherDataAction {
 			e.printStackTrace();
 		}
 	}
+	
+	public void daochu()
+	{
+		List<GatherAppInfo> appInfoList = dataService.findAll().getList();
+		for(GatherAppInfo info : appInfoList)
+		{
+			String s = info.getAppName() + ";" + info.getPackageName() + ";" + info.isInlay() + ";\r\n";
+			print(s);
+		}
+	}
 }
