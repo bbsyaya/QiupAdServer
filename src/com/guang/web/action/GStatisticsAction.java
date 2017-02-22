@@ -145,7 +145,7 @@ public class GStatisticsAction extends ActionSupport{
 		
 		if(filed != null)
 		{
-			colvals.put(filed+" =", type2);
+			colvals.put(filed+" =", "'"+type2+"'");
 		}
 		colvals.put("uploadTime >=", "'"+from+"'");
 		colvals.put("uploadTime <", "'"+to+"'");

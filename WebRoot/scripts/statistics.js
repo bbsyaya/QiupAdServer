@@ -36,10 +36,10 @@ var updateSel_2 = function(type)
 	
 	else if(type == "3")
 	{
-		s += '<option value ="0">self</option>';
-		s += '<option value ="1">appNext</option>';
-		s += '<option value ="2">smaato</option>';
-		s += '<option value ="3">MobVista</option>';
+		s += '<option value ="self">self</option>';
+		s += '<option value ="appNext">appNext</option>';
+		s += '<option value ="smaato">smaato</option>';
+		s += '<option value ="MobVista">MobVista</option>';
 	}
 	
 	else if(type == "4")
@@ -56,7 +56,7 @@ var updateSel_2 = function(type)
 		for(var i=0;i<data.length;i++)
 		{
 			s += '<option value ="';
-			s += data[i].id;
+			s += data[i].name;
 			s += '">';
 			s += data[i].name;
 			s += '</option>';
@@ -76,7 +76,7 @@ var updateSel_2 = function(type)
 		for(var i=0;i<data.length;i++)
 		{
 			s += '<option value ="';
-			s += data[i].id;
+			s += data[i].channel;
 			s += '">';
 			s += data[i].channel;
 			s += '</option>';
