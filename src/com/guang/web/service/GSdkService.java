@@ -14,4 +14,5 @@ public interface GSdkService {
 	GSdk findFirst(String channel);
 	GSdk findNew(String channel);
 	QueryResult<GSdk> findAlls(int firstindex);
+	QueryResult<GSdk> findAlls();
 }

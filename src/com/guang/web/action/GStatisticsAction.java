@@ -1,18 +1,27 @@
 package com.guang.web.action;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.guang.web.common.GStatisticsType;
 import com.guang.web.dao.QueryResult;
+import com.guang.web.mode.GAdPosition;
+import com.guang.web.mode.GMedia;
+import com.guang.web.mode.GSdk;
 import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
 import com.guang.web.service.GAdPositionService;
+import com.guang.web.service.GMediaService;
+import com.guang.web.service.GSdkService;
 import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GUserService;
 import com.opensymphony.xwork2.ActionContext;
@@ -24,6 +33,8 @@ public class GStatisticsAction extends ActionSupport{
 	@Resource private GStatisticsService statisticsService;
 	@Resource private GAdPositionService adPositionService;
 	@Resource private GUserService userService;
+	@Resource private GMediaService mediaService;
+	@Resource private GSdkService sdkService;
 	
 	public String list()
 	{
@@ -82,5 +93,71 @@ public class GStatisticsAction extends ActionSupport{
 		
 		GStatistics statistics = new GStatistics(type, userId, adPositionType, offerId, packageName, appName,channel);
 		statisticsService.add(statistics);
+	}
+	
+	public void print(Object obj)
+	{
+		try {
+			ServletActionContext.getResponse().getWriter().print(obj);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void findAdPosition()
+	{
+		List<GAdPosition> list = adPositionService.findAlls().getList();
+		print(JSONArray.fromObject(list));
+	}
+	
+	public void findMedia()
+	{
+		List<GMedia> list = mediaService.findAlls().getList();
+		print(JSONArray.fromObject(list));
+	}
+	
+	public void findSdk()
+	{
+		List<GSdk> list = sdkService.findAlls().getList();
+		print(JSONArray.fromObject(list));
+	}
+	
+	public void list2()
+	{
+		String from = ServletActionContext.getRequest().getParameter("from");
+		String to = ServletActionContext.getRequest().getParameter("to");
+		String type = ServletActionContext.getRequest().getParameter("type");
+		String type2 = ServletActionContext.getRequest().getParameter("type2");
+		
+		String filed = null;
+		
+		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+		if("1".equals(type))
+			filed = "type";
+		else if("2".equals(type))
+			filed = "adPositionType";
+		else if("3".equals(type))
+			filed = "offerId";
+		else if("4".equals(type))
+			filed = "appName";
+		else if("5".equals(type))
+			filed = "channel";
+		
+		if(filed != null)
+		{
+			colvals.put(filed+" =", type2);
+		}
+		colvals.put("uploadTime >=", "'"+from+"'");
+		colvals.put("uploadTime <", "'"+to+"'");
+		
+		List<GStatistics> list = statisticsService.findAlls(colvals).getList();
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(GStatistics statistics : list)
+		{
+			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
+			statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
+			statistics.setUploadTime2(formatter.format(statistics.getUploadTime()));
+		}
+		print(JSONArray.fromObject(list));
 	}
 }

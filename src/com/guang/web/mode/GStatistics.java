@@ -26,6 +26,9 @@ public class GStatistics {
 	private String offer;
 	private String channel;
 	
+	private String uploadTime2;
+	
+	
 	public GStatistics(){}
 	public GStatistics(Integer type, Long userId, Integer adPositionType,
 			String offerId, String packageName, String appName,String channel) {
@@ -122,5 +125,11 @@ public class GStatistics {
 		this.channel = channel;
 	}
 	
-	
+	@Transient
+	public String getUploadTime2() {
+		return uploadTime2;
+	}
+	public void setUploadTime2(String uploadTime2) {
+		this.uploadTime2 = uploadTime2;
+	}
 }

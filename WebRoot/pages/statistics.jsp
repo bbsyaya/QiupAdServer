@@ -6,7 +6,8 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<script type="text/javascript"
+	src="<%=basePath%>scripts/laydate.dev.js"></script>
 <h1>记录</h1>
 
 <div style="width:800px;float:right;font-size: 14px;text-align:right;margin-top: -40px;">
@@ -18,7 +19,7 @@
   <option value ="4">应用名</option>
   <option value ="5">渠道</option>
 </select>
-<select id="media_sel">
+<select id="filed_sel_2">
   <option value ="0">选择</option>
   
 </select>
@@ -45,7 +46,7 @@
 			<th>操作</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody id="tbody">
 		<s:iterator value="list" var="val">
 			<tr>				
 				<td><s:property value="#val.id" /></td>
@@ -69,7 +70,7 @@
 <a id="a_1" href="#" > 上一页    </a>
 <a id="a_2" href="#"> 下一页</a>
 
-<a  herf="#">总记录数：${maxNum}</a>
+<a  herf="#" id="maxNum">总记录数：${maxNum}</a>
 </div>
 
 <div id="div_update" style="display:none;position:absolute;width:100px;">
@@ -89,5 +90,20 @@ $(function() {
 	$('table tr:nth-child(even)').addClass('even');	 
 });
 
+//创建日期选择
+laydate({
+			istime: true,
+            elem: '#from_date',
+            format: 'YYYY-MM-DD'
+        });
+laydate({
+			istime: true,
+            elem: '#to_date',
+            format: 'YYYY-MM-DD'
+        });   
+ $("#to_date").click(function(){
+ 	laydate.resetPosition(-100);
+ });
+ 
 </script>
 <script type="text/javascript" src="<%=basePath%>scripts/statistics.js"></script>

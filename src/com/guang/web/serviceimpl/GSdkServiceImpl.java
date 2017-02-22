@@ -56,4 +56,10 @@ public class GSdkServiceImpl implements GSdkService{
 		return daoTools.find(GSdk.class, null,null, firstindex, 100, lhm);
 	}
 	
+	public QueryResult<GSdk> findAlls() {
+		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
+		lhm.put("id", "desc");
+		return daoTools.find(GSdk.class, null,null, 0, 10000000, lhm);
+	}
+	
 }
