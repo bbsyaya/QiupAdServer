@@ -11,17 +11,20 @@
 <h1>记录</h1>
 
 <div style="width:800px;float:right;font-size: 14px;text-align:right;margin-top: -40px;">
-<select id="filed_sel">
-  <option value ="0">字段选择</option>
-  <option value ="1">类型</option>
-  <option value ="2">广告位</option>
-  <option value ="3">offer</option>
-  <option value ="4">应用名</option>
-  <option value ="5">渠道</option>
+<select id="filed_sel_1">
+  <option value ="0">类型选择</option>
 </select>
 <select id="filed_sel_2">
-  <option value ="0">选择</option>
-  
+  <option value ="0">广告位选择</option>
+</select>
+<select id="filed_sel_3">
+  <option value ="0">offer选择</option>
+</select>
+<select id="filed_sel_4">
+  <option value ="0">应用选择</option>
+</select>
+<select id="filed_sel_5">
+  <option value ="0">渠道选择</option>
 </select>
 <input type="button" value="今日" id="today"/>
 <input type="button" value="一周内" id="oneWeek"/>

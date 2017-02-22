@@ -126,26 +126,34 @@ public class GStatisticsAction extends ActionSupport{
 	{
 		String from = ServletActionContext.getRequest().getParameter("from");
 		String to = ServletActionContext.getRequest().getParameter("to");
-		String type = ServletActionContext.getRequest().getParameter("type");
+		String type1 = ServletActionContext.getRequest().getParameter("type1");
 		String type2 = ServletActionContext.getRequest().getParameter("type2");
-		
-		String filed = null;
-		
+		String type3 = ServletActionContext.getRequest().getParameter("type3");
+		String type4 = ServletActionContext.getRequest().getParameter("type4");
+		String type5 = ServletActionContext.getRequest().getParameter("type5");
+				
 		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
-		if("1".equals(type))
-			filed = "type";
-		else if("2".equals(type))
-			filed = "adPositionType";
-		else if("3".equals(type))
-			filed = "offerId";
-		else if("4".equals(type))
-			filed = "appName";
-		else if("5".equals(type))
-			filed = "channel";
 		
-		if(filed != null)
+		
+		if(!"-1".equals(type1))
 		{
-			colvals.put(filed+" =", "'"+type2+"'");
+			colvals.put("type =", "'"+type1+"'");
+		}
+		if(!"-1".equals(type2))
+		{
+			colvals.put("adPositionType =", "'"+type2+"'");
+		}
+		if(!"-1".equals(type3))
+		{
+			colvals.put("offerId =", "'"+type3+"'");
+		}
+		if(!"-1".equals(type4))
+		{
+			colvals.put("appName =", "'"+type4+"'");
+		}
+		if(!"-1".equals(type5))
+		{
+			colvals.put("channel =", "'"+type5+"'");
 		}
 		colvals.put("uploadTime >=", "'"+from+"'");
 		colvals.put("uploadTime <", "'"+to+"'");

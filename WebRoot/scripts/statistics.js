@@ -1,10 +1,11 @@
 var baseUrl =  window.location.protocol + "//" + window.location.host+ "/QiupAdServer/";
 
-var updateSel_2 = function(type)
+var updateSel = function(type)
 {
-	var s = '<option value ="-1">选择</option>';
+	
 	if(type == "1")
 	{
+		var s = '<option value ="-1">类型选择</option>';
 		s += '<option value ="0">请求</option>';
 		s += '<option value ="1">展示</option>';
 		s += '<option value ="2">点击</option>';
@@ -12,6 +13,8 @@ var updateSel_2 = function(type)
 		s += '<option value ="4">下载成功</option>';
 		s += '<option value ="5">安装</option>';
 		s += '<option value ="6">激活</option>';
+		
+		$("#filed_sel_1").html(s);
 	}
 	else if(type == "2")
 	{
@@ -24,6 +27,7 @@ var updateSel_2 = function(type)
 		data = data.responseText;
 		data = eval("("+data+")");
 		
+		var s = '<option value ="-1">广告位选择</option>';
 		for(var i=0;i<data.length;i++)
 		{
 			s += '<option value ="';
@@ -32,14 +36,19 @@ var updateSel_2 = function(type)
 			s += data[i].name;
 			s += '</option>';
 		}
+		
+		$("#filed_sel_2").html(s);
 	}
 	
 	else if(type == "3")
 	{
+		var s = '<option value ="-1">offer选择</option>';
 		s += '<option value ="self">self</option>';
 		s += '<option value ="appNext">appNext</option>';
 		s += '<option value ="smaato">smaato</option>';
 		s += '<option value ="MobVista">MobVista</option>';
+		
+		$("#filed_sel_3").html(s);
 	}
 	
 	else if(type == "4")
@@ -53,6 +62,7 @@ var updateSel_2 = function(type)
 		data = data.responseText;
 		data = eval("("+data+")");
 		
+		var s = '<option value ="-1">应用选择</option>';
 		for(var i=0;i<data.length;i++)
 		{
 			s += '<option value ="';
@@ -61,6 +71,8 @@ var updateSel_2 = function(type)
 			s += data[i].name;
 			s += '</option>';
 		}
+		
+		$("#filed_sel_4").html(s);
 	}
 	
 	else if(type == "5")
@@ -73,6 +85,8 @@ var updateSel_2 = function(type)
 			});
 		data = data.responseText;
 		data = eval("("+data+")");
+		
+		var s = '<option value ="-1">渠道选择</option>';
 		for(var i=0;i<data.length;i++)
 		{
 			s += '<option value ="';
@@ -81,23 +95,29 @@ var updateSel_2 = function(type)
 			s += data[i].channel;
 			s += '</option>';
 		}
+		$("#filed_sel_5").html(s);
 	}
-	
-	$("#filed_sel_2").html(s);
 }
 
-$("#filed_sel").change(function(){
-	var type = $(this).val();
-	updateSel_2(type);
-});
+updateSel("1");
+updateSel("2");
+updateSel("3");
+updateSel("4");
+updateSel("5");
 
-var updateTable = function(from,to,type,type2)
+var updateTable = function(from,to)
 {	
+	var type1 = $("#filed_sel_1").val();
+	var type2 = $("#filed_sel_2").val();
+	var type3 = $("#filed_sel_3").val();
+	var type4 = $("#filed_sel_4").val();
+	var type5 = $("#filed_sel_5").val();
+	
 	var data = $.ajax({
 		  type: 'POST',
 		  url: baseUrl+"/statistics_list2",
-		  data: {"from" : from,"to":to,"type":type,
-			  "type2":type2},
+		  data: {"from" : from,"to":to,"type1":type1,
+			  "type2":type2,"type3":type3,"type4":type4,"type5":type5},
 		  async:false
 		});
 	data = data.responseText;
@@ -130,11 +150,9 @@ $("#today").click(function(){
 	var date = new Date();
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
 	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1) + " 00:00:00";
-	var type = $("#filed_sel").val();
-	var type2 = $("#filed_sel_2").val();
 	$("#from_date").val(from.split(" ")[0]);
 	$("#to_date").val(to.split(" ")[0]);
-	updateTable(from,to,type,type2);
+	updateTable(from,to);
 });
 
 $("#oneWeek").click(function(){
@@ -143,11 +161,9 @@ $("#oneWeek").click(function(){
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
 	date.setDate(date.getDate() + 7);
 	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1) + " 00:00:00";
-	var type = $("#filed_sel").val();
-	var type2 = $("#filed_sel_2").val();
 	$("#from_date").val(from.split(" ")[0]);
 	$("#to_date").val(to.split(" ")[0]);
-	updateTable(from,to,type,type2);
+	updateTable(from,to);
 });
 
 $("#oneMonth").click(function(){
@@ -156,28 +172,17 @@ $("#oneMonth").click(function(){
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
 	date.setDate(date.getDate() + 30);
 	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1) + " 00:00:00";
-	var type = $("#filed_sel").val();
-	var type2 = $("#filed_sel_2").val();
 	$("#from_date").val(from.split(" ")[0]);
 	$("#to_date").val(to.split(" ")[0]);
-	updateTable(from,to,type,type2);
+	updateTable(from,to);
 });
 
 $("#find").click(function(){
 	var from = $("#from_date").val() + " 00:00:00";
 	var to = $("#to_date").val() + " 00:00:00";
-	var type = $("#filed_sel").val();
-	var type2 = $("#filed_sel_2").val();
-	updateTable(from,to,type,type2);
+	updateTable(from,to);
 });
 
-$("#filed_sel_2").change(function(){
-	var from = $("#from_date").val() + " 00:00:00";
-	var to = $("#to_date").val() + " 00:00:00";
-	var type = $("#filed_sel").val();
-	var type2 = $("#filed_sel_2").val();
-	updateTable(from,to,type,type2);
-});
 
 
 
