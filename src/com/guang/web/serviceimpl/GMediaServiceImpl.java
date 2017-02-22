@@ -33,13 +33,13 @@ public class GMediaServiceImpl implements GMediaService{
 	public QueryResult<GMedia> findAlls(int firstindex) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
-		return daoTools.find(GMedia.class, null, null, firstindex, 20, lhm);
+		return daoTools.find(GMedia.class, null, null, firstindex, 100, lhm);
 	}
 
 	public QueryResult<GMedia> findAlls() {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
-		return daoTools.find(GMedia.class, null, null, 0, 100, lhm);
+		return daoTools.find(GMedia.class, null, null, 0, 100000, lhm);
 	}
 
 	public GMedia findByPackageName(String packageName) {

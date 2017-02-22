@@ -33,7 +33,7 @@ public class GStatisticsServiceImpl implements GStatisticsService{
 	public QueryResult<GStatistics> findAlls(int firstindex) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
-		return daoTools.find(GStatistics.class, null, null, firstindex, 20, lhm);
+		return daoTools.find(GStatistics.class, null, null, firstindex, 100, lhm);
 	}
 
 	public QueryResult<GStatistics> findAlls(

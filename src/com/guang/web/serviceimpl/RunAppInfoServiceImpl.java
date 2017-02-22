@@ -20,7 +20,7 @@ public class RunAppInfoServiceImpl implements RunAppInfoService {
 		// TODO Auto-generated method stub
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
-		return daoTools.find(GatherAppRunInfo.class, null, null, firstindex, 20, lhm);
+		return daoTools.find(GatherAppRunInfo.class, null, null, firstindex, 100, lhm);
 	}
 
 	public QueryResult<GatherAppRunInfo> find(LinkedHashMap<String, String> colvals) {

@@ -33,11 +33,11 @@ public class GAdPositionServiceImpl implements GAdPositionService{
 	public QueryResult<GAdPosition> findAlls(int firstindex) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
-		return daoTools.find(GAdPosition.class, null, null, firstindex, 20, lhm);
+		return daoTools.find(GAdPosition.class, null, null, firstindex, 100, lhm);
 	}
 
 	public QueryResult<GAdPosition> findAlls() {
-		return daoTools.find(GAdPosition.class, null, null, 0, 20, null);
+		return daoTools.find(GAdPosition.class, null, null, 0, 1000, null);
 	}
 
 	public GAdPosition find(int adPositionType) {

@@ -37,7 +37,7 @@ public class GGatherDataAction {
 		if (sindex != null && !"".equals(sindex))
 			index = Integer.parseInt(sindex);
 		Long num = qr.getNum();
-		int start = index * 20;
+		int start = index * 100;
 		if (start > num) {	
 			start = 0;
 		}
@@ -53,7 +53,7 @@ public class GGatherDataAction {
 		if (rSindex != null && !"".equals(rSindex))
 		rIndex = Integer.parseInt(rSindex);
 		Long sNum = qrg.getNum();
-		int starts = rIndex * 20;
+		int starts = rIndex * 100;
 		if (starts > sNum) {
 			starts = 0;
 		}

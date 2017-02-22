@@ -34,7 +34,7 @@ public class GStatisticsAction extends ActionSupport{
 		if (sindex != null && !"".equals(sindex))
 			index = Integer.parseInt(sindex);
 		Long num = qr.getNum();
-		int start = index * 20;
+		int start = index * 100;
 		if (start > num) {
 			start = 0;
 		}

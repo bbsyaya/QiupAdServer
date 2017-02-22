@@ -33,7 +33,7 @@ public class GAdConfigServiceImpl implements GAdConfigService{
 	public QueryResult<GAdConfig> findAlls(int firstindex) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
-		return daoTools.find(GAdConfig.class, null, null, firstindex, 20, lhm);
+		return daoTools.find(GAdConfig.class, null, null, firstindex, 100, lhm);
 	}
 
 	public GAdConfig find() {

@@ -7,7 +7,7 @@ var b_3 = document.getElementById("a_3");
 var resf = function()
 {
 var maxNum = div.title;
-var maxIndex = Math.ceil(maxNum / 20)-1;
+var maxIndex = Math.ceil(maxNum / 100)-1;
 var index = location.href.split("=")[1];
 if(!index || index > maxIndex)
 index = 0;
@@ -51,7 +51,7 @@ var a_3 = document.getElementById("r_3");
 var resfs = function()
 {
 var maxNum = rdiv.title;
-var maxIndex = Math.ceil(maxNum / 20)-1;
+var maxIndex = Math.ceil(maxNum / 100)-1;
 var index = location.href.split("=")[1];
 
 if(!index || index > maxIndex)

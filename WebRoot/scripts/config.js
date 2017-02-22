@@ -377,7 +377,7 @@ var a_2 = document.getElementById("a_2");
 var resf = function()
 {
 var maxNum = div.title;
-var maxIndex = Math.ceil(maxNum / 20)-1;
+var maxIndex = Math.ceil(maxNum / 100)-1;
 var index = location.href.split("=")[1];
 
 if(!index || index > maxIndex)

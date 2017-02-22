@@ -23,7 +23,7 @@ public class GGatherDataServiceimpl implements GGatherDataService{
 		// TODO Auto-generated method stub
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
-		return daoTools.find(GatherAppInfo.class, null, null, firstindex, 20, lhm);
+		return daoTools.find(GatherAppInfo.class, null, null, firstindex, 100, lhm);
 	}
 	public void delete(long id) {
 		// TODO Auto-generated method stub
