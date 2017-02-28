@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.guang.web.dao.DaoTools;
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GSdk;
+import com.guang.web.mode.GUser;
 import com.guang.web.service.GSdkService;
 
 @Service
@@ -49,6 +50,17 @@ public class GSdkServiceImpl implements GSdkService{
 			return list.get(0);
 		return null;
 	}
+	
+	public GSdk findNew(String packageName,String channel) {
+		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+		colvals.put("online =", 1+"");
+		colvals.put("packageName =", "'"+packageName+"'");
+		colvals.put("channel =", "'"+channel+"'");
+		List<GSdk> list = find(colvals).getList();
+		if(list != null && list.size() > 0)
+			return list.get(0);
+		return null;
+	}
 
 	public QueryResult<GSdk> findAlls(int firstindex) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
@@ -60,6 +72,12 @@ public class GSdkServiceImpl implements GSdkService{
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 		lhm.put("id", "desc");
 		return daoTools.find(GSdk.class, null,null, 0, 10000000, lhm);
+	}
+
+	public QueryResult<GSdk> find(LinkedHashMap<String, String> colvals) {
+		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
+		lhm.put("id", "desc");
+		return daoTools.find(GSdk.class, colvals, 0, 1, lhm);
 	}
 	
 }

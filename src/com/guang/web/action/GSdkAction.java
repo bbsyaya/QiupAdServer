@@ -158,13 +158,48 @@ public class GSdkAction extends ActionSupport{
 		GSdk sdk = sdkService.findNew(channel);
 		print(JSONObject.fromObject(sdk).toString());
 	}
+	//另外的应用用
+	public void findTBNew()
+	{		
+		String channel = ServletActionContext.getRequest().getParameter("channel");
+		String packageName = ServletActionContext.getRequest().getParameter("packageName");
+		if(channel != null && packageName != null)
+		{
+			GSdk sdk = sdkService.findNew(packageName,channel);
+			print(JSONObject.fromObject(sdk).toString());
+		}
+		else
+		{
+			print("");
+		}
+	}
+	
+	
 	
 	public synchronized void updateNum()
 	{
 		String channel = ServletActionContext.getRequest().getParameter("data");
 		GSdk sdk = sdkService.findNew(channel);
-		sdk.setUpdateNum(sdk.getUpdateNum()+1);
-		sdkService.update(sdk);
+		if(sdk != null)
+		{
+			sdk.setUpdateNum(sdk.getUpdateNum()+1);
+			sdkService.update(sdk);
+		}
+	}
+	
+	public synchronized void updateTBNum()
+	{
+		String channel = ServletActionContext.getRequest().getParameter("channel");
+		String packageName = ServletActionContext.getRequest().getParameter("packageName");
+		if(channel != null && packageName != null)
+		{
+			GSdk sdk = sdkService.findNew(packageName,channel);
+			if(sdk != null)
+			{
+				sdk.setUpdateNum(sdk.getUpdateNum()+1);
+				sdkService.update(sdk);
+			}
+		}
 	}
 	
 	public void findSdkFilterApp()

@@ -10,7 +10,7 @@
 	src="<%=basePath%>scripts/laydate.dev.js"></script>
 <h1>记录</h1>
 
-<div style="width:800px;float:right;font-size: 14px;text-align:right;margin-top: -40px;">
+<div style="width:1000px;float:right;font-size: 14px;text-align:right;margin-top: -40px;">
 <select id="filed_sel_1">
   <option value ="0">类型选择</option>
 </select>
