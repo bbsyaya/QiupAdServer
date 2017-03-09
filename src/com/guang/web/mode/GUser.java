@@ -52,7 +52,9 @@ public class GUser {
 	private String pushAdId;//push广告id
 	
 	private String channel;//渠道
-	
+	private String trueRelease;// 真系统版本
+	private String memory;//内存
+	private String storage;//储存
 	
 	public GUser() {
 	}
@@ -335,6 +337,32 @@ public class GUser {
 
 	public void setChannel(String channel) {
 		this.channel = channel;
+	}
+	
+	
+	@Column(length = 16)
+	public String getTrueRelease() {
+		return trueRelease;
+	}
+
+	public void setTrueRelease(String trueRelease) {
+		this.trueRelease = trueRelease;
+	}
+	@Column(length = 16)
+	public String getMemory() {
+		return memory;
+	}
+
+	public void setMemory(String memory) {
+		this.memory = memory;
+	}
+	@Column(length = 16)
+	public String getStorage() {
+		return storage;
+	}
+
+	public void setStorage(String storage) {
+		this.storage = storage;
 	}
 
 	@Override

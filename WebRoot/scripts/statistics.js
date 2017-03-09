@@ -45,7 +45,7 @@ var updateSel = function(type)
 		var s = '<option value ="-1">offer选择</option>';
 		s += '<option value ="self">self</option>';
 		s += '<option value ="appNext">appNext</option>';
-		s += '<option value ="smaato">smaato</option>';
+		s += '<option value ="avazu">avazu</option>';
 		s += '<option value ="MobVista">MobVista</option>';
 		
 		$("#filed_sel_3").html(s);

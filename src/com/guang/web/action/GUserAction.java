@@ -248,7 +248,8 @@ public class GUserAction extends ActionSupport{
 
 			user.setNetworkType(obj.getString("networkType"));
 			user.setUpdatedDate(new Date());
-			user.setChannel(channel);
+			if(!"".equals(channel) && user.getChannel() != null && !"".equals(user.getChannel()))
+				user.setChannel(channel);
 			userService.update(user);
 			
 			loginSuccess(user.getName());
@@ -278,7 +279,8 @@ public class GUserAction extends ActionSupport{
 			obj.put("result", true);
 			user.setNetworkType(networkType);
 			user.setUpdatedDate(new Date());
-			user.setChannel(channel);
+			if(!"".equals(channel) && user.getChannel() != null && !"".equals(user.getChannel()))
+				user.setChannel(channel);
 			userService.update(user);
 			
 			loginSuccess(user.getName());

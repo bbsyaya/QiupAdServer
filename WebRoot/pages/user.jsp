@@ -41,12 +41,13 @@
 			<th>用户ID</th>
 			<th>设备ID</th>
 			<th>手机型号</th>
-			<th>手机号码</th>
+			<th>内存</th>
 			<%--<th>网络类型</th>--%>
-			<th>运营商</th>
+			<th>储存</th>
 			<th>网络</th>
 			<%--<th>国家</th>--%>
 			<th>系统版本</th>
+			<th>真版本</th>
 			<th>省份</th>
 			<th>城市</th>
 			<th>渠道</th>
@@ -68,10 +69,11 @@
 				<td><s:property value="#user.name" /></td>
 				<td><s:property value="#user.deviceId" /></td>
 				<td><s:property value="#user.model" /></td>
-				<td><s:property value="#user.phoneNumber" /></td>
-				<td><s:property value="#user.networkOperatorName" /></td>
+				<td><s:property value="#user.memory" /></td>
+				<td><s:property value="#user.storage" /></td>
 				<td><s:property value="#user.networkType" /></td>
 				<td><s:property value="#user.release" /></td>
+				<td><s:property value="#user.trueRelease" /></td>
 				<td><s:property value="#user.province" /></td>
 				<td><s:property value="#user.city" /></td>
 				<td><s:property value="#user.channel" /></td>
