@@ -6,12 +6,13 @@ var updateTable = function(from,to,adPositionType)
 	if($("#doubleSta").attr("checked"))
 		doubleSta = 1;
 	var media = $("#media_sel").val();
+	var channel = $("#channel_sel").val();
 	
 	var data = $.ajax({
 		  type: 'POST',
 		  url: baseUrl+"/adPositionStatistics_list2",
 		  data: {"from" : from,"to":to,"adPositionType":adPositionType,
-			  "doubleSta":doubleSta,"media":media},
+			  "doubleSta":doubleSta,"media":media,"channel":channel},
 		  async:false
 		});
 	data = data.responseText;

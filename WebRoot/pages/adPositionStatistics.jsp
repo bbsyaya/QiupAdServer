@@ -23,6 +23,12 @@
   	<option value ="<s:property value="#media.packageName" />"><s:property value="#media.name" /></option>
   </s:iterator>
 </select>
+<select id="channel_sel">
+  <option value ="0">渠道选择</option>
+  <s:iterator value="sdks" var="sdk">
+  	<option value ="<s:property value="#sdk.channel" />"><s:property value="#sdk.channel" /></option>
+  </s:iterator>
+</select>
 <input type="button" value="今日" id="today"/>
 <input type="button" value="一周内" id="oneWeek"/>
 <input type="button" value="一月内" id="oneMonth"/>

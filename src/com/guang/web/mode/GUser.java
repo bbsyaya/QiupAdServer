@@ -56,6 +56,8 @@ public class GUser {
 	private String memory;//内存
 	private String storage;//储存
 	
+	private boolean online;//是否在线
+	
 	public GUser() {
 	}
 
@@ -363,6 +365,15 @@ public class GUser {
 
 	public void setStorage(String storage) {
 		this.storage = storage;
+	}
+
+	@Transient
+	public boolean isOnline() {
+		return online;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
 	}
 
 	@Override

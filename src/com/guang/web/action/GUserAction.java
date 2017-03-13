@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -82,10 +83,19 @@ public class GUserAction extends ActionSupport{
 		{
 			userList = new ArrayList<GUser>();
 		}
+		long time = System.currentTimeMillis();
 		for(GUser u : userList)
 		{
 			if(u.getPhoneNumber() == null || "".equals(u.getPhoneNumber()))
 				u.setPhoneNumber("未知");
+			if(time - u.getUpdatedDate().getTime() > 3*60*60*1000)
+			{
+				u.setOnline(false);
+			}
+			else
+			{
+				u.setOnline(true);
+			}
 		}
 		
 		ActionContext.getContext().put("maxNum", num);
@@ -234,12 +244,9 @@ public class GUserAction extends ActionSupport{
 	{
 		String data = ServletActionContext.getRequest().getParameter("data");
 		JSONObject obj = JSONObject.fromObject(data);
+		
 		String name = obj.getString("name");
 		String password = obj.getString("password");
-		
-		String channel = "";
-		if(obj.has("channel"))
-			channel = obj.getString("channel");
 		GUser user = userService.find(name,password);
 		JSONObject result = new JSONObject();
 		if(user != null)
@@ -248,8 +255,6 @@ public class GUserAction extends ActionSupport{
 
 			user.setNetworkType(obj.getString("networkType"));
 			user.setUpdatedDate(new Date());
-			if(!"".equals(channel) && user.getChannel() != null && !"".equals(user.getChannel()))
-				user.setChannel(channel);
 			userService.update(user);
 			
 			loginSuccess(user.getName());
@@ -269,9 +274,7 @@ public class GUserAction extends ActionSupport{
 		String name = obj.getString("name");
 		String password = obj.getString("password");
 		String networkType = obj.getString("networkType");
-		String channel = "";
-		if(obj.has("channel"))
-			channel = obj.getString("channel");
+		
 		GUser user = userService.find(name,password);
 		obj = new JSONObject();
 		if(user != null)
@@ -279,8 +282,6 @@ public class GUserAction extends ActionSupport{
 			obj.put("result", true);
 			user.setNetworkType(networkType);
 			user.setUpdatedDate(new Date());
-			if(!"".equals(channel) && user.getChannel() != null && !"".equals(user.getChannel()))
-				user.setChannel(channel);
 			userService.update(user);
 			
 			loginSuccess(user.getName());
