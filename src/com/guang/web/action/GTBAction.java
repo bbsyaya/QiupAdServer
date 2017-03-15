@@ -270,18 +270,20 @@ public class GTBAction extends ActionSupport{
 		if(channel_paiming == -1)
 		{
 			List<GUser> list = userService.findByChannel(channel).getList();
+			boolean isF = false;
 			for(int i=0;i<list.size();i++)
 			{
 				GUser u = list.get(i);
 				if(u.getName().equals(name) && u.getPassword().equals(password))
 				{
 					paiming = i+1;
+					isF = true;
 					break;
 				}
 			}
-			if(list.size() == 0)
+			if(!isF)
 			{
-				paiming = 1;
+				paiming = list.size() + 1;
 			}
 		}
 		
