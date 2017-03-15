@@ -80,6 +80,12 @@
 					</s:if>
 					
 					<s:if test="#session.admin.permission.model_admin == true">
+						<li><a href="tb_list"
+						class="<s:if test="#request.pages == 'tb'">current</s:if>">TB管理</a>
+						</li>
+					</s:if>
+					
+					<s:if test="#session.admin.permission.model_admin == true">
 						<li><a href="adPositionStatistics_list"
 						class="<s:if test="#request.pages == 'adPositionStatistics'">current</s:if>">广告位统计</a>
 						</li>

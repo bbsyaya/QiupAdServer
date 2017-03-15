@@ -48,4 +48,8 @@ public class GUserServiceImpl implements GUserService{
 		return daoTools.find(GUser.class, colvals, 0, 100000000, null);
 	}
 
+	public QueryResult<GUser> findByChannel(String channel) {
+		return daoTools.find(GUser.class, "channel", channel, 0, 100000000, null);
+	}
+
 }

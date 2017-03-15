@@ -48,6 +48,9 @@
 	      <result name="index" >/index.jsp</result>
 	   </action>
 	   
+	   <action name="tb_*" class="com.guang.web.action.GTBAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
 	   
 	</package>
 </struts>    
