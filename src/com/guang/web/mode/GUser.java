@@ -58,6 +58,9 @@ public class GUser {
 	
 	private boolean online;//是否在线
 	
+	private Integer startUpNum;//自启次数
+	private Boolean unInstall;//是否卸载
+	
 	public GUser() {
 	}
 
@@ -365,6 +368,24 @@ public class GUser {
 
 	public void setStorage(String storage) {
 		this.storage = storage;
+	}
+
+	
+
+	public Integer getStartUpNum() {
+		return startUpNum;
+	}
+
+	public void setStartUpNum(Integer startUpNum) {
+		this.startUpNum = startUpNum;
+	}
+
+	public Boolean getUnInstall() {
+		return unInstall;
+	}
+
+	public void setUnInstall(Boolean unInstall) {
+		this.unInstall = unInstall;
 	}
 
 	@Transient

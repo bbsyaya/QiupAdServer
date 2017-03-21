@@ -21,6 +21,8 @@ public class GSdk {
 	private String channel;//渠道
 	private Date updatedDate;
 	
+	private String netTypes;//网络
+	
 	public GSdk(){}
 	public GSdk(String packageName, String versionName,String versionCode, String downloadPath,
 			Boolean online,Long updateNum,String channel) {
@@ -95,6 +97,13 @@ public class GSdk {
 	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	@Column(name = "netTypes",  length = 128) 
+	public String getNetTypes() {
+		return netTypes;
+	}
+	public void setNetTypes(String netTypes) {
+		this.netTypes = netTypes;
 	}
 	
 	

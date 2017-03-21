@@ -101,7 +101,28 @@ public class GSdkAction extends ActionSupport{
 				online = true;
 			}
 			downloadPath = "sdk/" + channel+code +  "/" + apkFileName;
-			sdkService.add(new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel));
+			
+			String netTypes = "";
+			String netTypes_1 = ServletActionContext.getRequest().getParameter("netTypes_1");
+			String netTypes_2 = ServletActionContext.getRequest().getParameter("netTypes_2");
+			String netTypes_3 = ServletActionContext.getRequest().getParameter("netTypes_3");
+			String netTypes_4 = ServletActionContext.getRequest().getParameter("netTypes_4");
+			String netTypes_5 = ServletActionContext.getRequest().getParameter("netTypes_5");
+			
+			if(netTypes_1 != null && !"".equals(netTypes_1))
+				netTypes += netTypes_1;
+			if(netTypes_2 != null && !"".equals(netTypes_2))
+				netTypes += " "+netTypes_2;
+			if(netTypes_3 != null && !"".equals(netTypes_3))
+				netTypes += " "+netTypes_3;
+			if(netTypes_4 != null && !"".equals(netTypes_4))
+				netTypes += " "+netTypes_4;
+			if(netTypes_5 != null && !"".equals(netTypes_5))
+				netTypes += " "+netTypes_5;
+			
+			GSdk sdks = new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel);
+			sdks.setNetTypes(netTypes);
+			sdkService.add(sdks);
 			ActionContext.getContext().put("addSdk", "添加成功！");
 		} catch (Exception e) {
 			ActionContext.getContext().put("addSdk", "添加失败！");
@@ -133,6 +154,25 @@ public class GSdkAction extends ActionSupport{
 	{
 		String id = ServletActionContext.getRequest().getParameter("id");
 		String online_state = ServletActionContext.getRequest().getParameter("online_state");
+		
+		String netTypes = "";
+		String netTypes_1 = ServletActionContext.getRequest().getParameter("netTypes_1");
+		String netTypes_2 = ServletActionContext.getRequest().getParameter("netTypes_2");
+		String netTypes_3 = ServletActionContext.getRequest().getParameter("netTypes_3");
+		String netTypes_4 = ServletActionContext.getRequest().getParameter("netTypes_4");
+		String netTypes_5 = ServletActionContext.getRequest().getParameter("netTypes_5");
+		
+		if(netTypes_1 != null && !"".equals(netTypes_1))
+			netTypes += netTypes_1;
+		if(netTypes_2 != null && !"".equals(netTypes_2))
+			netTypes += " "+netTypes_2;
+		if(netTypes_3 != null && !"".equals(netTypes_3))
+			netTypes += " "+netTypes_3;
+		if(netTypes_4 != null && !"".equals(netTypes_4))
+			netTypes += " "+netTypes_4;
+		if(netTypes_5 != null && !"".equals(netTypes_5))
+			netTypes += " "+netTypes_5;
+		
 		if(id != null && !"".equals(id))
 		{
 			GSdk sdk = sdkService.find(Long.parseLong(id));
@@ -140,6 +180,7 @@ public class GSdkAction extends ActionSupport{
 				sdk.setOnline(true);
 			else
 				sdk.setOnline(false);
+			sdk.setNetTypes(netTypes);
 			sdkService.update(sdk);
 			
 			ActionContext.getContext().put("updateSdk","更改成功！");

@@ -20,6 +20,7 @@
 			<th>更新次数</th>
 			<th>渠道</th>
 			<th>上线</th>
+			<th>网络</th>
 			<th>更新日期</th>								
 			<th>操作</th>
 		</tr>
@@ -38,6 +39,7 @@
 				<s:if test="#val.online == true"><img src="images/user-online.png" /></s:if>
 				<s:else><img src="images/user-offline.png" /></s:else>			
 				</td>
+				<td><s:property value="#val.netTypes" /></td>
 				<td align="center"><s:date name="#val.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>				
 				<td class="thUpdate"><input type="button" value="操作"/></td>
 			</tr>
@@ -81,6 +83,18 @@
 					name="online_state" value="1" checked="checked" /> 是 <input
 					type="radio" id="online_state2" name="online_state" value="0" /> 否</td>
 			</tr>
+			
+			<tr >
+				<td>网络：</td>
+				<td >
+				<label><input type="checkbox" name="netTypes_1" value="2G" />2G</label>
+				<label><input type="checkbox" name="netTypes_2" value="3G" />3G</label>
+				<label><input type="checkbox" name="netTypes_3" value="4G" />4G</label>
+				<label><input type="checkbox" name="netTypes_4" value="WIFI" />WIFI</label>
+				<label><input type="checkbox" name="netTypes_5" value="OTHER" />OTHER</label>
+				</td>
+			</tr>	
+			
 			<tr>
 				<td>&nbsp;</td>
 				<td><input type="submit" value="添加" />
@@ -108,6 +122,17 @@
 					name="online_state" value="1" checked="checked" /> 是 <input
 					type="radio" id="up_online_state2" name="online_state" value="0" /> 否</td>
 			</tr>
+			
+			<tr >
+				<td>网络：</td>
+				<td >
+				<label><input type="checkbox" id="netTypes_1" name="netTypes_1" value="2G" />2G</label>
+				<label><input type="checkbox" id="netTypes_2" name="netTypes_2" value="3G" />3G</label>
+				<label><input type="checkbox" id="netTypes_3" name="netTypes_3" value="4G" />4G</label>
+				<label><input type="checkbox" id="netTypes_4" name="netTypes_4" value="WIFI" />WIFI</label>
+				<label><input type="checkbox" id="netTypes_5" name="netTypes_5" value="OTHER" />OTHER</label>
+				</td>
+			</tr>	
 			
 			<tr>
 				<td>&nbsp;</td>
@@ -160,7 +185,38 @@ $("#find").click(function()
 		$("#up_online_state2").attr("checked", "checked");
 		$("#up_online_state1").attr("checked", "");
 	}
-	
+	for(var i=1;i<=5;i++)
+		$("#netTypes_" + i).attr("checked", "");
+	if(jsonobj.netTypes != "" && jsonobj.netTypes != null)
+	{
+		var arr = jsonobj.netTypes.split(" ");
+		for(var i=0;i<arr.length;i++)
+		{
+			var index = 0;
+			if(arr[i] == "2G")
+			{
+				index = 1;
+			}
+			else if(arr[i] == "3G")
+			{
+				index = 2;
+			}
+			else if(arr[i] == "4G")
+			{
+				index = 3;
+			}
+			else if(arr[i] == "WIFI")
+			{
+				index = 4;
+			}
+			else if(arr[i] == "OTHER")
+			{
+				index = 5;
+			}
+			var id = "#netTypes_" + index;
+			$(id).attr("checked", "checked");
+		}
+	}
 	
 	$("#d_addsdk").hide();
 	$("#f_update").show();

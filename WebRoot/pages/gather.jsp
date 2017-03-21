@@ -7,6 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"
 %>
 <h1 id="h3_text">app上传信息</h1>
 <button id="see_runinfo">查看app运行信息 </button>	
+<button id="out">导出</button>	
 <div id="appinfo">
 	<table id="tableList" class="tablesorter" style="margin-top: 10px;" cellspacing="1">
 		<thead>
@@ -49,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"
 
 
 <div id="runinfo" style="display:none;">
-	<table id="tableList" class="tablesorter" style="margin-top: 10px;" cellspacing="1">
+	<table id="tableList2" class="tablesorter" style="margin-top: 10px;" cellspacing="1">
 		<thead>
 			<tr>	
 				<th>ID</th>		
