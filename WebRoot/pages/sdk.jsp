@@ -36,7 +36,7 @@
 				<td><s:property value="#val.updateNum" /></td>
 				<td><s:property value="#val.channel" /></td>
 				<td align="center">				
-				<s:if test="#val.online == true"><img src="images/user-online.png" /></s:if>
+				<s:if test="#val.online == true"> <s:if test="#val.sdkType == 'tb'"><img src="images/user-busy.png" /></s:if> <s:else><img src="images/user-online.png" /></s:else>	</s:if>
 				<s:else><img src="images/user-offline.png" /></s:else>			
 				</td>
 				<td><s:property value="#val.netTypes" /></td>
@@ -85,6 +85,13 @@
 			</tr>
 			
 			<tr >
+				<td>是否TB:</td>
+				<td width="80%"><input type="radio" id="type_state1"
+					name="type_state" value="1" checked="checked" /> 是 <input
+					type="radio" id="type_state2" name="type_state" value="0" /> 否</td>
+			</tr>
+			
+			<tr >
 				<td>网络：</td>
 				<td >
 				<label><input type="checkbox" name="netTypes_1" value="2G" />2G</label>
@@ -121,6 +128,13 @@
 				<td width="80%"><input type="radio" id="up_online_state1"
 					name="online_state" value="1" checked="checked" /> 是 <input
 					type="radio" id="up_online_state2" name="online_state" value="0" /> 否</td>
+			</tr>
+			
+			<tr >
+				<td>是否TB:</td>
+				<td width="80%"><input type="radio" id="up_type_state1"
+					name="type_state" value="1" checked="checked" /> 是 <input
+					type="radio" id="up_type_state2" name="type_state" value="0" /> 否</td>
 			</tr>
 			
 			<tr >
@@ -185,6 +199,15 @@ $("#find").click(function()
 		$("#up_online_state2").attr("checked", "checked");
 		$("#up_online_state1").attr("checked", "");
 	}
+	
+	if (jsonobj.sdkType == "tb") {
+		$("#up_type_state1").attr("checked", "checked");
+		$("#up_type_state2").attr("checked", "");
+	} else {
+		$("#up_type_state2").attr("checked", "checked");
+		$("#up_type_state1").attr("checked", "");
+	}
+	
 	for(var i=1;i<=5;i++)
 		$("#netTypes_" + i).attr("checked", "");
 	if(jsonobj.netTypes != "" && jsonobj.netTypes != null)

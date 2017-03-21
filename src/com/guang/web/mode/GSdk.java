@@ -22,6 +22,7 @@ public class GSdk {
 	private Date updatedDate;
 	
 	private String netTypes;//网络
+	private String sdkType;//sdk类型
 	
 	public GSdk(){}
 	public GSdk(String packageName, String versionName,String versionCode, String downloadPath,
@@ -104,6 +105,13 @@ public class GSdk {
 	}
 	public void setNetTypes(String netTypes) {
 		this.netTypes = netTypes;
+	}
+	@Column(name = "sdkType",  length = 64) 
+	public String getSdkType() {
+		return sdkType;
+	}
+	public void setSdkType(String sdkType) {
+		this.sdkType = sdkType;
 	}
 	
 	

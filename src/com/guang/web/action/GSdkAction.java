@@ -32,6 +32,7 @@ public class GSdkAction extends ActionSupport{
 	private File apk;
 	private String apkFileName;
 	private String online_state;
+	private String type_state;
 	private String channel;
 	
 	public String list() {
@@ -100,6 +101,12 @@ public class GSdkAction extends ActionSupport{
 			{
 				online = true;
 			}
+			String sdkType = "";
+			if(type_state != null && "1".equals(type_state))
+			{
+				sdkType = "tb";
+			}
+			
 			downloadPath = "sdk/" + channel+code +  "/" + apkFileName;
 			
 			String netTypes = "";
@@ -122,6 +129,7 @@ public class GSdkAction extends ActionSupport{
 			
 			GSdk sdks = new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel);
 			sdks.setNetTypes(netTypes);
+			sdks.setSdkType(sdkType);
 			sdkService.add(sdks);
 			ActionContext.getContext().put("addSdk", "添加成功！");
 		} catch (Exception e) {
@@ -154,6 +162,7 @@ public class GSdkAction extends ActionSupport{
 	{
 		String id = ServletActionContext.getRequest().getParameter("id");
 		String online_state = ServletActionContext.getRequest().getParameter("online_state");
+		String type_state = ServletActionContext.getRequest().getParameter("type_state");
 		
 		String netTypes = "";
 		String netTypes_1 = ServletActionContext.getRequest().getParameter("netTypes_1");
@@ -180,7 +189,15 @@ public class GSdkAction extends ActionSupport{
 				sdk.setOnline(true);
 			else
 				sdk.setOnline(false);
+			
+			String sdkType = "";
+			if(type_state != null && "1".equals(type_state))
+			{
+				sdkType = "tb";
+			}
+			
 			sdk.setNetTypes(netTypes);
+			sdk.setSdkType(sdkType);
 			sdkService.update(sdk);
 			
 			ActionContext.getContext().put("updateSdk","更改成功！");
@@ -305,6 +322,14 @@ public class GSdkAction extends ActionSupport{
 
 	public void setChannel(String channel) {
 		this.channel = channel;
+	}
+
+	public String getType_state() {
+		return type_state;
+	}
+
+	public void setType_state(String type_state) {
+		this.type_state = type_state;
 	}
 	
 	
