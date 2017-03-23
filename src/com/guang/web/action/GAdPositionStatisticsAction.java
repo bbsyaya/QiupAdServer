@@ -136,7 +136,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		slist.add(adPositionStatistics);
 		ActionContext.getContext().put("list", slist);
 		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());	
-		ActionContext.getContext().put("medias", mediaService.findAlls().getList());
+		ActionContext.getContext().put("medias", sdkService.findAlls().getList());
 		ActionContext.getContext().put("sdks", sdkService.findAlls().getList());
 		ActionContext.getContext().put("pages", "adPositionStatistics");
 		return "index";

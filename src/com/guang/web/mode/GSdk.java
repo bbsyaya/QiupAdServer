@@ -1,12 +1,14 @@
 package com.guang.web.mode;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "gsdk")
@@ -23,6 +25,15 @@ public class GSdk {
 	
 	private String netTypes;//网络
 	private String sdkType;//sdk类型
+	
+	private String name;//应用名字
+	private String appPackageName;// 应用包名
+	private String adPosition;
+	private Float loopTime;
+	private Boolean uploadPackage;//是否上传包名
+	
+	private String adPositionName;
+	private List<GAdPositionConfig> configs;
 	
 	public GSdk(){}
 	public GSdk(String packageName, String versionName,String versionCode, String downloadPath,
@@ -113,6 +124,54 @@ public class GSdk {
 	public void setSdkType(String sdkType) {
 		this.sdkType = sdkType;
 	}
+	@Column(length = 64)
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	@Column(length = 64)
+	public String getAppPackageName() {
+		return appPackageName;
+	}
+	public void setAppPackageName(String appPackageName) {
+		this.appPackageName = appPackageName;
+	}
+	@Column(length = 128)
+	public String getAdPosition() {
+		return adPosition;
+	}
+	public void setAdPosition(String adPosition) {
+		this.adPosition = adPosition;
+	}
+	public Float getLoopTime() {
+		return loopTime;
+	}
+	public void setLoopTime(Float loopTime) {
+		this.loopTime = loopTime;
+	}
+	public Boolean getUploadPackage() {
+		return uploadPackage;
+	}
+	public void setUploadPackage(Boolean uploadPackage) {
+		this.uploadPackage = uploadPackage;
+	}
 	
-	
+	@Transient
+	public String getAdPositionName() {
+		return adPositionName;
+	}
+
+	public void setAdPositionName(String adPositionName) {
+		this.adPositionName = adPositionName;
+	}
+	@Transient
+	public List<GAdPositionConfig> getConfigs() {
+		return configs;
+	}
+
+	public void setConfigs(List<GAdPositionConfig> configs) {
+		this.configs = configs;
+	}
 }

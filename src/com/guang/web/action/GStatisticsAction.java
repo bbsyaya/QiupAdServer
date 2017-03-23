@@ -2,6 +2,7 @@ package com.guang.web.action;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -111,8 +112,25 @@ public class GStatisticsAction extends ActionSupport{
 	}
 	
 	public void findMedia()
-	{
-		List<GMedia> list = mediaService.findAlls().getList();
+	{		
+		List<GSdk> lists = new ArrayList<GSdk>();
+		List<GSdk> list = sdkService.findAlls().getList();
+		for(GSdk sdk : list)
+		{
+			boolean b = true;
+			for(GSdk sdk2 : lists)
+			{
+				if(sdk.getName().equals(sdk2.getName()))
+				{
+					b = false;
+					break;
+				}
+			}
+			if(b)
+			{
+				lists.add(sdk);
+			}
+		}
 		print(JSONArray.fromObject(list));
 	}
 	

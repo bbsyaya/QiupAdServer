@@ -13,15 +13,25 @@
 	<thead>
 		<tr>			
 			<th>ID</th>
-			<th>包名</th>
+			<th>渠道</th>
+			<th>应用名称</th>
+			<th>应用包名</th>
+			<th>SDK包名</th>
 			<th>版本名</th>
 			<th>版本号</th>
-			<th>下载路径</th>			
+					
 			<th>更新次数</th>
-			<th>渠道</th>
-			<th>上线</th>
+			
+			
 			<th>网络</th>
-			<th>更新日期</th>								
+			
+			
+			<th>是否上传包</th>
+			<th>循环时间</th>
+			<th>所选广告位</th>
+			<th>下载路径</th>	
+			<th>上线</th>
+			<th>创建日期</th>								
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -29,17 +39,30 @@
 		<s:iterator value="list" var="val">
 			<tr>				
 				<td><s:property value="#val.id" /></td>
+				<td><s:property value="#val.channel" /></td>
+				<td><s:property value="#val.name" /></td>
+				<td><s:property value="#val.appPackageName" /></td>
 				<td><s:property value="#val.packageName" /></td>
 				<td><s:property value="#val.versionName" /></td>
 				<td><s:property value="#val.versionCode" /></td>
-				<td><s:property value="#val.downloadPath" /></td>
+				
 				<td><s:property value="#val.updateNum" /></td>
-				<td><s:property value="#val.channel" /></td>
+				
+				
+				<td><s:property value="#val.netTypes" /></td>
+						
+				
+				<td align="center">				
+				<s:if test="#val.uploadPackage == true">是</s:if>
+				<s:else>否</s:else>			
+				</td>
+				<td><s:property value="#val.loopTime" /> 小时</td>
+				<td><s:property value="#val.adPositionName" /></td>
+				<td><s:property value="#val.downloadPath" /></td>
 				<td align="center" style="background:<s:if test="#val.sdkType == 'tb'">#adacae</s:if>;">				
 				<s:if test="#val.online == true"> <img src="images/user-online.png" />	</s:if>
 				<s:else>  <img src="images/user-offline.png" /> </s:else>		
 				</td>
-				<td><s:property value="#val.netTypes" /></td>
 				<td align="center"><s:date name="#val.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>				
 				<td class="thUpdate"><input type="button" value="操作"/></td>
 			</tr>
@@ -102,6 +125,44 @@
 				</td>
 			</tr>	
 			
+			
+			<tr >
+				<td>名称:</td>
+				<td><input type="text" id="name" name="name"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			
+			<tr >
+				<td>包名:</td>
+				<td><input type="text" id="appPackageName" name="appPackageName"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			
+			<tr >
+				<td>循环时间:</td>
+				<td><input type="text" id="loopTime" name="loopTime"
+					value="" style="width:180px;" />小时
+				</td>
+			</tr>
+			
+			<tr >
+				<td>是否上传包:</td>
+				<td ><input type="radio" 
+					name="uploadPackage_state" value="1" checked="checked" /> 是 <input
+					type="radio"  name="uploadPackage_state" value="0" /> 否</td>
+			</tr>
+			
+			<tr >
+				<td>广告位开关：</td>
+				<td >
+				<s:iterator value="adPositions" var="val">	
+				<label><input type="checkbox" name="adPositionSwitch_<s:property value="#val.id" />" value="1" /><s:property value="#val.name" /></label>
+				</s:iterator>
+				</td>
+			</tr>		
+			
 			<tr>
 				<td>&nbsp;</td>
 				<td><input type="submit" value="添加" />
@@ -146,7 +207,46 @@
 				<label><input type="checkbox" id="netTypes_4" name="netTypes_4" value="WIFI" />WIFI</label>
 				<label><input type="checkbox" id="netTypes_5" name="netTypes_5" value="OTHER" />OTHER</label>
 				</td>
-			</tr>	
+			</tr>
+			
+			
+			<tr >
+				<td>名称:</td>
+				<td><input type="text" id="update_name" name="name"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			
+			<tr >
+				<td>包名:</td>
+				<td><input type="text" id="update_appPackageName" name="appPackageName"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			
+			<tr >
+				<td>是否上传包:</td>
+				<td ><input type="radio" id="uploadPackage_state1"
+					name="uploadPackage_state" value="1" checked="checked" /> 是 <input
+					type="radio" id="uploadPackage_state2" name="uploadPackage_state" value="0" /> 否</td>
+			</tr>
+			
+			<tr >
+				<td>循环时间:</td>
+				<td><input type="text" id="update_loopTime" name="loopTime"
+					value="" style="width:180px;" />小时
+				</td>
+			</tr>
+			
+			<tr >
+				<td>广告位开关：</td>
+				<td >
+				<s:iterator value="adPositions" var="val">	
+				<label><input type="checkbox" id="update_adPositionSwitch_<s:property value="#val.id" />" name="adPositionSwitch_<s:property value="#val.id" />" value="1" /><s:property value="#val.name" />
+				</label>
+				</s:iterator>
+				</td>
+			</tr>		
 			
 			<tr>
 				<td>&nbsp;</td>
@@ -237,6 +337,29 @@ $("#find").click(function()
 				index = 5;
 			}
 			var id = "#netTypes_" + index;
+			$(id).attr("checked", "checked");
+		}
+	}
+	
+	$("#update_name").val(jsonobj.name);
+	$("#update_appPackageName").val(jsonobj.appPackageName);
+	$("#update_loopTime").val(jsonobj.loopTime);
+	
+	if(jsonobj.uploadPackage)
+	{
+		$("#uploadPackage_state1").attr("checked", "checked");
+		$("#uploadPackage_state2").attr("checked", "");
+	} else {
+		$("#uploadPackage_state2").attr("checked", "checked");
+		$("#uploadPackage_state1").attr("checked", "");
+	}
+	
+	if(jsonobj.adPosition != "" && jsonobj.adPosition != null)
+	{
+		var arr = jsonobj.adPosition.split(",");
+		for(var i=0;i<arr.length;i++)
+		{
+			var id = "#update_adPositionSwitch_" + arr[i];
 			$(id).attr("checked", "checked");
 		}
 	}

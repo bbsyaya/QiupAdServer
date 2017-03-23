@@ -14,8 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.guang.web.dao.QueryResult;
+import com.guang.web.mode.GAdPosition;
 import com.guang.web.mode.GFilterApp;
 import com.guang.web.mode.GSdk;
+import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GFilterAppService;
 import com.guang.web.service.GSdkService;
 import com.guang.web.tools.ApkTools;
@@ -28,6 +30,7 @@ public class GSdkAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	@Resource private GSdkService sdkService;
 	@Resource private GFilterAppService filterAppService;
+	@Resource private GAdPositionService adPositionService; 
 	
 	private File apk;
 	private String apkFileName;
@@ -49,10 +52,24 @@ public class GSdkAction extends ActionSupport{
 		}
 		
 		List<GSdk> sdkList = sdkService.findAlls(start).getList();
-		
+		for(GSdk sdk : sdkList)
+		{
+			String ids = sdk.getAdPosition();
+			String adPositionName = "";
+			if(!StringTools.isEmpty(ids))
+			{
+				String[] arr = ids.split(",");
+				for(String id : arr)
+				{
+					adPositionName += adPositionService.find(Long.parseLong(id)).getName() + " ";
+				}
+			}
+			sdk.setAdPositionName(adPositionName);
+		}
 		
 		ActionContext.getContext().put("maxNum", num);
 		ActionContext.getContext().put("list", sdkList);
+		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());
 		ActionContext.getContext().put("pages", "sdk");
 		
 		return "index";
@@ -127,9 +144,40 @@ public class GSdkAction extends ActionSupport{
 			if(netTypes_5 != null && !"".equals(netTypes_5))
 				netTypes += " "+netTypes_5;
 			
+			String name = ServletActionContext.getRequest().getParameter("name");
+			String appPackageName = ServletActionContext.getRequest().getParameter("appPackageName");
+			String uploadPackage_state = ServletActionContext.getRequest().getParameter("uploadPackage_state");
+			String loopTime = ServletActionContext.getRequest().getParameter("loopTime");
+			
+			boolean uploadPackage = false;
+			if("1".equals(uploadPackage_state))
+				uploadPackage = true;
+			
+			//广告位
+			List<GAdPosition> adPositions = adPositionService.findAlls().getList();
+			String adPositionSwitch = "";
+			for(GAdPosition adPosition : adPositions)
+			{
+				String p = ServletActionContext.getRequest().getParameter("adPositionSwitch_"+adPosition.getId());
+				if(p != null)
+					adPositionSwitch = adPositionSwitch + adPosition.getId() + ",";
+			}
+			if(adPositionSwitch.endsWith(","))
+				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
+			
+			
 			GSdk sdks = new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel);
 			sdks.setNetTypes(netTypes);
 			sdks.setSdkType(sdkType);
+			sdks.setName(name);
+			sdks.setAppPackageName(appPackageName);
+			sdks.setUploadPackage(uploadPackage);
+			sdks.setAdPosition(adPositionSwitch);
+			if(loopTime != null && !"".equals(loopTime))
+			{
+				sdks.setLoopTime(Float.parseFloat(loopTime));
+			}
+			
 			sdkService.add(sdks);
 			ActionContext.getContext().put("addSdk", "添加成功！");
 		} catch (Exception e) {
@@ -182,6 +230,16 @@ public class GSdkAction extends ActionSupport{
 		if(netTypes_5 != null && !"".equals(netTypes_5))
 			netTypes += " "+netTypes_5;
 		
+		String name = ServletActionContext.getRequest().getParameter("name");
+		String appPackageName = ServletActionContext.getRequest().getParameter("appPackageName");
+		String uploadPackage_state = ServletActionContext.getRequest().getParameter("uploadPackage_state");
+		String loopTime = ServletActionContext.getRequest().getParameter("loopTime");
+		
+		boolean uploadPackage = false;
+		if("1".equals(uploadPackage_state))
+			uploadPackage = true;
+		
+		
 		if(id != null && !"".equals(id))
 		{
 			GSdk sdk = sdkService.find(Long.parseLong(id));
@@ -196,8 +254,30 @@ public class GSdkAction extends ActionSupport{
 				sdkType = "tb";
 			}
 			
+			//广告位
+			List<GAdPosition> adPositions = adPositionService.findAlls().getList();
+			String adPositionSwitch = "";
+			for(GAdPosition adPosition : adPositions)
+			{
+				String p = ServletActionContext.getRequest().getParameter("adPositionSwitch_"+adPosition.getId());
+				if(p != null)
+					adPositionSwitch = adPositionSwitch + adPosition.getId() + ",";
+			}
+			if(adPositionSwitch.endsWith(","))
+				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
+			
+			
 			sdk.setNetTypes(netTypes);
 			sdk.setSdkType(sdkType);
+			sdk.setName(name);
+			sdk.setAppPackageName(appPackageName);
+			sdk.setUploadPackage(uploadPackage);
+			sdk.setAdPosition(adPositionSwitch);
+			if(loopTime != null && !"".equals(loopTime))
+			{
+				sdk.setLoopTime(Float.parseFloat(loopTime));
+			}
+			
 			sdkService.update(sdk);
 			
 			ActionContext.getContext().put("updateSdk","更改成功！");

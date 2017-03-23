@@ -20,7 +20,7 @@
 <select id="media_sel">
   <option value ="0">媒体选择</option>
   <s:iterator value="medias" var="media">
-  	<option value ="<s:property value="#media.packageName" />"><s:property value="#media.name" /></option>
+  	<option value ="<s:property value="#media.appPackageName" />"><s:property value="#media.name" /></option>
   </s:iterator>
 </select>
 <select id="channel_sel">
