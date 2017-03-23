@@ -2,6 +2,7 @@ package com.guang.web.action;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,7 +11,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
-
 
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GUser;
@@ -121,6 +121,27 @@ public class GGatherDataAction {
 	public void deleteRunInfo(){
 		String id = ServletActionContext.getRequest().getParameter("id");
 		appInfoService.delete(Integer.parseInt(id));
+	}
+	
+	public String find(){
+		String regFrom = ServletActionContext.getRequest().getParameter("regDate_from");
+		String regTo = ServletActionContext.getRequest().getParameter("regDate_to");
+		
+		List<GatherAppInfo> gUser = null ; 
+		//注册时间
+		if (null!=regFrom&&!"".equals(regFrom) && null!=regTo&&!"".equals(regTo)) {
+			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();			
+			colvals.put("gdate >=", "'"+regFrom+"'");
+			colvals.put("gdate <", "'"+regTo+"'");
+			gUser = dataService.find(colvals).getList();
+			long m = dataService.find(colvals).getNum();
+			
+			ActionContext.getContext().put("appInfoList", gUser);
+			ActionContext.getContext().put("maxNum", m);
+			ActionContext.getContext().put("pages", "gather");
+		}
+		
+		return "index";
 	}
 	
 	//上传APP上传信息

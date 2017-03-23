@@ -35,9 +35,9 @@
 				<td><s:property value="#val.downloadPath" /></td>
 				<td><s:property value="#val.updateNum" /></td>
 				<td><s:property value="#val.channel" /></td>
-				<td align="center">				
-				<s:if test="#val.online == true"> <s:if test="#val.sdkType == 'tb'"><img src="images/user-busy.png" /></s:if> <s:else><img src="images/user-online.png" /></s:else>	</s:if>
-				<s:else><img src="images/user-offline.png" /></s:else>			
+				<td align="center" style="background:<s:if test="#val.sdkType == 'tb'">#adacae</s:if>;">				
+				<s:if test="#val.online == true"> <img src="images/user-online.png" />	</s:if>
+				<s:else>  <img src="images/user-offline.png" /> </s:else>		
 				</td>
 				<td><s:property value="#val.netTypes" /></td>
 				<td align="center"><s:date name="#val.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>				

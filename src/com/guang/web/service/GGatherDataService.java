@@ -1,5 +1,7 @@
 package com.guang.web.service;
 
+import java.util.LinkedHashMap;
+
 import org.springframework.stereotype.Service;
 
 import com.guang.web.dao.QueryResult;
@@ -11,4 +13,5 @@ public interface GGatherDataService {
 	void delete(long id);
 	QueryResult<GatherAppInfo> findAll();
 	QueryResult<GatherAppInfo> findAlls(int index);
+	QueryResult<GatherAppInfo> find(LinkedHashMap<String, String> colvals);
 }

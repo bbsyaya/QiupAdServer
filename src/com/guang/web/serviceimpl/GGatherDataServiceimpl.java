@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.guang.web.dao.DaoTools;
 import com.guang.web.dao.QueryResult;
-import com.guang.web.mode.GAdmin;
-import com.guang.web.mode.GUser;
 import com.guang.web.mode.GatherAppInfo;
 import com.guang.web.service.GGatherDataService;
 
@@ -31,5 +29,8 @@ public class GGatherDataServiceimpl implements GGatherDataService{
 	}
 	public void add(GatherAppInfo gatherAppInfo) {
 		daoTools.add(gatherAppInfo);
+	}
+	public QueryResult<GatherAppInfo> find(LinkedHashMap<String, String> colvals) {
+		return daoTools.find(GatherAppInfo.class, colvals, 0, 100000000, null);
 	}
 }

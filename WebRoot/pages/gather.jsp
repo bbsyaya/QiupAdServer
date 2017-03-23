@@ -5,9 +5,27 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"
 +request.getServerPort()+path+"/";
 %>
+<script type="text/javascript"
+	src="<%=basePath%>scripts/laydate.dev.js"></script>
 <h1 id="h3_text">app上传信息</h1>
-<button id="see_runinfo">查看app运行信息 </button>	
-<button id="out">导出</button>	
+<!-- <button id="see_runinfo">查看app运行信息 </button>	 -->
+<div>
+	<form action=gather_find method="post" style="margin:0xp;"class="g_from">
+	<table>
+		<td>
+			<h>时间:</h>
+			<input type="text" id="regDate_from" name=regDate_from
+				value="" style="width:120px;"/>至<input type="text" id="regDate_to" name=regDate_to
+				value="" style="width:120px;"/>
+				&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;
+			<input type="submit" value="查询" />
+			<input type="button" id="out" value="导出" />
+		</td>
+	</table>
+  </form>
+</div>
+
 <div id="appinfo">
 	<table id="tableList" class="tablesorter" style="margin-top: 10px;" cellspacing="1">
 		<thead>
@@ -118,5 +136,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"
 	</table>
 </div>
 <script type="text/javascript">
+//创建日期选择
+laydate({
+			istime: true,
+            elem: '#regDate_from',
+            format: 'YYYY-MM-DD hh:mm:ss'
+        });
+laydate({
+			istime: true,
+            elem: '#regDate_to',
+            format: 'YYYY-MM-DD hh:mm:ss'
+        }); 
 </script>
 <script type="text/javascript"src="<%=basePath%>scripts/gather.js"></script>

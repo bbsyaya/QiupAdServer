@@ -32,6 +32,7 @@
 <input type="text" id="from_date" name="from_date"  style="width:80px;" /> -
 <input type="text" id="to_date" name="to_date" style="width:80px;" />
 <input type="button" value="查询" id="find"/>
+<input type="button" id="out" value="导出" />
 </div>
 
 <table id="tableList" class="tablesorter" cellspacing="1">

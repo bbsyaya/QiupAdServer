@@ -17,13 +17,13 @@
 		<td>
 			<h>登录时间:</h>
 			<input type="text" id="loginDate_from" name=loginDate_from
-				value="",style="width:120px;"/>至<input type="text" id="loginDate_to" name=loginDate_to
-				value="",style="width:120px;"/>
+				value="" style="width:120px;"/>至<input type="text" id="loginDate_to" name=loginDate_to
+				value="" style="width:120px;"/>
 				&nbsp;&nbsp;&nbsp;
 			<h>注册时间:</h>
 			<input type="text" id="regDate_from" name=regDate_from
-				value="",style="width:120px;"/>至<input type="text" id="regDate_to" name=regDate_to
-				value="",style="width:120px;"/>
+				value="" style="width:120px;"/>至<input type="text" id="regDate_to" name=regDate_to
+				value="" style="width:120px;"/>
 				&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;
 			<input type="submit" value="查询" />
@@ -38,8 +38,9 @@
 	<thead>
 		<tr>			
 			<th>在线</th>
-			<th>自启次数</th>	
 			<th>ID</th>
+			<th>卸载</th>
+			<th>自启次数</th>	
 			<!-- <th>用户ID</th> -->
 			<th>设备ID</th>
 			<th>手机型号</th>
@@ -64,11 +65,13 @@
 		<s:iterator value="userList" var="user">
 			<tr>
 				<td align="center">
-				<s:if test="#user.unInstall == true"><img src="images/user-offline.png" /></s:if>
-				<s:else><img src="images/user-online.png" /></s:else>			
+				<s:if test="#user.online == true"><img src="<%=basePath%>images/user-online.png" /></s:if>
+				<s:else><img src="<%=basePath%>images/user-offline.png" /></s:else>	</td>
+				<td><s:property value="#user.id" /></td>
+				<td><s:if test="#user.unInstall == true"><img src="<%=basePath%>images/user-offline.png" /></s:if>
+				<s:else><img src="<%=basePath%>images/user-busy.png" /></s:else>			
 				</td>
 				<td><s:property value="#user.startUpNum" /></td>	
-				<td><s:property value="#user.id" /></td>
 				<%-- <td><s:property value="#user.name" /></td> --%>
 				<td><s:property value="#user.deviceId" /></td>
 				<td><s:property value="#user.model" /></td>
@@ -83,11 +86,6 @@
 				<%-- <td><s:property value="#user.onlineTime" />分钟</td>
 				<td><s:property value="#user.lastOnlineTime" />分钟</td> --%>
 							
-				<%-- <td >
-				<s:if test="#user.unInstall == true"><img src="images/user-busy.png" /></s:if>
-				<s:else><img src="images/user-away.png" /></s:else>			
-				</td> --%>
-				
 				<td align="center"><s:date name="#user.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>
 				<td align="center"><s:date name="#user.createdDate" format="yyyy-MM-dd HH:mm:ss" /></td>
 				<td class="thUpdate"><input type="button" value="操作"/></td>

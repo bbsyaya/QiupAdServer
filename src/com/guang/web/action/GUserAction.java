@@ -213,28 +213,29 @@ public class GUserAction extends ActionSupport{
 		
 		List<GUser> gUser = null ; 
 		//注册时间
-		Date date = new Date();
-		if (null!=loginFrom&&!"".equals(loginFrom)) {
+		if (null!=regFrom&&!"".equals(regFrom) && null!=regTo&&!"".equals(regTo)) {
 			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();			
-			colvals.put("createdDate >=", "'"+loginFrom+"'");
-			colvals.put("createdDate <", "'"+loginTo+"'");
+			colvals.put("createdDate >=", "'"+regFrom+"'");
+			colvals.put("createdDate <", "'"+regTo+"'");
 			gUser = userService.find(colvals).getList();
 			long m = userService.find(colvals).getNum();
 			ActionContext.getContext().put("maxNum", m);
 			ActionContext.getContext().put("userList", gUser);
 			ActionContext.getContext().put("pages", "user");
-			 
+			return "index";	 
 		}
-		if (null!=regFrom&&!"".equals(regFrom)) {
+		if (null!=loginFrom&&!"".equals(loginFrom) && null!=loginTo&&!"".equals(loginTo)) {
 			//登录时间
 			LinkedHashMap<String, String> colvals2 = new LinkedHashMap<String, String>();			
-			colvals2.put("updatedDate >=", "'"+regFrom+"'");
-			colvals2.put("updatedDate <", "'"+regTo+"'");
+			colvals2.put("updatedDate >=", "'"+loginFrom+"'");
+			colvals2.put("updatedDate <", "'"+loginTo+"'");
 			long n = userService.find(colvals2).getNum();
 			gUser = userService.find(colvals2).getList();
 			ActionContext.getContext().put("maxNum", n);
 			ActionContext.getContext().put("userList", gUser);
 			ActionContext.getContext().put("pages", "user");
+			
+			return "index";
 		}
 		return "index";
 	}
