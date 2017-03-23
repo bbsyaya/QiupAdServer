@@ -65,11 +65,11 @@
 		<s:iterator value="userList" var="user">
 			<tr>
 				<td align="center">
-				<s:if test="#user.online == true"><img src="<%=basePath%>images/user-online.png" /></s:if>
-				<s:else><img src="<%=basePath%>images/user-offline.png" /></s:else>	</td>
+				<s:if test="#user.online == true"><img src="images/user-online.png" />Y</s:if>
+				<s:else><img src="images/user-offline.png" />N</s:else>	</td>
 				<td><s:property value="#user.id" /></td>
-				<td><s:if test="#user.unInstall == true"><img src="<%=basePath%>images/user-offline.png" /></s:if>
-				<s:else><img src="<%=basePath%>images/user-busy.png" /></s:else>			
+				<td><s:if test="#user.unInstall == true"><img src="images/user-offline.png" />Y</s:if>
+				<s:else><img src="images/user-online.png" />N</s:else>			
 				</td>
 				<td><s:property value="#user.startUpNum" /></td>	
 				<%-- <td><s:property value="#user.name" /></td> --%>
