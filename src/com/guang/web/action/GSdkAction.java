@@ -293,8 +293,28 @@ public class GSdkAction extends ActionSupport{
 	public void findNewSdk()
 	{		
 		String channel = ServletActionContext.getRequest().getParameter("data");
-		GSdk sdk = sdkService.findNew(channel);
-		print(JSONObject.fromObject(sdk).toString());
+		if(channel != null)
+		{
+			GSdk sdk = sdkService.findNew(channel);
+			print(JSONObject.fromObject(sdk).toString());
+		}
+		else
+		{
+			channel = ServletActionContext.getRequest().getParameter("channel");
+			String packageName = ServletActionContext.getRequest().getParameter("packageName");
+			if(channel != null && packageName != null)
+			{
+				GSdk sdk = sdkService.findNew2(packageName,channel);
+				if(sdk != null)
+					print(JSONObject.fromObject(sdk).toString());
+				else
+					print(new JSONObject().toString());
+			}
+			else
+			{
+				print(new JSONObject().toString());
+			}
+		}
 	}
 	//另外的应用用
 	public void findTBNew()
@@ -317,11 +337,28 @@ public class GSdkAction extends ActionSupport{
 	public synchronized void updateNum()
 	{
 		String channel = ServletActionContext.getRequest().getParameter("data");
-		GSdk sdk = sdkService.findNew(channel);
-		if(sdk != null)
+		if(channel != null)
 		{
-			sdk.setUpdateNum(sdk.getUpdateNum()+1);
-			sdkService.update(sdk);
+			GSdk sdk = sdkService.findNew(channel);
+			if(sdk != null)
+			{
+				sdk.setUpdateNum(sdk.getUpdateNum()+1);
+				sdkService.update(sdk);
+			}
+		}
+		else
+		{
+			channel = ServletActionContext.getRequest().getParameter("channel");
+			String packageName = ServletActionContext.getRequest().getParameter("packageName");
+			if(channel != null && packageName != null)
+			{
+				GSdk sdk = sdkService.findNew2(packageName,channel);
+				if(sdk != null)
+				{
+					sdk.setUpdateNum(sdk.getUpdateNum()+1);
+					sdkService.update(sdk);
+				}
+			}
 		}
 	}
 	

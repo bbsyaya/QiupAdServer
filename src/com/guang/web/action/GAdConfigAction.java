@@ -15,10 +15,12 @@ import com.guang.web.mode.GAdConfig;
 import com.guang.web.mode.GAdPosition;
 import com.guang.web.mode.GAdPositionConfig;
 import com.guang.web.mode.GMedia;
+import com.guang.web.mode.GSdk;
 import com.guang.web.service.GAdConfigService;
 import com.guang.web.service.GAdPositionConfigService;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GMediaService;
+import com.guang.web.service.GSdkService;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -30,6 +32,7 @@ public class GAdConfigAction extends ActionSupport{
 	@Resource private GAdConfigService adConfigService;
 	@Resource private GAdPositionService adPositionService;
 	@Resource private GMediaService mediaService;
+	@Resource private GSdkService sdkService;
 	@Resource private GAdPositionConfigService adPositionConfigService;
 	
 	public String list() {
@@ -49,7 +52,7 @@ public class GAdConfigAction extends ActionSupport{
 		ActionContext.getContext().put("maxNum", num);
 		ActionContext.getContext().put("list", list);
 		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());
-		ActionContext.getContext().put("medias", mediaService.findAlls(0).getList());
+		ActionContext.getContext().put("medias", sdkService.findAlls(0).getList());
 		ActionContext.getContext().put("pages", "config");
 		
 		return "index";
@@ -167,7 +170,51 @@ public class GAdConfigAction extends ActionSupport{
 		}
 		else
 		{
-			print(0);
+			packageName = ServletActionContext.getRequest().getParameter("packageName");
+			String channel = ServletActionContext.getRequest().getParameter("channel");
+			if(!StringTools.isEmpty(packageName) && !StringTools.isEmpty(channel))
+			{
+				GSdk sdk = sdkService.findNew2(packageName, channel);
+				if(sdk != null)
+				{
+					String adPosition = sdk.getAdPosition();
+					if(!StringTools.isEmpty(adPosition))
+					{
+						sdk.setConfigs(new ArrayList<GAdPositionConfig>());
+						String []ids = adPosition.split(",");
+						for(String id : ids)
+						{
+							GAdPositionConfig config = adPositionConfigService.findByPositionId(Long.parseLong(id));
+							if(config != null)
+							{
+								GAdPosition gdPosition = adPositionService.find(Long.parseLong(id));
+								if(gdPosition != null)
+								{
+									config.setAdPositionType(gdPosition.getType());
+								}
+								sdk.getConfigs().add(config);
+							}
+							else
+							{
+								GAdPosition gdPosition = adPositionService.find(Long.parseLong(id));
+								if(gdPosition != null && gdPosition.getOpen())
+								{
+									config = new GAdPositionConfig();
+									config.setAdPositionType(gdPosition.getType());
+									sdk.getConfigs().add(config);
+								}
+							}
+						}
+					}
+					
+				}
+				print(JSONObject.fromObject(sdk).toString());
+			}
+			else
+			{
+				print(0);
+			}
+			
 		}
 	}
 	

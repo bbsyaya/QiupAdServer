@@ -61,6 +61,17 @@ public class GSdkServiceImpl implements GSdkService{
 			return list.get(0);
 		return null;
 	}
+	
+	public GSdk findNew2(String appPackageName,String channel) {
+		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+		colvals.put("online =", 1+"");
+		colvals.put("appPackageName =", "'"+appPackageName+"'");
+		colvals.put("channel =", "'"+channel+"'");
+		List<GSdk> list = find(colvals).getList();
+		if(list != null && list.size() > 0)
+			return list.get(0);
+		return null;
+	}
 
 	public QueryResult<GSdk> findAlls(int firstindex) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
