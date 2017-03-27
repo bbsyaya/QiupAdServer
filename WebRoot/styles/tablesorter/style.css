@@ -11,7 +11,7 @@ table.tablesorter thead tr th,table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
 	border: 1px solid #FFF;
 	font-size: 2pt;
-	padding: 1px;
+	padding: 10px;
 	white-space:nowrap;
 }
 
@@ -24,7 +24,7 @@ table.tablesorter thead tr .header {
 
 table.tablesorter tbody td {
 	color: #3D3D3D;
-	padding: 1px;
+	padding: 10px;
 	background-color: #FFF;
 	vertical-align: center;
 	line-height: 100%;

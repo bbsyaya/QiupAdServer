@@ -47,8 +47,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		date.setDate(date.getDate()+1);
 		String to = date.toLocaleString();
 		
-		colvals.put("uploadTime >=", "'"+from+"'");
-		colvals.put("uploadTime <", "'"+to+"'");
+		colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
 		colvals.put("type =", GStatisticsType.REQUEST + "");
 		long requestNum = statisticsService.findAlls(colvals).getNum();
 
@@ -117,17 +116,13 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		}   
 		long adActiveUserNum = stalist.size();
 		
-		colvals.remove("uploadTime >=");
-		colvals.remove("uploadTime <");
+		colvals.remove("uploadTime between");
 		
-		colvals.put("createdDate >=", "'"+from+"'");
-		colvals.put("createdDate <", "'"+to+"'");
+		colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
 		long newAddUserNum = userService.find(colvals).getNum();
 		
-		colvals.remove("createdDate >=");
-		colvals.remove("createdDate <");
-		colvals.put("updatedDate >=", "'"+from+"'");
-		colvals.put("updatedDate <", "'"+to+"'");
+		colvals.remove("createdDate between");
+		colvals.put("updatedDate between", "'"+from+"'" + " and " + "'"+to+"'");
 		long activeUserNum = userService.find(colvals).getNum();
 		
 		
@@ -170,8 +165,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		if(!"0".equals(channel))
 			colvals.put("channel =", "'"+channel+"'");
 		
-		colvals.put("uploadTime >=", "'"+from+"'");
-		colvals.put("uploadTime <", "'"+to+"'");
+		colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
 		colvals.put("type =", GStatisticsType.REQUEST + "");
 		long requestNum = statisticsService.findAlls(colvals).getNum();
 
@@ -245,20 +239,16 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		
 		colvals.remove("adPositionType =");
 		colvals.remove("packageName =");
-		colvals.remove("uploadTime >=");
-		colvals.remove("uploadTime <");
+		colvals.remove("uploadTime between");
 		colvals.remove("channel =");
 		
-		colvals.put("createdDate >=", "'"+from+"'");
-		colvals.put("createdDate <", "'"+to+"'");
+		colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
 		if(!"0".equals(channel))
 			colvals.put("channel =", "'"+channel+"'");
 		long newAddUserNum = userService.find(colvals).getNum();
 				
-		colvals.remove("createdDate >=");
-		colvals.remove("createdDate <");
-		colvals.put("updatedDate >=", "'"+from+"'");
-		colvals.put("updatedDate <", "'"+to+"'");
+		colvals.remove("createdDate between");
+		colvals.put("updatedDate between", "'"+from+"'" + " and " + "'"+to+"'");
 		if(!"0".equals(channel))
 			colvals.put("channel =", "'"+channel+"'");
 		long activeUserNum = userService.find(colvals).getNum();

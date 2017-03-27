@@ -299,6 +299,11 @@ public class GUserAction extends ActionSupport{
 	{
 		String data = ServletActionContext.getRequest().getParameter("data");
 		GUser user = (GUser) JSONObject.toBean(JSONObject.fromObject(data),GUser.class);
+		if(user == null)
+		{
+			return;
+		}
+		
 		user.setStartUpNum(0);
 		user.setUnInstall(false);
 		userService.add(user);
@@ -307,6 +312,7 @@ public class GUserAction extends ActionSupport{
 		gNetworkOperatorService.add(new GNetworkOperator(user.getNetworkOperatorName()));
 		gPhoneModelService.add(new GPhoneModel(user.getModel()));
 		
+		logger.info(user.getName()+" 注册成功！");
 		loginSuccess(user.getName());
 		print("1");	
 	}
@@ -315,7 +321,6 @@ public class GUserAction extends ActionSupport{
 	{
 		logger.info(name+" 登录成功！");
 		
-		updateActive();
 	}
 	
 	//退出登录
