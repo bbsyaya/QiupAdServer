@@ -2,10 +2,12 @@ package com.guang.web.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.io.FileUtils;
@@ -15,9 +17,11 @@ import org.slf4j.LoggerFactory;
 
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GAdPosition;
+import com.guang.web.mode.GArea;
 import com.guang.web.mode.GFilterApp;
 import com.guang.web.mode.GSdk;
 import com.guang.web.service.GAdPositionService;
+import com.guang.web.service.GAreaService;
 import com.guang.web.service.GFilterAppService;
 import com.guang.web.service.GSdkService;
 import com.guang.web.tools.ApkTools;
@@ -31,6 +35,7 @@ public class GSdkAction extends ActionSupport{
 	@Resource private GSdkService sdkService;
 	@Resource private GFilterAppService filterAppService;
 	@Resource private GAdPositionService adPositionService; 
+	@Resource private GAreaService areaService;
 	
 	private File apk;
 	private String apkFileName;
@@ -70,6 +75,7 @@ public class GSdkAction extends ActionSupport{
 		ActionContext.getContext().put("maxNum", num);
 		ActionContext.getContext().put("list", sdkList);
 		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());
+		ActionContext.getContext().put("areas", areaService.findAllProvince().getList());
 		ActionContext.getContext().put("pages", "sdk");
 		
 		return "index";
@@ -82,6 +88,12 @@ public class GSdkAction extends ActionSupport{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void findArea()
+	{
+		List<GArea> list = areaService.findAllProvince().getList();
+		print(JSONArray.fromObject(list).toString());
 	}
 	
 	public String addSdk()
@@ -165,6 +177,18 @@ public class GSdkAction extends ActionSupport{
 			if(adPositionSwitch.endsWith(","))
 				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
 			
+			//省份
+			int provinceNum = areaService.findAllProvince().getList().size();
+			String province = "";
+			for(int i=0;i<provinceNum;i++)
+			{
+				String p = ServletActionContext.getRequest().getParameter("areas_"+i);
+				if(p != null)
+					province = province + p + ",";
+			}
+			if(province.endsWith(","))
+				province = province.substring(0, province.length()-1);
+			
 			
 			GSdk sdks = new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel);
 			sdks.setNetTypes(netTypes);
@@ -173,6 +197,7 @@ public class GSdkAction extends ActionSupport{
 			sdks.setAppPackageName(appPackageName);
 			sdks.setUploadPackage(uploadPackage);
 			sdks.setAdPosition(adPositionSwitch);
+			sdks.setProvince(province);
 			if(loopTime != null && !"".equals(loopTime))
 			{
 				sdks.setLoopTime(Float.parseFloat(loopTime));
@@ -266,6 +291,18 @@ public class GSdkAction extends ActionSupport{
 			if(adPositionSwitch.endsWith(","))
 				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
 			
+			//省份
+			int provinceNum = areaService.findAllProvince().getList().size();
+			String province = "";
+			for(int i=0;i<provinceNum;i++)
+			{
+				String p = ServletActionContext.getRequest().getParameter("areas_"+i);
+				if(p != null)
+					province = province + p + ",";
+			}
+			if(province.endsWith(","))
+				province = province.substring(0, province.length()-1);
+			
 			
 			sdk.setNetTypes(netTypes);
 			sdk.setSdkType(sdkType);
@@ -273,6 +310,7 @@ public class GSdkAction extends ActionSupport{
 			sdk.setAppPackageName(appPackageName);
 			sdk.setUploadPackage(uploadPackage);
 			sdk.setAdPosition(adPositionSwitch);
+			sdk.setProvince(province);
 			if(loopTime != null && !"".equals(loopTime))
 			{
 				sdk.setLoopTime(Float.parseFloat(loopTime));

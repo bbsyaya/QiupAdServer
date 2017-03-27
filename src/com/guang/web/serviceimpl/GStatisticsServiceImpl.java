@@ -1,6 +1,8 @@
 package com.guang.web.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.guang.web.dao.DaoTools;
 import com.guang.web.dao.QueryResult;
+import com.guang.web.mode.GArea;
 import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
 import com.guang.web.service.GStatisticsService;
@@ -39,5 +42,11 @@ public class GStatisticsServiceImpl implements GStatisticsService{
 	public QueryResult<GStatistics> findAlls(
 			LinkedHashMap<String, String> colvals) {
 		return daoTools.find(GStatistics.class, colvals, 0, 100000000, null);
+	}
+
+	public long findAllsNum(LinkedHashMap<String, String> colvals) {
+		List<String> fileds = new ArrayList<String>();
+		fileds.add("userId");
+		return daoTools.find(GStatistics.class, fileds, colvals).getList().size();
 	}
 }

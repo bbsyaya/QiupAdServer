@@ -102,19 +102,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		float income = activateNum;
 		
 		colvals.remove("type =");
-		List<GStatistics> stalist = statisticsService.findAlls(colvals).getList();
-		//移除重复数据
-		for ( int i = 0 ; i < stalist.size() - 1 ; i ++ ) 
-		{  
-		     for ( int j = stalist.size() - 1 ; j > i; j -- ) 
-		     {  
-		       if (stalist.get(j).getUserId().equals(stalist.get(i).getUserId()))
-		       {  
-		    	   stalist.remove(j); 
-		       }
-		     }   
-		}   
-		long adActiveUserNum = stalist.size();
+		long adActiveUserNum = statisticsService.findAllsNum(colvals);
 		
 		colvals.remove("uploadTime between");
 		
@@ -223,19 +211,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		float income = activateNum;
 		
 		colvals.remove("type =");
-		List<GStatistics> stalist = statisticsService.findAlls(colvals).getList();
-		//移除重复数据
-		for ( int i = 0 ; i < stalist.size() - 1 ; i ++ ) 
-		{  
-		     for ( int j = stalist.size() - 1 ; j > i; j -- ) 
-		     {  
-		       if (stalist.get(j).getUserId().equals(stalist.get(i).getUserId()))
-		       {  
-		    	   stalist.remove(j); 
-		       }
-		     }   
-		}   
-		long adActiveUserNum = stalist.size();
+		long adActiveUserNum = statisticsService.findAllsNum(colvals);
 		
 		colvals.remove("adPositionType =");
 		colvals.remove("packageName =");

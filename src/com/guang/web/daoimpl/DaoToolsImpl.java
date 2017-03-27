@@ -3,6 +3,9 @@ package com.guang.web.daoimpl;
 import java.util.LinkedHashMap;
 
 
+
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -91,6 +94,7 @@ public class DaoToolsImpl implements DaoTools{
 		return qr;
 	}
 	
+	
 	//按条件查询
 		protected String getOrderBy(LinkedHashMap<String, String> orderby)
 		{
@@ -152,6 +156,44 @@ public class DaoToolsImpl implements DaoTools{
 				colvalssq.append("o.").append(key+" ").append(colvals.get(key)+" and ");
 			}
 			colvalssq.delete(colvalssq.length()-4, colvalssq.length()-1);
+		}
+		return colvalssq.toString();		
+	}
+
+	//过滤重复值
+	public <T> QueryResult<T> find(Class<T> entityclass,
+			List<String> fileds,
+			LinkedHashMap<String, String> colvals) {
+		QueryResult<T> qr = new QueryResult<T>();
+		String entityname = getEntityName(entityclass);
+		String colvalssq = getColVals(colvals);
+		String filedssq = getFiledVals(fileds);
+		String sql = null;
+		Query query = null;
+		if(colvalssq != null && !"".equals(colvalssq))
+		{
+			sql = "select distinct " +filedssq+ " from "+entityname+" o where "+colvalssq;
+			query = em.createQuery(sql);
+		}else{
+			sql = "select distinct " +filedssq+ " from "+entityname+" o ";	
+			query = em.createQuery(sql);
+		}	
+		query.setFirstResult(0).setMaxResults(10000000);
+		qr.setList(query.getResultList());
+		return qr;
+	}
+	
+	
+	public String getFiledVals(List<String> fileds)
+	{
+		StringBuffer colvalssq = new StringBuffer("");
+		if(fileds!=null && fileds.size()>0)
+		{
+			for(String filed : fileds)
+			{
+				colvalssq.append("o.").append(filed+",");
+			}
+			colvalssq.deleteCharAt(colvalssq.length()-1);
 		}
 		return colvalssq.toString();		
 	}

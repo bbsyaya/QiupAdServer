@@ -161,7 +161,16 @@
 				<label><input type="checkbox" name="adPositionSwitch_<s:property value="#val.id" />" value="1" /><s:property value="#val.name" /></label>
 				</s:iterator>
 				</td>
-			</tr>		
+			</tr>	
+			
+			<tr >
+				<td>省份：</td>
+				<td >
+				<s:iterator value="areas" var="val" status="sta">	
+				<label><input type="checkbox" name="areas_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
+				</s:iterator>
+				</td>
+			</tr>	
 			
 			<tr>
 				<td>&nbsp;</td>
@@ -240,10 +249,19 @@
 			
 			<tr >
 				<td>广告位开关：</td>
-				<td >
+				<td id="update_adPositionSwitch">
 				<s:iterator value="adPositions" var="val">	
 				<label><input type="checkbox" id="update_adPositionSwitch_<s:property value="#val.id" />" name="adPositionSwitch_<s:property value="#val.id" />" value="1" /><s:property value="#val.name" />
 				</label>
+				</s:iterator>
+				</td>
+			</tr>	
+			
+			<tr >
+				<td>省份：</td>
+				<td id="update_areas">
+				<s:iterator value="areas" var="val" status="sta">	
+				<label><input type="checkbox" id="update_areas_<s:property value="#sta.index" />" name="areas_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
 				</s:iterator>
 				</td>
 			</tr>		
@@ -357,11 +375,36 @@ $("#find").click(function()
 	if(jsonobj.adPosition != "" && jsonobj.adPosition != null)
 	{
 		var arr = jsonobj.adPosition.split(",");
+		var cs = $("#update_adPositionSwitch").children();
+		for(var j=0;j<cs.length;j++)
+		{
+			cs[j].getElementsByTagName("input")[0].checked = "";
+		}
 		for(var i=0;i<arr.length;i++)
 		{
 			var id = "#update_adPositionSwitch_" + arr[i];
 			$(id).attr("checked", "checked");
 		}
+	}
+	
+	if(jsonobj.province != "" && jsonobj.province != null)
+	{
+		var arr = jsonobj.province.split(",");
+		var num = $("#update_areas").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_areas_"+j;
+			$(id).attr("checked", "");
+		} 
+		for(var i=0;i<arr.length;i++)
+		{
+			for(var j=0;j<num;j++)
+			{
+				var id = "#update_areas_"+j;
+				if($(id).val() == arr[i])
+					$(id).attr("checked", "checked");
+			}
+		}		
 	}
 	
 	$("#d_addsdk").hide();

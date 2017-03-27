@@ -15,4 +15,5 @@ public interface GStatisticsService {
 	GStatistics find(Long id);
 	QueryResult<GStatistics> findAlls(int firstindex);
 	QueryResult<GStatistics> findAlls(LinkedHashMap<String, String> colvals);
+	long findAllsNum(LinkedHashMap<String, String> colvals);
 }

@@ -32,6 +32,8 @@ public class GSdk {
 	private Float loopTime;
 	private Boolean uploadPackage;//是否上传包名
 	
+	private String province;//省份
+	
 	private String adPositionName;
 	private List<GAdPositionConfig> configs;
 	
@@ -158,6 +160,13 @@ public class GSdk {
 		this.uploadPackage = uploadPackage;
 	}
 	
+	@Column(length = 1024)
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
 	@Transient
 	public String getAdPositionName() {
 		return adPositionName;
@@ -174,4 +183,7 @@ public class GSdk {
 	public void setConfigs(List<GAdPositionConfig> configs) {
 		this.configs = configs;
 	}
+	
+	
+	
 }

@@ -1,6 +1,7 @@
 package com.guang.web.dao;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 
 public interface DaoTools {
@@ -11,5 +12,6 @@ public interface DaoTools {
 	public <T> QueryResult<T> find(Class<T> entityclass, String columnName, String value ,int firstindex,int maxresult, LinkedHashMap<String, String> orderby);
 	public <T> QueryResult<T> find(Class<T> entityclass, String columnName, String value ,String columnName2, String value2 ,int firstindex,int maxresult, LinkedHashMap<String, String> orderby);
 	public <T> QueryResult<T> find(Class<T> entityclass, LinkedHashMap<String, String> colvals,int firstindex,int maxresult, LinkedHashMap<String, String> orderby);
+	public <T> QueryResult<T> find(Class<T> entityclass, List<String> fileds,LinkedHashMap<String, String> colvals);
 
 }

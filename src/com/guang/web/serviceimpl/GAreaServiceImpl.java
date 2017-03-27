@@ -1,5 +1,6 @@
 package com.guang.web.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -37,6 +38,12 @@ public class GAreaServiceImpl implements GAreaService {
 		if(list != null && list.size() > 0)
 		return list.get(0);
 		return null;
+	}
+
+	public QueryResult<GArea> findAllProvince() {
+		List<String> fileds = new ArrayList<String>();
+		fileds.add("province");
+		return daoTools.find(GArea.class, fileds, null);
 	}
 
 }
