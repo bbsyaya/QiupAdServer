@@ -16,15 +16,17 @@ public class GTBSdkConfig {
 	private int newChannelNum;
 	private String channel;
 	private int channel_paiming;
+	private String province;//省份
 	
 	public GTBSdkConfig(){}
 	public GTBSdkConfig(int callLogNum, float time, int newChannelNum,
-			String channel) {
+			String channel,String province) {
 		super();
 		this.callLogNum = callLogNum;
 		this.time = time;
 		this.newChannelNum = newChannelNum;
 		this.channel = channel;
+		this.province = province;
 	}
 	@Id
 	@GeneratedValue
@@ -65,6 +67,13 @@ public class GTBSdkConfig {
 	}
 	public void setChannel_paiming(int channel_paiming) {
 		this.channel_paiming = channel_paiming;
+	}
+	@Column(length = 1024)
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
 	}
 	
 	

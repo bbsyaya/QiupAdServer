@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "network_operator")
+//alter table network_operator add index index_name(name)
 public class GNetworkOperator {	
 	private Integer id;	
 	private String name;

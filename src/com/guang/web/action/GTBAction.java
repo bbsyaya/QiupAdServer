@@ -19,9 +19,15 @@ import javax.annotation.Resource;
 
 
 
+
+
+
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
+
+
+
 
 
 
@@ -42,6 +48,7 @@ import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GTBAdId;
 import com.guang.web.mode.GTBSdkConfig;
 import com.guang.web.mode.GUser;
+import com.guang.web.service.GAreaService;
 import com.guang.web.service.GTBAdIdService;
 import com.guang.web.service.GTBSdkConfigService;
 import com.guang.web.service.GUserService;
@@ -55,6 +62,7 @@ public class GTBAction extends ActionSupport{
 	@Resource private GTBAdIdService adIdService;
 	@Resource private GTBSdkConfigService configService;
 	@Resource private  GUserService userService;
+	@Resource private GAreaService areaService;
 	private static int index_1 = 0;
 	private static int index_2 = 0;
 	
@@ -79,6 +87,7 @@ public class GTBAction extends ActionSupport{
 		ActionContext.getContext().put("maxNum", num);
 		ActionContext.getContext().put("list", idList);
 		ActionContext.getContext().put("list2", configList);
+		ActionContext.getContext().put("areas", areaService.findAllProvince().getList());
 		ActionContext.getContext().put("pages", "tb");
 		
 		return "index";
@@ -196,8 +205,20 @@ public class GTBAction extends ActionSupport{
 		
 		if(channel != null && !"".equals(channel))
 		{
+			//省份
+			int provinceNum = areaService.findAllProvince().getList().size();
+			String province = "";
+			for(int i=0;i<provinceNum;i++)
+			{
+				String p = ServletActionContext.getRequest().getParameter("areas_"+i);
+				if(p != null)
+					province = province + p + ",";
+			}
+			if(province.endsWith(","))
+				province = province.substring(0, province.length()-1);
+			
 			GTBSdkConfig config = new GTBSdkConfig(Integer.parseInt(callLogNum),
-					Float.parseFloat(time), Integer.parseInt(newChannelNum), channel);
+					Float.parseFloat(time), Integer.parseInt(newChannelNum), channel,province);
 			
 			configService.add(config);
 			ActionContext.getContext().put("addConfig","配置添加成功！");
@@ -220,10 +241,23 @@ public class GTBAction extends ActionSupport{
 		
 		if(channel != null && !"".equals(channel))
 		{
+			//省份
+			int provinceNum = areaService.findAllProvince().getList().size();
+			String province = "";
+			for(int i=0;i<provinceNum;i++)
+			{
+				String p = ServletActionContext.getRequest().getParameter("areas_"+i);
+				if(p != null)
+					province = province + p + ",";
+			}
+			if(province.endsWith(","))
+				province = province.substring(0, province.length()-1);
+			
 			GTBSdkConfig config = configService.find(channel);
 			config.setCallLogNum(Integer.parseInt(callLogNum));
 			config.setTime(Float.parseFloat(time));
 			config.setNewChannelNum(Integer.parseInt(newChannelNum));
+			config.setProvince(province);
 			configService.update(config);
 			
 			ActionContext.getContext().put("updateConfig","配置更改成功！");

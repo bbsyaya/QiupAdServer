@@ -110,4 +110,5 @@ laydate({
  });
  
 </script>
+<script type="text/javascript" src="<%=basePath%>scripts/table-to-excel.js"></script>
 <script type="text/javascript" src="<%=basePath%>scripts/statistics.js"></script>

@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "phone_model")
+//alter table phone_model add index index_model(model)
 public class GPhoneModel {	
 	private Integer id;	
 	private String model;

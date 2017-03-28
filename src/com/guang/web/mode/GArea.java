@@ -11,6 +11,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "area",
 uniqueConstraints={@UniqueConstraint(columnNames = {"province","city"})})
+//alter table area add index index_province_city(province,city)
 public class GArea {
 	
 	private Integer id;		

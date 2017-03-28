@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "gsdk")
+//alter table gsdk add index index_channel(channel)
 public class GSdk {
 	private Long id;
 	private String packageName;// 包名
