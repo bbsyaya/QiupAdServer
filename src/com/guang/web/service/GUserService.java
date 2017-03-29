@@ -19,4 +19,5 @@ public interface GUserService {
 	QueryResult<GUser> findAlls(int firstindex);
 	QueryResult<GUser> find(LinkedHashMap<String, String> colvals);
 	QueryResult<GUser> findByChannel(String channel);
+	long findNum(LinkedHashMap<String, String> colvals);
 }

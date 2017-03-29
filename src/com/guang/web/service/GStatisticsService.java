@@ -1,6 +1,7 @@
 package com.guang.web.service;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -15,5 +16,6 @@ public interface GStatisticsService {
 	GStatistics find(Long id);
 	QueryResult<GStatistics> findAlls(int firstindex);
 	QueryResult<GStatistics> findAlls(LinkedHashMap<String, String> colvals);
-	long findAllsNum(LinkedHashMap<String, String> colvals);
+	long findAllsNum(LinkedHashMap<String, String> colvals);//比如省份唯一
+	long findAllsNum2(LinkedHashMap<String, String> colvals);
 }

@@ -197,4 +197,21 @@ public class DaoToolsImpl implements DaoTools{
 		}
 		return colvalssq.toString();		
 	}
+
+	public <T> long findNum(Class<T> entityclass,
+			LinkedHashMap<String, String> colvals) {
+		String entityname = getEntityName(entityclass);
+		String colvalssq = getColVals(colvals);
+		Query query = null;
+		long num = 0;
+		if(colvalssq != null && !"".equals(colvalssq))
+		{
+			query = em.createQuery("select count(o) from "+entityname+" o where "+colvalssq);
+			num = (Long)query.getSingleResult();
+		}else{
+			query = em.createQuery("select count(o) from "+entityname+" o");
+			num = (Long)query.getSingleResult();
+		}	
+		return num;
+	}
 }

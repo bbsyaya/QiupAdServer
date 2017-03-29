@@ -49,4 +49,7 @@ public class GStatisticsServiceImpl implements GStatisticsService{
 		fileds.add("userId");
 		return daoTools.find(GStatistics.class, fileds, colvals).getList().size();
 	}
+	public long findAllsNum2(LinkedHashMap<String, String> colvals) {
+		return daoTools.findNum(GStatistics.class, colvals);
+	}
 }

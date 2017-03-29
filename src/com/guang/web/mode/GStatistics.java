@@ -12,6 +12,9 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "offer_statistics")
 //alter table offer_statistics add index index_uploadTime(uploadTime)
+//alter table offer_statistics add index index_userId(userId)
+//alter table offer_statistics add index index_type(type)
+//alter table offer_statistics add index index_uploadTime_type(uploadTime,type)
 public class GStatistics {
 	private Long id;
 	private Integer type;//统计类型 

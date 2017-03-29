@@ -52,4 +52,8 @@ public class GUserServiceImpl implements GUserService{
 		return daoTools.find(GUser.class, "channel", channel, 0, 100000000, null);
 	}
 
+	public long findNum(LinkedHashMap<String, String> colvals) {
+		return daoTools.findNum(GUser.class, colvals);
+	}
+
 }

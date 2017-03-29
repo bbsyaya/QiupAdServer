@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "app")
+//alter table app add index index_userId(userId)
+
 public class GApp {
 	private Long id;
 	private Long userId;
