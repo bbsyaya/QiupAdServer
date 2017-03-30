@@ -10,17 +10,21 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "area",
-uniqueConstraints={@UniqueConstraint(columnNames = {"province","city"})})
+uniqueConstraints={@UniqueConstraint(columnNames = {"country","province","city"})})
 //alter table area add index index_province_city(province,city)
+//alter table area drop index province;
+//alter table area add unique(country,province,city);
 public class GArea {
 	
 	private Integer id;		
+	private String country;//国家
 	private String province;//省份
 	private String city;//城市
 	
 	public GArea(){}
-	public GArea(String province, String city) {
+	public GArea(String country,String province, String city) {
 		super();
+		this.country = country;
 		this.province = province;
 		this.city = city;
 	}
@@ -31,6 +35,13 @@ public class GArea {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	@Column(name = "country",  length = 64) 
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	@Column(name = "province",  length = 64) 
 	public String getProvince() {

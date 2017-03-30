@@ -42,6 +42,7 @@ public class GUser {
 	private int phoneType;//
 	private String model;// 手机型号
 	private String release;// 系统版本
+	private String country;//国家
 	private String province;// 省份
 	private String city;// 城市
 	private String district;// 区县
@@ -251,6 +252,15 @@ public class GUser {
 
 	public void setRelease(String release) {
 		this.release = release;
+	}
+	
+	@Column(name = "country", length = 64)
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	@Column(name = "province", length = 32)

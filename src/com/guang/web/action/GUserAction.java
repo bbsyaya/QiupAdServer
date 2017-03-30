@@ -308,7 +308,7 @@ public class GUserAction extends ActionSupport{
 		user.setUnInstall(false);
 		userService.add(user);
 		
-		areaService.add(new GArea(user.getProvince(), user.getCity()));
+		areaService.add(new GArea(user.getCountry(), user.getProvince(), user.getCity()));
 		gNetworkOperatorService.add(new GNetworkOperator(user.getNetworkOperatorName()));
 		gPhoneModelService.add(new GPhoneModel(user.getModel()));
 		
