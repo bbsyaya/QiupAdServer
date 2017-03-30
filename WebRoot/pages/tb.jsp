@@ -207,14 +207,14 @@
 				</td>
 			</tr>
 			
-			<tr >
+			<%-- <tr >
 				<td>国内省份选择：</td>
 				<td >
 				<s:iterator value="areas" var="val" status="sta">	
 				<label><input type="checkbox" name="areas_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
 				</s:iterator>
 				</td>
-			</tr>
+			</tr> --%>
 			
 			<tr>
 				<td>&nbsp;</td>
@@ -255,14 +255,14 @@
 				</td>
 			</tr>
 			
-			<tr >
+			<%-- <tr >
 				<td>国内省份选择：</td>
 				<td id="update_areas">
 				<s:iterator value="areas" var="val" status="sta">	
 				<label><input type="checkbox" id="update_areas_<s:property value="#sta.index" />" name="areas_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
 				</s:iterator>
 				</td>
-			</tr>
+			</tr> --%>
 			
 			<tr>
 				<td>&nbsp;</td>
@@ -497,7 +497,7 @@ $("#find2").click(function()
 	$("#f_newChannelNum").val(jsonobj.newChannelNum);
 	$("#f_channel").val(jsonobj.channel);
 	
-	if(jsonobj.province != "" && jsonobj.province != null)
+	/* if(jsonobj.province != "" && jsonobj.province != null)
 	{
 		var arr = jsonobj.province.split(",");
 		var num = $("#update_areas").children().length;
@@ -515,7 +515,7 @@ $("#find2").click(function()
 					$(id).attr("checked", "checked");
 			}
 		}		
-	}
+	} */
 	
 	
 	$("#d_alladid").hide();

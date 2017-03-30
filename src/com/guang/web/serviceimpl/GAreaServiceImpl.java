@@ -46,4 +46,10 @@ public class GAreaServiceImpl implements GAreaService {
 		return daoTools.find(GArea.class, fileds, null);
 	}
 
+	public QueryResult<GArea> findAllCountry() {
+		List<String> fileds = new ArrayList<String>();
+		fileds.add("country");
+		return daoTools.find(GArea.class, fileds, null);
+	}
+
 }

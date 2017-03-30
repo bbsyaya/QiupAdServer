@@ -163,12 +163,29 @@
 				</td>
 			</tr>	
 			
-			<tr >
-				<td>省份：</td>
-				<td >
-				<s:iterator value="areas" var="val" status="sta">	
-				<label><input type="checkbox" name="areas_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
+			<tr id="update_country2_tr">
+				<td>国家：</td>
+				<td id="update_country2">
+				<s:iterator value="countrys" var="val" status="sta">	
+				<label><input type="checkbox" id="update_country2_<s:property value="#sta.index" />" name="countrys_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
 				</s:iterator>
+				</td>
+			</tr>
+			
+			<tr style="display:none;" id="update_areas2_tr">
+				<td>省份：</td>
+				<td id="update_areas2">
+				<s:iterator value="areas" var="val" status="sta">	
+				<label><input type="checkbox" id="update_areas2_<s:property value="#sta.index" />" name="areas_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
+				</s:iterator>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input id="sel_areas_all2" type="button" value="全选" />
+					<input id="sel_areas_no2" type="button" value="全不选" />
 				</td>
 			</tr>	
 			
@@ -257,14 +274,31 @@
 				</td>
 			</tr>	
 			
-			<tr >
+			<tr id="update_country_tr">
+				<td>国家：</td>
+				<td id="update_country">
+				<s:iterator value="countrys" var="val" status="sta">	
+				<label><input type="checkbox" id="update_country_<s:property value="#sta.index" />" name="countrys_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
+				</s:iterator>
+				</td>
+			</tr>
+			
+			<tr style="display:none;" id="update_areas_tr">
 				<td>省份：</td>
 				<td id="update_areas">
 				<s:iterator value="areas" var="val" status="sta">	
 				<label><input type="checkbox" id="update_areas_<s:property value="#sta.index" />" name="areas_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
 				</s:iterator>
 				</td>
-			</tr>		
+			</tr>	
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input id="sel_areas_all" type="button" value="全选" />
+					<input id="sel_areas_no" type="button" value="全不选" />
+				</td>
+			</tr>	
 			
 			<tr>
 				<td>&nbsp;</td>
@@ -298,6 +332,122 @@ var findSdkFilterApp = function()
 };
 
 findSdkFilterApp();
+
+$("#sel_areas_all").click(function(){
+		var num = $("#update_areas").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_areas_"+j;
+			$(id).attr("checked", "checked");
+		} 
+		
+		num = $("#update_country").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_country_"+j;
+			$(id).attr("checked", "checked");
+		} 
+});
+$("#sel_areas_no").click(function(){
+		var num = $("#update_areas").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_areas_"+j;
+			$(id).attr("checked", "");
+		} 
+		
+		num = $("#update_country").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_country_"+j;
+			$(id).attr("checked", "");
+		} 
+});
+
+$("#sel_areas_all2").click(function(){
+		var num = $("#update_areas2").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_areas2_"+j;
+			$(id).attr("checked", "checked");
+		} 
+		
+		num = $("#update_country2").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_country2_"+j;
+			$(id).attr("checked", "checked");
+		} 
+});
+$("#sel_areas_no2").click(function(){
+		var num = $("#update_areas2").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_areas2_"+j;
+			$(id).attr("checked", "");
+		} 
+		
+		num = $("#update_country2").children().length;
+		for(var j=0;j<num;j++)
+		{
+			var id = "#update_country2_"+j;
+			$(id).attr("checked", "");
+		} 
+});
+
+
+
+$("#up_type_state1").click(function(){
+		if($(this).attr("checked"))
+		{
+			$("#update_country_tr").show();
+			$("#update_areas_tr").hide();
+		}
+		else
+		{
+			$("#update_country_tr").hide();
+			$("#update_areas_tr").show();
+		}
+});
+$("#up_type_state2").click(function(){
+		if($(this).attr("checked"))
+		{
+			$("#update_country_tr").hide();
+			$("#update_areas_tr").show();			
+		}
+		else
+		{
+			$("#update_country_tr").show();
+			$("#update_areas_tr").hide();
+		}
+});
+
+$("#type_state1").click(function(){
+		if($(this).attr("checked"))
+		{
+			$("#update_country2_tr").show();
+			$("#update_areas2_tr").hide();
+		}
+		else
+		{
+			$("#update_country2_tr").hide();
+			$("#update_areas2_tr").show();
+		}
+});
+$("#type_state2").click(function(){
+		if($(this).attr("checked"))
+		{
+			$("#update_country2_tr").hide();
+			$("#update_areas2_tr").show();			
+		}
+		else
+		{
+			$("#update_country2_tr").show();
+			$("#update_areas2_tr").hide();
+		}
+});
+
+
 
 $("#find").click(function()
 {
@@ -387,20 +537,32 @@ $("#find").click(function()
 		}
 	}
 	
+	var update_type = "#update_country";
+	if($("#up_type_state1").attr("checked"))
+	{
+		$("#update_country_tr").show();
+		$("#update_areas_tr").hide();
+	}
+	else
+	{
+		$("#update_country_tr").hide();
+		$("#update_areas_tr").show();
+		update_type = "#update_areas";
+	}
+	var num = $(update_type).children().length;
+	for(var j=0;j<num;j++)
+	{
+		var id = update_type+"_"+j;
+		$(id).attr("checked", "");
+	} 
 	if(jsonobj.province != "" && jsonobj.province != null)
 	{
 		var arr = jsonobj.province.split(",");
-		var num = $("#update_areas").children().length;
-		for(var j=0;j<num;j++)
-		{
-			var id = "#update_areas_"+j;
-			$(id).attr("checked", "");
-		} 
 		for(var i=0;i<arr.length;i++)
 		{
 			for(var j=0;j<num;j++)
 			{
-				var id = "#update_areas_"+j;
+				var id = update_type+"_"+j;
 				if($(id).val() == arr[i])
 					$(id).attr("checked", "checked");
 			}

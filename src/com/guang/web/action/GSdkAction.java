@@ -76,6 +76,7 @@ public class GSdkAction extends ActionSupport{
 		ActionContext.getContext().put("list", sdkList);
 		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());
 		ActionContext.getContext().put("areas", areaService.findAllProvince().getList());
+		ActionContext.getContext().put("countrys", areaService.findAllCountry().getList());
 		ActionContext.getContext().put("pages", "sdk");
 		
 		return "index";
@@ -177,19 +178,34 @@ public class GSdkAction extends ActionSupport{
 			if(adPositionSwitch.endsWith(","))
 				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
 			
-			//省份
-			int provinceNum = areaService.findAllProvince().getList().size();
+			//省份/国家
 			String province = "";
-			for(int i=0;i<provinceNum;i++)
+			//tb 按国家分
+			if("tb".equals(sdkType))
 			{
-				String p = ServletActionContext.getRequest().getParameter("areas_"+i);
-				if(p != null)
-					province = province + p + ",";
+				int countryNum = areaService.findAllCountry().getList().size();
+				for(int i=0;i<countryNum;i++)
+				{
+					String p = ServletActionContext.getRequest().getParameter("countrys_"+i);
+					if(p != null)
+						province = province + p + ",";
+				}
+				if(province.endsWith(","))
+					province = province.substring(0, province.length()-1);
 			}
-			if(province.endsWith(","))
-				province = province.substring(0, province.length()-1);
-			
-			
+			else
+			{
+				int provinceNum = areaService.findAllProvince().getList().size();
+				for(int i=0;i<provinceNum;i++)
+				{
+					String p = ServletActionContext.getRequest().getParameter("areas_"+i);
+					if(p != null)
+						province = province + p + ",";
+				}
+				if(province.endsWith(","))
+					province = province.substring(0, province.length()-1);
+			}
+
 			GSdk sdks = new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel);
 			sdks.setNetTypes(netTypes);
 			sdks.setSdkType(sdkType);
@@ -291,17 +307,33 @@ public class GSdkAction extends ActionSupport{
 			if(adPositionSwitch.endsWith(","))
 				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
 			
-			//省份
-			int provinceNum = areaService.findAllProvince().getList().size();
+			//省份/国家
 			String province = "";
-			for(int i=0;i<provinceNum;i++)
+			//tb 按国家分
+			if("tb".equals(sdkType))
 			{
-				String p = ServletActionContext.getRequest().getParameter("areas_"+i);
-				if(p != null)
-					province = province + p + ",";
+				int countryNum = areaService.findAllCountry().getList().size();
+				for(int i=0;i<countryNum;i++)
+				{
+					String p = ServletActionContext.getRequest().getParameter("countrys_"+i);
+					if(p != null)
+						province = province + p + ",";
+				}
+				if(province.endsWith(","))
+					province = province.substring(0, province.length()-1);
 			}
-			if(province.endsWith(","))
-				province = province.substring(0, province.length()-1);
+			else
+			{
+				int provinceNum = areaService.findAllProvince().getList().size();
+				for(int i=0;i<provinceNum;i++)
+				{
+					String p = ServletActionContext.getRequest().getParameter("areas_"+i);
+					if(p != null)
+						province = province + p + ",";
+				}
+				if(province.endsWith(","))
+					province = province.substring(0, province.length()-1);
+			}
 			
 			
 			sdk.setNetTypes(netTypes);

@@ -14,4 +14,5 @@ public interface GAreaService {
 	GArea find(String province,String city);
 	QueryResult<GArea> findAll();
 	QueryResult<GArea> findAllProvince();
+	QueryResult<GArea> findAllCountry();
 }
