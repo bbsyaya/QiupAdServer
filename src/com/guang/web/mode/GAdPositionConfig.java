@@ -33,10 +33,13 @@ public class GAdPositionConfig {
 	
 	//banner
 	private Float bannerDelyTime;//banner延迟时间
+	private Float bannerTwoDelyTime;//banner二次延迟时间
+	private Float bannerShowTime;//停留时间
 	
 	//充电
 	
 	//应用插屏
+	private Float appSpotDelyTime;//应用插屏延迟时间
 	
 	//wifi
 	
@@ -55,7 +58,7 @@ public class GAdPositionConfig {
 	public GAdPositionConfig(Long adPositionId, String timeSlot,
 			Integer showNum, Float showTimeInterval, String whiteList,Integer adShowNum,
 			Float browerSpotTwoTime,Float browerSpotFlow, Float bannerDelyTime,
-			String behindBrushUrls) {
+			Float bannerTwoDelyTime,Float bannerShowTime,Float appSpotDelyTime,String behindBrushUrls) {
 		super();
 		this.adPositionId = adPositionId;
 		this.timeSlot = timeSlot;
@@ -66,6 +69,9 @@ public class GAdPositionConfig {
 		this.browerSpotTwoTime = browerSpotTwoTime;
 		this.browerSpotFlow = browerSpotFlow;
 		this.bannerDelyTime = bannerDelyTime;
+		this.bannerTwoDelyTime = bannerTwoDelyTime;
+		this.bannerShowTime = bannerShowTime;
+		this.appSpotDelyTime = appSpotDelyTime;
 		this.behindBrushUrls = behindBrushUrls;
 	}
 	@Id
@@ -174,6 +180,24 @@ public class GAdPositionConfig {
 	}
 	public void setBrowerBreakUrl(String browerBreakUrl) {
 		this.browerBreakUrl = browerBreakUrl;
+	}
+	public Float getBannerTwoDelyTime() {
+		return bannerTwoDelyTime;
+	}
+	public void setBannerTwoDelyTime(Float bannerTwoDelyTime) {
+		this.bannerTwoDelyTime = bannerTwoDelyTime;
+	}
+	public Float getBannerShowTime() {
+		return bannerShowTime;
+	}
+	public void setBannerShowTime(Float bannerShowTime) {
+		this.bannerShowTime = bannerShowTime;
+	}
+	public Float getAppSpotDelyTime() {
+		return appSpotDelyTime;
+	}
+	public void setAppSpotDelyTime(Float appSpotDelyTime) {
+		this.appSpotDelyTime = appSpotDelyTime;
 	}
 	
 	

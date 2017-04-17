@@ -22,7 +22,7 @@
 </table>
 
 <div id="d_addAdPosition" style="display:none; ">
-<h1 align="center">新增媒体</h1>
+<h1 align="center">新增广告位</h1>
 	<form action="adPosition_addAdPosition" method="post" class="g_from" style="margin-left: auto;margin-right: auto;">
 		<table  cellpadding="4" cellspacing="0" border="0">
 			<tr >
@@ -166,7 +166,7 @@
 			</tr>
 			
 			<tr >
-				<td>延迟时间:</td>
+				<td>banner延迟时间:</td>
 				<td><input type="text" id="update_bannerDelyTime" name="bannerDelyTime"
 					value="" style="width:80px;" />分钟
 				</td>
@@ -199,6 +199,28 @@
 					value="" style="width:180px;" />
 				</td>
 			</tr>	
+			
+			<tr >
+				<td>应用插屏延迟时间:</td>
+				<td><input type="text" id="update_appSpotDelyTime" name="appSpotDelyTime"
+					value="" style="width:80px;" />分钟
+				</td>
+			</tr>
+			
+			<tr >
+				<td>banner二次延迟时间:</td>
+				<td><input type="text" id="update_bannerTwoDelyTime" name="bannerTwoDelyTime"
+					value="" style="width:80px;" />分钟
+				</td>
+			</tr>
+			
+			<tr >
+				<td>banner停留时间:</td>
+				<td><input type="text" id="update_bannerShowTime" name="bannerShowTime"
+					value="" style="width:80px;" />分钟
+				</td>
+			</tr>
+			
 			<tr>
 				<td>&nbsp;</td>
 				<td align=center><input type="submit" value="更改" />

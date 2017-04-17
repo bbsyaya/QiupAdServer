@@ -105,10 +105,13 @@ public class GAdPositionAction extends ActionSupport {
 		String browerSpotTwoTime = ServletActionContext.getRequest().getParameter("browerSpotTwoTime");
 		String browerSpotFlow = ServletActionContext.getRequest().getParameter("browerSpotFlow");
 		String bannerDelyTime = ServletActionContext.getRequest().getParameter("bannerDelyTime");
+		String bannerTwoDelyTime = ServletActionContext.getRequest().getParameter("bannerTwoDelyTime");
+		String bannerShowTime = ServletActionContext.getRequest().getParameter("bannerShowTime");
 		String behindBrushUrls = ServletActionContext.getRequest().getParameter("behindBrushUrls");
 		String shortcutName = ServletActionContext.getRequest().getParameter("shortcutName");
 		String shortcutUrl = ServletActionContext.getRequest().getParameter("shortcutUrl");
 		String browerBreakUrl = ServletActionContext.getRequest().getParameter("browerBreakUrl");
+		String appSpotDelyTime = ServletActionContext.getRequest().getParameter("appSpotDelyTime");
 		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(name) && !StringTools.isEmpty(type))
 		{
 			boolean open = false;
@@ -145,6 +148,19 @@ public class GAdPositionAction extends ActionSupport {
 			float bannerDelyTime2 = 0;
 			if(!StringTools.isEmpty(bannerDelyTime))
 				bannerDelyTime2 = Float.parseFloat(bannerDelyTime);
+			
+			float bannerTwoDelyTime2 = 0;
+			if(!StringTools.isEmpty(bannerTwoDelyTime))
+				bannerTwoDelyTime2 = Float.parseFloat(bannerTwoDelyTime);
+			
+			float bannerShowTime2 = 0;
+			if(!StringTools.isEmpty(bannerShowTime))
+				bannerShowTime2 = Float.parseFloat(bannerShowTime);
+			
+			float appSpotDelyTime2 = 0;
+			if(!StringTools.isEmpty(appSpotDelyTime))
+				appSpotDelyTime2 = Float.parseFloat(appSpotDelyTime);
+			
 			//时间段
 			if(timeSlot.endsWith(","))
 				timeSlot = timeSlot.substring(0, timeSlot.length()-1);
@@ -180,12 +196,15 @@ public class GAdPositionAction extends ActionSupport {
 			config.setBrowerSpotTwoTime(browerSpotTwoTime2);
 			config.setBrowerSpotFlow(browerSpotFlow2);
 			config.setBannerDelyTime(bannerDelyTime2);
+			config.setBannerTwoDelyTime(bannerTwoDelyTime2);
+			config.setBannerShowTime(bannerShowTime2);
 			config.setBehindBrushUrls(behindBrushUrls);
 			if(shortcutIconPath != null && !"".equals(shortcutIconPath))
 				config.setShortcutIconPath(shortcutIconPath);
 			config.setShortcutName(shortcutName);
 			config.setShortcutUrl(shortcutUrl);
 			config.setBrowerBreakUrl(browerBreakUrl);
+			config.setAppSpotDelyTime(appSpotDelyTime2);
 			
 			adPositionConfigService.update(config);
 			
