@@ -161,7 +161,7 @@ public class GSdk {
 		this.uploadPackage = uploadPackage;
 	}
 	
-	@Column(length = 1024)
+	@Column(length = 10240)
 	public String getProvince() {
 		return province;
 	}

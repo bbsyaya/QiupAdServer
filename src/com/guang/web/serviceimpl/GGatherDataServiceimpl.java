@@ -31,6 +31,8 @@ public class GGatherDataServiceimpl implements GGatherDataService{
 		daoTools.add(gatherAppInfo);
 	}
 	public QueryResult<GatherAppInfo> find(LinkedHashMap<String, String> colvals) {
+		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
+		lhm.put("id", "desc");
 		return daoTools.find(GatherAppInfo.class, colvals, 0, 100000000, null);
 	}
 }

@@ -5,11 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ad_positionConfig")
+//alter table ad_positionConfig modify column whiteList text;
 public class GAdPositionConfig {
 	private Long id;
 	private Long adPositionId;
@@ -99,7 +101,7 @@ public class GAdPositionConfig {
 	public void setShowTimeInterval(Float showTimeInterval) {
 		this.showTimeInterval = showTimeInterval;
 	}
-	@Column(length = 10240)
+	@Lob
 	public String getWhiteList() {
 		return whiteList;
 	}

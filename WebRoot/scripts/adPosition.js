@@ -360,6 +360,7 @@ $("#find").click(function()
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
+		$("#update_bannerDelyTime").parent().parent().show();
 	}
 	//连接wifi
 	else if(jsonobj.type == 7)

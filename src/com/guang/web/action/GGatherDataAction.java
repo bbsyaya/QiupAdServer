@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.guang.web.common.GStatisticsType;
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GUser;
 import com.guang.web.mode.GatherAppInfo;
@@ -19,6 +20,7 @@ import com.guang.web.mode.GatherAppRunInfo;
 import com.guang.web.service.GGatherDataService;
 import com.guang.web.service.RunAppInfoService;
 import com.guang.web.tools.GTools;
+import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 
 public class GGatherDataAction {
@@ -190,7 +192,22 @@ public class GGatherDataAction {
 	
 	public void daochu()
 	{
-		List<GatherAppInfo> appInfoList = dataService.findAll().getList();
+		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+		String from = ServletActionContext.getRequest().getParameter("from");
+		String to = ServletActionContext.getRequest().getParameter("to");
+		String inlay = ServletActionContext.getRequest().getParameter("inlay");
+		if(!StringTools.isEmpty(from) && !StringTools.isEmpty(from))
+		{
+			colvals.put("gdate between", "'"+from+"'" + " and " + "'"+to+"'");
+		}
+		if(!StringTools.isEmpty(inlay) )
+		{
+			boolean lay = false;
+			if("1".equals(inlay))
+				lay = true;
+			colvals.put("inlay =", lay + "");
+		}
+		List<GatherAppInfo> appInfoList = dataService.find(colvals).getList();
 		for(GatherAppInfo info : appInfoList)
 		{
 			String s = info.getAppName() + ";" + info.getPackageName() + ";" + info.isInlay() + ";\r\n";
