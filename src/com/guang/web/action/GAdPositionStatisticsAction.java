@@ -254,11 +254,11 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		List<GAdPositionStatistics> slist = new ArrayList<GAdPositionStatistics>();
 		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 		
-		if(!"0".equals(adPositionType))
+		if(adPositionType != null && !"0".equals(adPositionType))
 			colvals.put("adPositionType =", adPositionType);
-		if(!"0".equals(media))
+		if(media != null && !"0".equals(media))
 			colvals.put("packageName =", "'"+media+"'");
-		if(!"0".equals(channel))
+		if(channel != null && !"0".equals(channel))
 			colvals.put("channel =", "'"+channel+"'");
 		
 		long t = System.currentTimeMillis();
