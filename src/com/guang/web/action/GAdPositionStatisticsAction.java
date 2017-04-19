@@ -149,11 +149,11 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		List<GAdPositionStatistics> slist = new ArrayList<GAdPositionStatistics>();
 		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 		
-		if(!"0".equals(adPositionType))
+		if(adPositionType != null && !"0".equals(adPositionType))
 			colvals.put("adPositionType =", adPositionType);
-		if(!"0".equals(media))
+		if(media != null && !"0".equals(media))
 			colvals.put("packageName =", "'"+media+"'");
-		if(!"0".equals(channel))
+		if(channel != null && !"0".equals(channel))
 			colvals.put("channel =", "'"+channel+"'");
 		
 		colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
@@ -222,14 +222,13 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		colvals.remove("channel =");
 		
 		colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
-		if(!"0".equals(channel))
+		if(channel != null && !"0".equals(channel))
 			colvals.put("channel =", "'"+channel+"'");
 		long newAddUserNum = userService.findNum(colvals);
 				
 		colvals.remove("createdDate between");
 		colvals.put("updatedDate between", "'"+from+"'" + " and " + "'"+to+"'");
-		if(!"0".equals(channel))
-			colvals.put("channel =", "'"+channel+"'");
+
 		long activeUserNum = userService.findNum(colvals);
 				
 		
@@ -306,7 +305,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		colvals.remove("channel =");
 		
 		colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
-		if(!"0".equals(channel))
+		if(channel != null && !"0".equals(channel))
 			colvals.put("channel =", "'"+channel+"'");
 		long newAddUserNum = userService.findNum(colvals);
 		
@@ -315,8 +314,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 				
 		colvals.remove("createdDate between");
 		colvals.put("updatedDate between", "'"+from+"'" + " and " + "'"+to+"'");
-		if(!"0".equals(channel))
-			colvals.put("channel =", "'"+channel+"'");
+		
 		long activeUserNum = userService.findNum(colvals);
 		
 		println("activeUserNum:"+(System.currentTimeMillis()-t));
@@ -396,7 +394,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		
 		colvals.put("createdDate >", "'"+from+"'");
 		colvals.put("createdDate <=", "'"+to+"'");
-		if(!"0".equals(channel))
+		if(channel != null && !"0".equals(channel))
 			colvals.put("channel =", "'"+channel+"'");
 		long newAddUserNum = userService.findNum(colvals);
 		
@@ -407,8 +405,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		colvals.remove("createdDate <=");
 		colvals.put("updatedDate >", "'"+from+"'");
 		colvals.put("updatedDate <=", "'"+to+"'");
-		if(!"0".equals(channel))
-			colvals.put("channel =", "'"+channel+"'");
+
 		long activeUserNum = userService.findNum(colvals);
 		
 		println("activeUserNum:"+activeUserNum +"  "+(System.currentTimeMillis()-t));
