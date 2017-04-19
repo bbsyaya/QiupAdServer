@@ -14,4 +14,5 @@ public interface DaoTools {
 	public <T> QueryResult<T> find(Class<T> entityclass, LinkedHashMap<String, String> colvals,int firstindex,int maxresult, LinkedHashMap<String, String> orderby);
 	public <T> QueryResult<T> find(Class<T> entityclass, List<String> fileds,LinkedHashMap<String, String> colvals);
 	public <T> long findNum(Class<T> entityclass, LinkedHashMap<String, String> colvals);
+	public <T> long findNum(Class<T> entityclass, List<String> fileds,LinkedHashMap<String, String> colvals);
 }

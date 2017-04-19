@@ -55,10 +55,10 @@ public class DaoToolsImpl implements DaoTools{
 		qr.setList(query.getResultList());
 		if(columnName!=null && value!=null)
 		{
-			query = em.createQuery("select count(o) from "+entityname+" o where o."+columnName+" = '"+value+"' "+orderbysq);
+			query = em.createQuery("select count(o.id) from "+entityname+" o where o."+columnName+" = '"+value+"' "+orderbysq);
 			qr.setNum((Long)query.getSingleResult());
 		}else{
-			query = em.createQuery("select count(o) from "+entityname+" o");
+			query = em.createQuery("select count(o.id) from "+entityname+" o");
 			qr.setNum((Long)query.getSingleResult());
 		}	
 		return qr;
@@ -85,10 +85,10 @@ public class DaoToolsImpl implements DaoTools{
 		qr.setList(query.getResultList());
 		if(columnName!=null && value!=null)
 		{
-			query = em.createQuery("select count(o) from "+entityname+" o where o."+columnName+" = '"+value+"' and o."+columnName2+" = '"+value2+"' "+orderbysq);
+			query = em.createQuery("select count(o.id) from "+entityname+" o where o."+columnName+" = '"+value+"' and o."+columnName2+" = '"+value2+"' "+orderbysq);
 			qr.setNum((Long)query.getSingleResult());
 		}else{
-			query = em.createQuery("select count(o) from "+entityname+" o");
+			query = em.createQuery("select count(o.id) from "+entityname+" o");
 			qr.setNum((Long)query.getSingleResult());
 		}	
 		return qr;
@@ -139,10 +139,10 @@ public class DaoToolsImpl implements DaoTools{
 		qr.setList(query.getResultList());
 		if(colvalssq != null && !"".equals(colvalssq))
 		{
-			query = em.createQuery("select count(o) from "+entityname+" o where "+colvalssq+orderbysq);
+			query = em.createQuery("select count(o.id) from "+entityname+" o where "+colvalssq+orderbysq);
 			qr.setNum((Long)query.getSingleResult());
 		}else{
-			query = em.createQuery("select count(o) from "+entityname+" o");
+			query = em.createQuery("select count(o.id) from "+entityname+" o");
 			qr.setNum((Long)query.getSingleResult());
 		}	
 		return qr;
@@ -183,6 +183,27 @@ public class DaoToolsImpl implements DaoTools{
 		return qr;
 	}
 	
+	public <T> long findNum(Class<T> entityclass,
+			List<String> fileds,
+			LinkedHashMap<String, String> colvals) {
+		long num = 0;
+		String entityname = getEntityName(entityclass);
+		String colvalssq = getColVals(colvals);
+		String filedssq = getFiledVals(fileds);
+		String sql = null;
+		Query query = null;
+		if(colvalssq != null && !"".equals(colvalssq))
+		{
+			sql = "select count(distinct " +filedssq+ "  ) from "+entityname+" o where "+colvalssq;
+			query = em.createQuery(sql);
+		}else{
+			sql = "select count(distinct " +filedssq+ " ) from "+entityname+" o ";	
+			query = em.createQuery(sql);
+		}	
+		num = (Long)query.getSingleResult();
+		return num;
+	}
+	
 	
 	public String getFiledVals(List<String> fileds)
 	{
@@ -206,10 +227,10 @@ public class DaoToolsImpl implements DaoTools{
 		long num = 0;
 		if(colvalssq != null && !"".equals(colvalssq))
 		{
-			query = em.createQuery("select count(o) from "+entityname+" o where "+colvalssq);
+			query = em.createQuery("select count(o.id) from "+entityname+" o where "+colvalssq);
 			num = (Long)query.getSingleResult();
 		}else{
-			query = em.createQuery("select count(o) from "+entityname+" o");
+			query = em.createQuery("select count(o.id) from "+entityname+" o");
 			num = (Long)query.getSingleResult();
 		}	
 		return num;

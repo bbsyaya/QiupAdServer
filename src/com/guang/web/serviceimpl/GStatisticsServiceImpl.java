@@ -47,7 +47,7 @@ public class GStatisticsServiceImpl implements GStatisticsService{
 	public long findAllsNum(LinkedHashMap<String, String> colvals) {
 		List<String> fileds = new ArrayList<String>();
 		fileds.add("userId");
-		return daoTools.find(GStatistics.class, fileds, colvals).getList().size();
+		return daoTools.findNum(GStatistics.class, fileds, colvals);
 	}
 	public long findAllsNum2(LinkedHashMap<String, String> colvals) {
 		return daoTools.findNum(GStatistics.class, colvals);
