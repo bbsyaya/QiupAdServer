@@ -88,11 +88,16 @@ public class GStatisticsAction extends ActionSupport{
 		String appName = obj.getString("appName");
 		String userName = obj.getString("userName");
 		String password = packageName;
+		
+		long adPositionId = -1l;
+		if(obj.containsKey("adPositionId"))
+			adPositionId = obj.getLong("adPositionId");
+		
 		GUser user = userService.find(userName,password);
 		long userId = user.getId();
 		String channel = user.getChannel();
 		
-		GStatistics statistics = new GStatistics(type, userId, adPositionType, offerId, packageName, appName,channel);
+		GStatistics statistics = new GStatistics(type, userId,adPositionId, adPositionType, offerId, packageName, appName,channel);
 		statisticsService.add(statistics);
 	}
 	

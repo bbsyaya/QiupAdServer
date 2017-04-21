@@ -14,6 +14,7 @@ import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 
 import com.guang.web.common.GStatisticsType;
+import com.guang.web.mode.GAdPosition;
 import com.guang.web.mode.GAdPositionStatistics;
 import com.guang.web.mode.GStatistics;
 import com.guang.web.service.GAdPositionService;
@@ -119,8 +120,26 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		GAdPositionStatistics adPositionStatistics = new GAdPositionStatistics(requestNum, showNum, clickNum, downloadNum, downloadSuccessNum, installNum, 
 				 activateNum, income, newAddUserNum, activeUserNum, adActiveUserNum);
 		slist.add(adPositionStatistics);
+		
+		List<GAdPosition> adPositions = adPositionService.findAlls().getList();
+		
+		List<GAdPosition> adPositionTypes = new ArrayList<GAdPosition>();
+		adPositionTypes.addAll(adPositions);
+		
+		for(int i =  0; i < adPositionTypes.size() - 1;i ++)
+		{
+			  for(int j = adPositionTypes.size() -  1;j > i;j --)
+			  {
+			     if ((int)(adPositionTypes.get(j).getType()) == (int)(adPositionTypes.get(i).getType()))
+			     {
+			    	 adPositionTypes.remove(j);
+			     }
+			  } 
+		} 
+	
 		ActionContext.getContext().put("list", slist);
-		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());	
+		ActionContext.getContext().put("adPositions", adPositions);	
+		ActionContext.getContext().put("adPositionTypes", adPositionTypes);
 		ActionContext.getContext().put("medias", sdkService.findAlls().getList());
 		ActionContext.getContext().put("sdks", sdkService.findAlls().getList());
 		ActionContext.getContext().put("pages", "adPositionStatistics");
@@ -141,16 +160,22 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 	{		
 		String from = ServletActionContext.getRequest().getParameter("from");
 		String to = ServletActionContext.getRequest().getParameter("to");
+		String adPositionId = ServletActionContext.getRequest().getParameter("adPositionId");
 		String adPositionType = ServletActionContext.getRequest().getParameter("adPositionType");
-		String doubleSta = ServletActionContext.getRequest().getParameter("doubleSta");
 		String media = ServletActionContext.getRequest().getParameter("media");
 		String channel = ServletActionContext.getRequest().getParameter("channel");
 		
 		List<GAdPositionStatistics> slist = new ArrayList<GAdPositionStatistics>();
 		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 		
-		if(adPositionType != null && !"0".equals(adPositionType))
-			colvals.put("adPositionType =", adPositionType);
+		if(adPositionId != null && !"0".equals(adPositionId))
+			colvals.put("adPositionId =", adPositionId);
+		else
+		{
+			if(adPositionType != null && !"0".equals(adPositionType))
+				colvals.put("adPositionType =", adPositionType);
+		}
+		
 		if(media != null && !"0".equals(media))
 			colvals.put("packageName =", "'"+media+"'");
 		if(channel != null && !"0".equals(channel))
@@ -184,38 +209,13 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 //		colvals.put("type =", GStatisticsType.ACTIVATE + "");
 		long activateNum = 0;//statisticsService.findAlls(colvals).getNum();
 		
-		if(doubleSta != null && "1".equals(doubleSta))
-		{
-//			colvals.remove("type =");
-//			colvals.put("type =", GStatisticsType.DOUBLE_SHOW + "");
-//			showNum += statisticsService.findAlls(colvals).getNum();
-//
-//			colvals.remove("type =");
-//			colvals.put("type =", GStatisticsType.DOUBLE_CLICK + "");
-//			clickNum += statisticsService.findAlls(colvals).getNum();
-//
-//			colvals.remove("type =");
-//			colvals.put("type =", GStatisticsType.DOUBLE_DOWNLOAD + "");
-//			downloadNum += statisticsService.findAlls(colvals).getNum();
-//
-//			colvals.remove("type =");
-//			colvals.put("type =", GStatisticsType.DOUBLE_DOWNLOAD_SUCCESS + "");
-//			downloadSuccessNum += statisticsService.findAlls(colvals).getNum();
-//
-//			colvals.remove("type =");
-//			colvals.put("type =", GStatisticsType.DOUBLE_INSTALL + "");
-//			installNum += statisticsService.findAlls(colvals).getNum();
-//
-//			colvals.remove("type =");
-//			colvals.put("type =", GStatisticsType.DOUBLE_ACTIVATE + "");
-//			activateNum += statisticsService.findAlls(colvals).getNum();
-		}
-
+		
 		float income = activateNum;
 		
 		colvals.remove("type =");
 		long adActiveUserNum = statisticsService.findAllsNum(colvals);
 		
+		colvals.remove("adPositionId =");
 		colvals.remove("adPositionType =");
 		colvals.remove("packageName =");
 		colvals.remove("uploadTime between");

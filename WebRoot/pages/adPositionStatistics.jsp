@@ -9,11 +9,17 @@
 <script type="text/javascript"
 	src="<%=basePath%>scripts/laydate.dev.js"></script>
 <h1>广告位统计</h1>
-<div style="width:800px;float:right;font-size: 14px;text-align:right;margin-top: -40px;">
-<label><input type="checkbox" id="doubleSta" name="doubleSta" value="1" />间接</label>
+<div style="width:1000px;float:right;font-size: 14px;text-align:right;margin-top: -40px;">
+
 <select id="adPosition_sel">
   <option value ="0">广告位选择</option>
   <s:iterator value="adPositions" var="adPosition">
+  	<option value ="<s:property value="#adPosition.id" />"><s:property value="#adPosition.name" /></option>
+  </s:iterator>
+</select>
+<select id="adPositionType_sel">
+  <option value ="0">广告位类型选择</option>
+  <s:iterator value="adPositionTypes" var="adPosition">
   	<option value ="<s:property value="#adPosition.type" />"><s:property value="#adPosition.name" /></option>
   </s:iterator>
 </select>
