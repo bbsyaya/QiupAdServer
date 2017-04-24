@@ -312,14 +312,14 @@ public class GUserAction extends ActionSupport{
 		gNetworkOperatorService.add(new GNetworkOperator(user.getNetworkOperatorName()));
 		gPhoneModelService.add(new GPhoneModel(user.getModel()));
 		
-		logger.info(user.getName()+" 注册成功！");
+//		logger.info(user.getName()+" 注册成功！");
 		loginSuccess(user.getName());
 		print("1");	
 	}
 	//登录成功
 	public void loginSuccess(String name)
 	{
-		logger.info(name+" 登录成功！");
+//		logger.info(name+" 登录成功！");
 		
 	}
 	

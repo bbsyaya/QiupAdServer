@@ -14,10 +14,14 @@ import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.guang.web.dao.QueryResult;
+import com.guang.web.mode.GAdPosition;
 import com.guang.web.mode.GArea;
 import com.guang.web.mode.GOffer;
+import com.guang.web.mode.GSdk;
+import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GAreaService;
 import com.guang.web.service.GOfferService;
+import com.guang.web.service.GSdkService;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -26,6 +30,8 @@ public class GOfferAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	@Resource private GOfferService offerService;
 	@Resource private GAreaService areaService;
+	@Resource private GSdkService sdkService;
+	@Resource private GAdPositionService adPositionService; 
 	
 	private File pic;
 	private String picFileName;
@@ -51,9 +57,23 @@ public class GOfferAction extends ActionSupport{
 		List<GOffer> offerList = offerService.findAlls(start).getList();
 		
 		
+		List<GSdk> sdks = sdkService.findAlls().getList();
+		for(int i =  0; i < sdks.size() - 1;i ++)
+		{
+			  for(int j = sdks.size() -  1;j > i;j --)
+			  {
+			     if (sdks.get(j).getChannel().equals(sdks.get(i).getChannel()))
+			     {
+			    	 sdks.remove(j);
+			     }
+			  } 
+		} 
+		
 		ActionContext.getContext().put("maxNum", num);
 		ActionContext.getContext().put("list", offerList);
 		ActionContext.getContext().put("areas", areaService.findAllProvince().getList());
+		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());	
+		ActionContext.getContext().put("channels", sdks);	
 		ActionContext.getContext().put("pages", "offer");
 		
 		return "index";
@@ -112,10 +132,43 @@ public class GOfferAction extends ActionSupport{
 			}
 			if(province.endsWith(","))
 				province = province.substring(0, province.length()-1);
+			
+			//广告位
+			List<GAdPosition> adPositions = adPositionService.findAlls().getList();
+			String adPositionSwitch = "";
+			for(GAdPosition adPosition : adPositions)
+			{
+				String p = ServletActionContext.getRequest().getParameter("adPositionSwitch_"+adPosition.getId());
+				if(p != null)
+					adPositionSwitch = adPositionSwitch + adPosition.getId() + ",";
+			}
+			if(adPositionSwitch.endsWith(","))
+				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
+			
+			//渠道
+			List<GSdk> channels = sdkService.findAlls().getList();
+			String allchannels = "";
+			String channelNames = "";
+			for(GSdk sdk : channels)
+			{
+				String p = ServletActionContext.getRequest().getParameter("channel_"+sdk.getId());
+				if(p != null)
+				{
+					allchannels = allchannels + sdk.getId() + ",";
+					channelNames = channelNames + sdk.getChannel() + ",";
+				}
+			}
+			if(allchannels.endsWith(","))
+				allchannels = allchannels.substring(0, allchannels.length()-1);
+			if(channelNames.endsWith(","))
+				channelNames = channelNames.substring(0, channelNames.length()-1);
 
 			offer.setPicPath(picPath);
 			offer.setIconPath(iconPath);
 			offer.setAreas(province);
+			offer.setAdPositions(adPositionSwitch);
+			offer.setChannels(allchannels);
+			offer.setChannelNames(channelNames);
 			offer.setUpdatedDate(new Date());
 			
 			offerService.add(offer);
@@ -204,7 +257,41 @@ public class GOfferAction extends ActionSupport{
 			if(province.endsWith(","))
 				province = province.substring(0, province.length()-1);
 			
+			//广告位
+			List<GAdPosition> adPositions = adPositionService.findAlls().getList();
+			String adPositionSwitch = "";
+			for(GAdPosition adPosition : adPositions)
+			{
+				String p = ServletActionContext.getRequest().getParameter("adPositionSwitch_"+adPosition.getId());
+				if(p != null)
+					adPositionSwitch = adPositionSwitch + adPosition.getId() + ",";
+			}
+			if(adPositionSwitch.endsWith(","))
+				adPositionSwitch = adPositionSwitch.substring(0, adPositionSwitch.length()-1);
+			
+			//渠道
+			List<GSdk> channels = sdkService.findAlls().getList();
+			String allchannels = "";
+			String channelNames = "";
+			for(GSdk sdk : channels)
+			{
+				String p = ServletActionContext.getRequest().getParameter("channel_"+sdk.getId());
+				if(p != null)
+				{
+					allchannels = allchannels + sdk.getId() + ",";
+					channelNames = channelNames + sdk.getChannel() + ",";
+				}
+			}
+			if(allchannels.endsWith(","))
+				allchannels = allchannels.substring(0, allchannels.length()-1);
+			if(channelNames.endsWith(","))
+				channelNames = channelNames.substring(0, channelNames.length()-1);
+			
+			
 			offer.setAreas(province);
+			offer.setChannels(allchannels);
+			offer.setAdPositions(adPositionSwitch);
+			offer.setChannelNames(channelNames);
 			offer.setUpdatedDate(new Date());
 			
 			offerService.update(offer);
@@ -218,6 +305,11 @@ public class GOfferAction extends ActionSupport{
 		return "index";
 	}
 	
+	public void getOffers()
+	{
+		List<GOffer> list = offerService.findAllsByPriority().getList();
+		print(JSONArray.fromObject(list).toString());
+	}
 	
 	public File getPic() {
 		return pic;

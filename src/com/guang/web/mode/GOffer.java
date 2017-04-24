@@ -24,10 +24,15 @@ public class GOffer {
 	private String areas;
 	private Date updatedDate;
 	
+	private String channels;
+	private String adPositions;
+	private String channelNames;
+	
 	public GOffer(){}
 	public GOffer(String appName, String packageName, String appDesc,
 			String picPath, String iconPath, String apkPath, float apkSize,
-			int priority, String areas) {
+			int priority, String areas,String channels,String adPositions,
+			String channelNames) {
 		super();
 		this.appName = appName;
 		this.packageName = packageName;
@@ -39,6 +44,10 @@ public class GOffer {
 		this.priority = priority;
 		this.areas = areas;
 		this.updatedDate = new Date();
+		
+		this.channels = channels;
+		this.adPositions = adPositions;
+		this.channelNames = channelNames;
 	}
 	@Id
 	@GeneratedValue
@@ -115,6 +124,27 @@ public class GOffer {
 	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	@Lob
+	public String getChannels() {
+		return channels;
+	}
+	public void setChannels(String channels) {
+		this.channels = channels;
+	}
+	@Lob
+	public String getAdPositions() {
+		return adPositions;
+	}
+	public void setAdPositions(String adPositions) {
+		this.adPositions = adPositions;
+	}
+	@Lob
+	public String getChannelNames() {
+		return channelNames;
+	}
+	public void setChannelNames(String channelNames) {
+		this.channelNames = channelNames;
 	}
 	
 	

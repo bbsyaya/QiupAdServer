@@ -108,6 +108,24 @@
 					value="" style="width:100px;" />
 				</td>
 			</tr>
+						
+			<tr >
+				<td>广告位：</td>
+				<td >
+				<s:iterator value="adPositions" var="val">	
+				<label><input type="checkbox" name="adPositionSwitch_<s:property value="#val.id" />" value="1" /><s:property value="#val.name" /></label>
+				</s:iterator>
+				</td>
+			</tr>	
+			
+			<tr >
+				<td>渠道：</td>
+				<td >
+				<s:iterator value="channels" var="val">	
+				<label><input type="checkbox" name="channel_<s:property value="#val.id" />" value="1" /><s:property value="#val.channel" /></label>
+				</s:iterator>
+				</td>
+			</tr>	
 			
 			<tr id="update_areas2_tr">
 				<td>省份：</td>
@@ -191,6 +209,26 @@
 					value="" style="width:100px;" />
 				</td>
 			</tr>
+
+			<tr >
+				<td>广告位：</td>
+				<td id="update_adPositionSwitch">
+				<s:iterator value="adPositions" var="val">	
+				<label><input type="checkbox" id="update_adPositionSwitch_<s:property value="#val.id" />" name="adPositionSwitch_<s:property value="#val.id" />" value="1" /><s:property value="#val.name" />
+				</label>
+				</s:iterator>
+				</td>
+			</tr>	
+			
+			<tr >
+				<td>渠道：</td>
+				<td id="update_channels">
+				<s:iterator value="channels" var="val">	
+				<label><input type="checkbox" id="update_channel_<s:property value="#val.id" />" name="channel_<s:property value="#val.id" />" value="1" /><s:property value="#val.channel" />
+				</label>
+				</s:iterator>
+				</td>
+			</tr>	
 			
 			<tr  id="update_areas_tr">
 				<td>省份：</td>
@@ -312,6 +350,36 @@ $("#find").click(function()
 					$(id).attr("checked", "checked");
 			}
 		}		
+	}
+	
+	if(jsonobj.adPositions != "" && jsonobj.adPositions != null)
+	{
+		var arr = jsonobj.adPositions.split(",");
+		var cs = $("#update_adPositionSwitch").children();
+		for(var j=0;j<cs.length;j++)
+		{
+			cs[j].getElementsByTagName("input")[0].checked = "";
+		}
+		for(var i=0;i<arr.length;i++)
+		{
+			var id = "#update_adPositionSwitch_" + arr[i];
+			$(id).attr("checked", "checked");
+		}
+	}
+	
+	if(jsonobj.channels != "" && jsonobj.channels != null)
+	{
+		var arr = jsonobj.channels.split(",");
+		var cs = $("#update_channel").children();
+		for(var j=0;j<cs.length;j++)
+		{
+			cs[j].getElementsByTagName("input")[0].checked = "";
+		}
+		for(var i=0;i<arr.length;i++)
+		{
+			var id = "#update_channel_" + arr[i];
+			$(id).attr("checked", "checked");
+		}
 	}
 	
 	$("#d_addoffer").hide();
