@@ -51,10 +51,10 @@ var updateTable = function(from,to)
 		s+="<td>" + data[i].downloadSuccessNum + "</td>";
 		s+="<td>" + data[i].installNum + "</td>";
 		s+="<td>" + data[i].activateNum + "</td>";
-		s+="<td>" + data[i].clickRate + "</td>";
-		s+="<td>" + data[i].downloadRate + "</td>";
-		s+="<td>" + data[i].installRate + "</td>";
-		s+="<td>" + data[i].activateRate + "</td>";
+		s+="<td>" + (data[i].clickRate*100).toFixed(1) + "%</td>";
+		s+="<td>" + (data[i].downloadRate*100).toFixed(1) + "%</td>";
+		s+="<td>" + (data[i].installRate*100).toFixed(1) + "%</td>";
+		s+="<td>" + (data[i].activateRate*100).toFixed(1) + "%</td>";
 		s+="<td>" + getDate(data[i].stime) + "</td>";
 		s+= "</tr>";
 			

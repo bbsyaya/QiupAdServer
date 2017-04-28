@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -51,10 +52,10 @@
 				<td><s:property value="#val.downloadSuccessNum" /></td>
 				<td><s:property value="#val.installNum" /></td>
 				<td><s:property value="#val.activateNum" /></td>
-				<td><s:property value="#val.clickRate" /></td>
-				<td><s:property value="#val.downloadRate" /></td>
-				<td><s:property value="#val.installRate" /></td>
-				<td><s:property value="#val.activateRate" /></td>
+				<td><fmt:formatNumber value="${val.clickRate }" pattern="#0.0%" /></td>
+				<td><fmt:formatNumber value="${val.downloadRate }" pattern="#0.0%" /></td>
+				<td><fmt:formatNumber value="${val.installRate }" pattern="#0.0%" /></td>
+				<td><fmt:formatNumber value="${val.activateRate }" pattern="#0.0%" /></td>
 				<td><s:date name="#val.stime" format="yyyy-MM-dd" /></td>			
 			</tr>
 		</s:iterator>
