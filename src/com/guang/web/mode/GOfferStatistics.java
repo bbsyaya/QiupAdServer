@@ -25,13 +25,14 @@ public class GOfferStatistics {
 	private float downloadRate;
 	private float installRate;
 	private float activateRate;
+	private float income;
 	private Date stime;
 	
 	public GOfferStatistics(){}
 	public GOfferStatistics(long offerId,String offerName,long requestNum, long showNum, long clickNum,
 			long downloadNum, long downloadSuccessNum, long installNum,
 			long activateNum, float clickRate, float downloadRate,
-			float installRate,float activateRate, Date stime) {
+			float installRate,float activateRate,float income, Date stime) {
 		super();
 		this.offerId = offerId;
 		this.offerName = offerName;
@@ -46,6 +47,7 @@ public class GOfferStatistics {
 		this.downloadRate = downloadRate;
 		this.installRate = installRate;
 		this.activateRate = activateRate;
+		this.income = income;
 		this.stime = stime;
 	}
 	@Id
@@ -140,6 +142,13 @@ public class GOfferStatistics {
 	}
 	public void setStime(Date stime) {
 		this.stime = stime;
+	}
+	
+	public float getIncome() {
+		return income;
+	}
+	public void setIncome(Float income) {
+		this.income = income;
 	}
 	@Override
 	public String toString() {

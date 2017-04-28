@@ -21,6 +21,7 @@
 			<th>Apk</th>
 			<th>Apk大小</th>
 			<th>优先级</th>
+			<th>单价</th>
 			<th>创建日期</th>								
 			<th>操作</th>
 		</tr>
@@ -37,6 +38,7 @@
 				<td><s:property value="#val.apkPath" /></td>
 				<td><s:property value="#val.apkSize" /></td>
 				<td><s:property value="#val.priority" /></td>
+				<td><s:property value="#val.pice" /></td>
 				<td align="center"><s:date name="#val.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>				
 				<td class="thUpdate"><input type="button" value="操作"/></td>
 			</tr>
@@ -105,6 +107,13 @@
 			<tr >
 				<td>优先级:</td>
 				<td><input type="text" id="priority" name="offer.priority"
+					value="" style="width:100px;" />
+				</td>
+			</tr>
+			
+			<tr >
+				<td>单价:</td>
+				<td><input type="text" id="pice" name="offer.pice"
 					value="" style="width:100px;" />
 				</td>
 			</tr>
@@ -206,6 +215,13 @@
 			<tr >
 				<td>优先级:</td>
 				<td><input type="text" id="update_priority" name="offer.priority"
+					value="" style="width:100px;" />
+				</td>
+			</tr>
+			
+			<tr >
+				<td>单价:</td>
+				<td><input type="text" id="update_pice" name="offer.pice"
 					value="" style="width:100px;" />
 				</td>
 			</tr>
@@ -327,6 +343,7 @@ $("#find").click(function()
 	$("#update_apkPath").val(jsonobj.apkPath);
 	$("#update_apkSize").val(jsonobj.apkSize);
 	$("#update_priority").val(jsonobj.priority);
+	$("#update_pice").val(jsonobj.pice);
 	
 	
 	

@@ -95,8 +95,11 @@ public class GTimerTask {
 				float downloadRate = downloadNum != 0 ? (float)downloadSuccessNum/(float)downloadNum : 0;
 				float installRate = downloadSuccessNum != 0 ? (float)installNum/(float)downloadSuccessNum : 0;
 				float activateRate = installNum != 0 ? (float)activateNum/(float)installNum : 0;
-				
-				GOfferStatistics offerStatistics = new GOfferStatistics(offer.getId(), offer.getAppName(), requestNum, showNum, clickNum, downloadNum, downloadSuccessNum, installNum, activateNum, clickRate, downloadRate, installRate, activateRate,yesterday);
+				float income = activateNum*offer.getPice();
+				GOfferStatistics offerStatistics = new GOfferStatistics(offer.getId(), offer.getAppName(), requestNum, 
+						showNum, clickNum, downloadNum, downloadSuccessNum, 
+						installNum, activateNum, clickRate, downloadRate, 
+						installRate, activateRate,income,yesterday);
 
 				offerStatisticsService.add(offerStatistics);
 			}

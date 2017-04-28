@@ -55,6 +55,7 @@ var updateTable = function(from,to)
 		s+="<td>" + (data[i].downloadRate*100).toFixed(1) + "%</td>";
 		s+="<td>" + (data[i].installRate*100).toFixed(1) + "%</td>";
 		s+="<td>" + (data[i].activateRate*100).toFixed(1) + "%</td>";
+		s+="<td>" + (data[i].income).toFixed(1) + "</td>";
 		s+="<td>" + getDate(data[i].stime) + "</td>";
 		s+= "</tr>";
 			

@@ -28,6 +28,8 @@ public class GOffer {
 	private String adPositions;
 	private String channelNames;
 	
+	private Float pice;
+	
 	public GOffer(){}
 	public GOffer(String appName, String packageName, String appDesc,
 			String picPath, String iconPath, String apkPath, float apkSize,
@@ -145,6 +147,12 @@ public class GOffer {
 	}
 	public void setChannelNames(String channelNames) {
 		this.channelNames = channelNames;
+	}
+	public Float getPice() {
+		return pice;
+	}
+	public void setPice(Float pice) {
+		this.pice = pice;
 	}
 	
 	
