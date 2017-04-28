@@ -62,21 +62,21 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		colvals.put("type =", GStatisticsType.CLICK + "");
 		long clickNum = statisticsService.findAllsNum2(colvals);//findAlls(colvals).getNum();
 
-//		colvals.remove("type =");
-//		colvals.put("type =", GStatisticsType.DOWNLOAD + "");
-		long downloadNum = 0;// statisticsService.findAlls(colvals).getNum();
+		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.DOWNLOAD + "");
+		long downloadNum = statisticsService.findAllsNum2(colvals);
 
-//		colvals.remove("type =");
-//		colvals.put("type =", GStatisticsType.DOWNLOAD_SUCCESS + "");
-		long downloadSuccessNum = 0;//statisticsService.findAlls(colvals).getNum();
+		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.DOWNLOAD_SUCCESS + "");
+		long downloadSuccessNum = statisticsService.findAllsNum2(colvals);
 
-//		colvals.remove("type =");
-//		colvals.put("type =", GStatisticsType.INSTALL + "");
-		long installNum = 0;//statisticsService.findAlls(colvals).getNum();
+		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.INSTALL + "");
+		long installNum = statisticsService.findAllsNum2(colvals);
 
-//		colvals.remove("type =");
-//		colvals.put("type =", GStatisticsType.ACTIVATE + "");
-		long activateNum = 0;//statisticsService.findAlls(colvals).getNum();
+		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.ACTIVATE + "");
+		long activateNum = statisticsService.findAllsNum2(colvals);
 		
 //		colvals.remove("type =");
 //		colvals.put("type =", GStatisticsType.DOUBLE_SHOW + "");
@@ -193,21 +193,21 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		colvals.put("type =", GStatisticsType.CLICK + "");
 		long clickNum = statisticsService.findAllsNum2(colvals);//statisticsService.findAlls(colvals).getNum();
 
-//		colvals.remove("type =");
-//		colvals.put("type =", GStatisticsType.DOWNLOAD + "");
-		long downloadNum = 0;// statisticsService.findAlls(colvals).getNum();
+		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.DOWNLOAD + "");
+		long downloadNum =  statisticsService.findAllsNum2(colvals);
 
-//		colvals.remove("type =");
-//		colvals.put("type =", GStatisticsType.DOWNLOAD_SUCCESS + "");
-		long downloadSuccessNum = 0;//statisticsService.findAlls(colvals).getNum();
+		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.DOWNLOAD_SUCCESS + "");
+		long downloadSuccessNum = statisticsService.findAllsNum2(colvals);
 
-//		colvals.remove("type =");
-//		colvals.put("type =", GStatisticsType.INSTALL + "");
-		long installNum = 0;//statisticsService.findAlls(colvals).getNum();
+		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.INSTALL + "");
+		long installNum = statisticsService.findAllsNum2(colvals);
 
-//		colvals.remove("type =");
-//		colvals.put("type =", GStatisticsType.ACTIVATE + "");
-		long activateNum = 0;//statisticsService.findAlls(colvals).getNum();
+		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.ACTIVATE + "");
+		long activateNum = statisticsService.findAllsNum2(colvals);
 		
 		
 		float income = activateNum;

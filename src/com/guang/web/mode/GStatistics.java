@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 //alter table offer_statistics drop index index_type
 //alter table offer_statistics add index index_adPositionId(adPositionId)
 //alter table offer_statistics add adPositionId bigint(20) DEFAULT NULL;
+//alter table offer_statistics add index index_offerId(offerId)
 public class GStatistics {
 	private Long id;
 	private Integer type;//统计类型 

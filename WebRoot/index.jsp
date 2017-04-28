@@ -96,6 +96,12 @@
 						class="<s:if test="#request.pages == 'adPositionStatistics'">current</s:if>">广告位统计</a>
 						</li>
 					</s:if>
+					
+					<s:if test="#session.admin.permission.model_admin == true">
+						<li><a href="offerStatistics_list"
+						class="<s:if test="#request.pages == 'offerStatistics'">current</s:if>">OFFER统计</a>
+						</li>
+					</s:if>
 										
 					<s:if test="#session.admin.permission.model_admin == true">
 					<li><a href="app_list"

@@ -7,19 +7,20 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.guang.web.mode.GUser;
 import com.guang.web.mode.GatherAppInfo;
 import com.guang.web.tools.ApkTools;
+import com.guang.web.tools.GTimerTask;
 import com.guang.web.tools.GTools;
 
 public class GTest {
 
 	public static void main(String[] args) {
-		System.out.println("u".startsWith("u"));
+	
+		
 		
 	}
 	
