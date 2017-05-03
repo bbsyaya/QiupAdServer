@@ -17,8 +17,16 @@ public class GStatisticsType {
 	public static final int DOUBLE_INSTALL = 11;//安装
 	public static final int DOUBLE_ACTIVATE = 12;//激活
 	
+	public static final int DOWNLOAD_CANCEL = 13;//下载取消
+	public static final int DOWNLOAD_BACKGROUND = 14;//后台下载
+	public static final int INSTALL_LATER = 15;//安装稍后
+	public static final int INSTALL_GO = 16;//去安装
+	public static final int OPEN_CANCEL = 17;//打开取消
+	public static final int OPEN_GO = 18;//打开
+	
 	public static final String Types[] = {
 		"请求","展示","点击","下载","下载成功","安装","激活",
-		"间接展示","间接点击","间接下载","间接下载成功","间接安装","间接激活"
+		"间接展示","间接点击","间接下载","间接下载成功","间接安装","间接激活",
+		"下载取消","后台下载","安装稍后","去安装","打开取消","打开"
 	};
 }

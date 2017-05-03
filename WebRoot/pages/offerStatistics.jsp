@@ -39,6 +39,12 @@
 			<th>安装率</th>
 			<th>激活率</th>
 			<th>收入</th>
+			<th>下载取消</th>
+			<th>后台下载</th>
+			<th>安装稍后</th>
+			<th>去安装</th>
+			<th>打开取消</th>
+			<th>打开</th>
 			<th>日期</th>
 		</tr>
 	</thead>
@@ -58,6 +64,12 @@
 				<td><fmt:formatNumber value="${val.installRate }" pattern="#0.0%" /></td>
 				<td><fmt:formatNumber value="${val.activateRate }" pattern="#0.0%" /></td>
 				<td><fmt:formatNumber value="${val.income }" pattern="#0.0" /></td>
+				<td><s:property value="#val.downloadCancelNum" /></td>
+				<td><s:property value="#val.downloadBackgroundNum" /></td>
+				<td><s:property value="#val.installLaterNum" /></td>
+				<td><s:property value="#val.installGoNum" /></td>
+				<td><s:property value="#val.openCancelNum" /></td>
+				<td><s:property value="#val.openGoNum" /></td>
 				<td><s:date name="#val.stime" format="yyyy-MM-dd" /></td>			
 			</tr>
 		</s:iterator>

@@ -91,16 +91,46 @@ public class GTimerTask {
 				colvals.put("type =", GStatisticsType.ACTIVATE + "");
 				long activateNum = statisticsService.findAllsNum2(colvals);
 				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.DOWNLOAD_CANCEL + "");
+				long downloadCancelNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.DOWNLOAD_BACKGROUND + "");
+				long downloadBackgroundNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.INSTALL_LATER + "");
+				long installLaterNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.INSTALL_GO + "");
+				long installGoNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.OPEN_CANCEL + "");
+				long openCancelNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.OPEN_GO + "");
+				long openGoNum = statisticsService.findAllsNum2(colvals);
+				
 				float clickRate = showNum!=0 ? (float)clickNum/(float)showNum : 0;
 				float downloadRate = downloadNum != 0 ? (float)downloadSuccessNum/(float)downloadNum : 0;
 				float installRate = downloadSuccessNum != 0 ? (float)installNum/(float)downloadSuccessNum : 0;
 				float activateRate = installNum != 0 ? (float)activateNum/(float)installNum : 0;
-				float income = activateNum*offer.getPice();
+				float income = offer.getPice() != null ? activateNum*offer.getPice() : 0;
+				
 				GOfferStatistics offerStatistics = new GOfferStatistics(offer.getId(), offer.getAppName(), requestNum, 
 						showNum, clickNum, downloadNum, downloadSuccessNum, 
 						installNum, activateNum, clickRate, downloadRate, 
 						installRate, activateRate,income,yesterday);
-
+				offerStatistics.setDownloadCancelNum(downloadCancelNum);
+				offerStatistics.setDownloadBackgroundNum(downloadBackgroundNum);
+				offerStatistics.setInstallLaterNum(installLaterNum);
+				offerStatistics.setInstallGoNum(installGoNum);
+				offerStatistics.setOpenCancelNum(openCancelNum);
+				offerStatistics.setOpenGoNum(openGoNum);
 				offerStatisticsService.add(offerStatistics);
 			}
 		}

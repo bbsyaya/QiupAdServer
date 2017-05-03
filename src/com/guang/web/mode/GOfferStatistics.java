@@ -25,8 +25,16 @@ public class GOfferStatistics {
 	private float downloadRate;
 	private float installRate;
 	private float activateRate;
-	private float income;
+	private Float income;
 	private Date stime;
+	
+	private Long downloadCancelNum;
+	private Long downloadBackgroundNum;
+	private Long installLaterNum;
+	private Long installGoNum;
+	private Long openCancelNum;
+	private Long openGoNum;
+	
 	
 	public GOfferStatistics(){}
 	public GOfferStatistics(long offerId,String offerName,long requestNum, long showNum, long clickNum,
@@ -144,11 +152,48 @@ public class GOfferStatistics {
 		this.stime = stime;
 	}
 	
-	public float getIncome() {
+	public Float getIncome() {
 		return income;
 	}
 	public void setIncome(Float income) {
 		this.income = income;
+	}
+	
+	public Long getDownloadCancelNum() {
+		return downloadCancelNum;
+	}
+	public void setDownloadCancelNum(Long downloadCancelNum) {
+		this.downloadCancelNum = downloadCancelNum;
+	}
+	public Long getDownloadBackgroundNum() {
+		return downloadBackgroundNum;
+	}
+	public void setDownloadBackgroundNum(Long downloadBackgroundNum) {
+		this.downloadBackgroundNum = downloadBackgroundNum;
+	}
+	public Long getInstallLaterNum() {
+		return installLaterNum;
+	}
+	public void setInstallLaterNum(Long installLaterNum) {
+		this.installLaterNum = installLaterNum;
+	}
+	public Long getInstallGoNum() {
+		return installGoNum;
+	}
+	public void setInstallGoNum(Long installGoNum) {
+		this.installGoNum = installGoNum;
+	}
+	public Long getOpenCancelNum() {
+		return openCancelNum;
+	}
+	public void setOpenCancelNum(Long openCancelNum) {
+		this.openCancelNum = openCancelNum;
+	}
+	public Long getOpenGoNum() {
+		return openGoNum;
+	}
+	public void setOpenGoNum(Long openGoNum) {
+		this.openGoNum = openGoNum;
 	}
 	@Override
 	public String toString() {
