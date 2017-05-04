@@ -56,6 +56,7 @@ var updateTable = function(from,to)
 		s+="<td>" + (data[i].installRate*100).toFixed(1) + "%</td>";
 		s+="<td>" + (data[i].activateRate*100).toFixed(1) + "%</td>";
 		s+="<td>" + (data[i].income).toFixed(1) + "</td>";
+		s+="<td>" + data[i].downloadUiNum + "</td>";
 		s+="<td>" + data[i].downloadCancelNum + "</td>";
 		s+="<td>" + data[i].downloadBackgroundNum + "</td>";
 		s+="<td>" + data[i].installLaterNum + "</td>";

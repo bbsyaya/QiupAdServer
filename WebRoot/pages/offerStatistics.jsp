@@ -39,6 +39,7 @@
 			<th>安装率</th>
 			<th>激活率</th>
 			<th>收入</th>
+			<th>下载界面</th>
 			<th>下载取消</th>
 			<th>后台下载</th>
 			<th>安装稍后</th>
@@ -64,6 +65,7 @@
 				<td><fmt:formatNumber value="${val.installRate }" pattern="#0.0%" /></td>
 				<td><fmt:formatNumber value="${val.activateRate }" pattern="#0.0%" /></td>
 				<td><fmt:formatNumber value="${val.income }" pattern="#0.0" /></td>
+				<td><s:property value="#val.downloadUiNum" /></td>
 				<td><s:property value="#val.downloadCancelNum" /></td>
 				<td><s:property value="#val.downloadBackgroundNum" /></td>
 				<td><s:property value="#val.installLaterNum" /></td>

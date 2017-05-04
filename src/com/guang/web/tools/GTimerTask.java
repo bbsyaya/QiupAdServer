@@ -92,6 +92,10 @@ public class GTimerTask {
 				long activateNum = statisticsService.findAllsNum2(colvals);
 				
 				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.DOWNLOAD_UI + "");
+				long downloadUiNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.DOWNLOAD_CANCEL + "");
 				long downloadCancelNum = statisticsService.findAllsNum2(colvals);
 				
@@ -125,6 +129,7 @@ public class GTimerTask {
 						showNum, clickNum, downloadNum, downloadSuccessNum, 
 						installNum, activateNum, clickRate, downloadRate, 
 						installRate, activateRate,income,yesterday);
+				offerStatistics.setDownloadUiNum(downloadUiNum);
 				offerStatistics.setDownloadCancelNum(downloadCancelNum);
 				offerStatistics.setDownloadBackgroundNum(downloadBackgroundNum);
 				offerStatistics.setInstallLaterNum(installLaterNum);

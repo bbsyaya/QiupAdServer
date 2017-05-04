@@ -28,6 +28,7 @@ public class GOfferStatistics {
 	private Float income;
 	private Date stime;
 	
+	private Long downloadUiNum;
 	private Long downloadCancelNum;
 	private Long downloadBackgroundNum;
 	private Long installLaterNum;
@@ -194,6 +195,13 @@ public class GOfferStatistics {
 	}
 	public void setOpenGoNum(Long openGoNum) {
 		this.openGoNum = openGoNum;
+	}
+	
+	public Long getDownloadUiNum() {
+		return downloadUiNum;
+	}
+	public void setDownloadUiNum(Long downloadUiNum) {
+		this.downloadUiNum = downloadUiNum;
 	}
 	@Override
 	public String toString() {

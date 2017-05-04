@@ -23,10 +23,11 @@ public class GStatisticsType {
 	public static final int INSTALL_GO = 16;//去安装
 	public static final int OPEN_CANCEL = 17;//打开取消
 	public static final int OPEN_GO = 18;//打开
+	public static final int DOWNLOAD_UI = 19;//下载界面
 	
 	public static final String Types[] = {
 		"请求","展示","点击","下载","下载成功","安装","激活",
 		"间接展示","间接点击","间接下载","间接下载成功","间接安装","间接激活",
-		"下载取消","后台下载","安装稍后","去安装","打开取消","打开"
+		"下载取消","后台下载","安装稍后","去安装","打开取消","打开","下载界面"
 	};
 }
