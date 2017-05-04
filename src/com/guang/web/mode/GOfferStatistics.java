@@ -27,14 +27,18 @@ public class GOfferStatistics {
 	private float activateRate;
 	private Float income;
 	private Date stime;
-	
-	private Long downloadUiNum;
+
 	private Long downloadCancelNum;
 	private Long downloadBackgroundNum;
 	private Long installLaterNum;
 	private Long installGoNum;
 	private Long openCancelNum;
 	private Long openGoNum;
+	private Long downloadUiNum;
+	private Long installUiNum;
+	private Long openUiNum;
+	private Long installUiUserNum;
+	private Long openUiUserNum;
 	
 	
 	public GOfferStatistics(){}
@@ -203,6 +207,32 @@ public class GOfferStatistics {
 	public void setDownloadUiNum(Long downloadUiNum) {
 		this.downloadUiNum = downloadUiNum;
 	}
+	
+	public Long getInstallUiNum() {
+		return installUiNum;
+	}
+	public void setInstallUiNum(Long installUiNum) {
+		this.installUiNum = installUiNum;
+	}
+	public Long getOpenUiNum() {
+		return openUiNum;
+	}
+	public void setOpenUiNum(Long openUiNum) {
+		this.openUiNum = openUiNum;
+	}
+	public Long getInstallUiUserNum() {
+		return installUiUserNum;
+	}
+	public void setInstallUiUserNum(Long installUiUserNum) {
+		this.installUiUserNum = installUiUserNum;
+	}
+	public Long getOpenUiUserNum() {
+		return openUiUserNum;
+	}
+	public void setOpenUiUserNum(Long openUiUserNum) {
+		this.openUiUserNum = openUiUserNum;
+	}
+	
 	@Override
 	public String toString() {
 		return "GOfferStatistics [id=" + id + ", offerId=" + offerId

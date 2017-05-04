@@ -90,11 +90,7 @@ public class GTimerTask {
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.ACTIVATE + "");
 				long activateNum = statisticsService.findAllsNum2(colvals);
-				
-				colvals.remove("type =");
-				colvals.put("type =", GStatisticsType.DOWNLOAD_UI + "");
-				long downloadUiNum = statisticsService.findAllsNum2(colvals);
-				
+								
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.DOWNLOAD_CANCEL + "");
 				long downloadCancelNum = statisticsService.findAllsNum2(colvals);
@@ -119,6 +115,22 @@ public class GTimerTask {
 				colvals.put("type =", GStatisticsType.OPEN_GO + "");
 				long openGoNum = statisticsService.findAllsNum2(colvals);
 				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.DOWNLOAD_UI + "");
+				long downloadUiNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.INSTALL_UI + "");
+				long installUiNum = statisticsService.findAllsNum2(colvals);
+				long installUiUserNum = statisticsService.findAllsNum(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.OPEN_UI + "");
+				long openUiNum = statisticsService.findAllsNum2(colvals);
+				long openUiUserNum = statisticsService.findAllsNum(colvals);
+				
+				
+				
 				float clickRate = showNum!=0 ? (float)clickNum/(float)showNum : 0;
 				float downloadRate = downloadNum != 0 ? (float)downloadSuccessNum/(float)downloadNum : 0;
 				float installRate = downloadSuccessNum != 0 ? (float)installNum/(float)downloadSuccessNum : 0;
@@ -130,6 +142,10 @@ public class GTimerTask {
 						installNum, activateNum, clickRate, downloadRate, 
 						installRate, activateRate,income,yesterday);
 				offerStatistics.setDownloadUiNum(downloadUiNum);
+				offerStatistics.setInstallUiNum(installUiNum);
+				offerStatistics.setOpenUiNum(openUiNum);
+				offerStatistics.setInstallUiUserNum(installUiUserNum);
+				offerStatistics.setOpenUiUserNum(openUiUserNum);
 				offerStatistics.setDownloadCancelNum(downloadCancelNum);
 				offerStatistics.setDownloadBackgroundNum(downloadBackgroundNum);
 				offerStatistics.setInstallLaterNum(installLaterNum);
