@@ -129,6 +129,18 @@ public class GTimerTask {
 				long openUiNum = statisticsService.findAllsNum2(colvals);
 				long openUiUserNum = statisticsService.findAllsNum(colvals);
 				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.TODOWNLOAD_UI + "");
+				long toDownloadUiNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.TODOWNLOAD_CANCEL + "");
+				long toDownloadCancelNum = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.TODOWNLOAD_GO + "");
+				long toDownloadGoNum = statisticsService.findAllsNum2(colvals);
+				
 				
 				
 				float clickRate = showNum!=0 ? (float)clickNum/(float)showNum : 0;
@@ -152,6 +164,9 @@ public class GTimerTask {
 				offerStatistics.setInstallGoNum(installGoNum);
 				offerStatistics.setOpenCancelNum(openCancelNum);
 				offerStatistics.setOpenGoNum(openGoNum);
+				offerStatistics.setToDownloadUiNum(toDownloadUiNum);
+				offerStatistics.setToDownloadCancelNum(toDownloadCancelNum);
+				offerStatistics.setToDownloadGoNum(toDownloadGoNum);
 				offerStatisticsService.add(offerStatistics);
 			}
 		}

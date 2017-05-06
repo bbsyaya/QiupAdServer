@@ -39,6 +39,9 @@ public class GOfferStatistics {
 	private Long openUiNum;
 	private Long installUiUserNum;
 	private Long openUiUserNum;
+	private Long toDownloadUiNum;
+	private Long toDownloadCancelNum;
+	private Long toDownloadGoNum;
 	
 	
 	public GOfferStatistics(){}
@@ -233,6 +236,24 @@ public class GOfferStatistics {
 		this.openUiUserNum = openUiUserNum;
 	}
 	
+	public Long getToDownloadUiNum() {
+		return toDownloadUiNum;
+	}
+	public void setToDownloadUiNum(Long toDownloadUiNum) {
+		this.toDownloadUiNum = toDownloadUiNum;
+	}
+	public Long getToDownloadCancelNum() {
+		return toDownloadCancelNum;
+	}
+	public void setToDownloadCancelNum(Long toDownloadCancelNum) {
+		this.toDownloadCancelNum = toDownloadCancelNum;
+	}
+	public Long getToDownloadGoNum() {
+		return toDownloadGoNum;
+	}
+	public void setToDownloadGoNum(Long toDownloadGoNum) {
+		this.toDownloadGoNum = toDownloadGoNum;
+	}
 	@Override
 	public String toString() {
 		return "GOfferStatistics [id=" + id + ", offerId=" + offerId
