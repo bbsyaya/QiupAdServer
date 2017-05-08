@@ -93,11 +93,15 @@ public class GStatisticsAction extends ActionSupport{
 		if(obj.containsKey("adPositionId"))
 			adPositionId = obj.getLong("adPositionId");
 		
+		int installTime = -1;
+		if(obj.containsKey("installTime"))
+			installTime = obj.getInt("installTime");
+		
 		GUser user = userService.find(userName,password);
 		long userId = user.getId();
 		String channel = user.getChannel();
 		
-		GStatistics statistics = new GStatistics(type, userId,adPositionId, adPositionType, offerId, packageName, appName,channel);
+		GStatistics statistics = new GStatistics(type, userId,adPositionId, adPositionType, offerId, packageName, appName,channel,installTime);
 		statisticsService.add(statistics);
 	}
 	

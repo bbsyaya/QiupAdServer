@@ -43,6 +43,7 @@ public class GOfferStatistics {
 	private Long toDownloadCancelNum;
 	private Long toDownloadGoNum;
 	
+	private String installTime; 
 	
 	public GOfferStatistics(){}
 	public GOfferStatistics(long offerId,String offerName,long requestNum, long showNum, long clickNum,
@@ -253,6 +254,13 @@ public class GOfferStatistics {
 	}
 	public void setToDownloadGoNum(Long toDownloadGoNum) {
 		this.toDownloadGoNum = toDownloadGoNum;
+	}
+	@Column(length = 256)
+	public String getInstallTime() {
+		return installTime;
+	}
+	public void setInstallTime(String installTime) {
+		this.installTime = installTime;
 	}
 	@Override
 	public String toString() {

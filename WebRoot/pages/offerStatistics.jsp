@@ -49,6 +49,7 @@
 			<th>安装界面用户</th>
 			<th>安装稍后</th>
 			<th>去安装</th>
+			<th>安装时间</th>
 			<th>打开界面</th>
 			<th>打开界面用户</th>
 			<th>打开取消</th>
@@ -82,6 +83,7 @@
 				<td><s:property value="#val.installUiUserNum" /></td>
 				<td><s:property value="#val.installLaterNum" /></td>
 				<td><s:property value="#val.installGoNum" /></td>
+				<td class="installTime" style="text-align:left;"><s:property value="#val.installTime" /></td>
 				<td><s:property value="#val.openUiNum" /></td>
 				<td><s:property value="#val.openUiUserNum" /></td>
 				<td><s:property value="#val.openCancelNum" /></td>

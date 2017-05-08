@@ -4,8 +4,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -141,6 +143,30 @@ public class GTimerTask {
 				colvals.put("type =", GStatisticsType.TODOWNLOAD_GO + "");
 				long toDownloadGoNum = statisticsService.findAllsNum2(colvals);
 				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.INSTALL_UI_TIME + "");
+				colvals.put("installTime =", 0 + "");
+				long installTime0 = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("installTime =");
+				colvals.put("installTime between", 1 + " and " + 4);
+				long installTime1 = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("installTime between");
+				colvals.put("installTime between", 4 + " and " + 11);
+				long installTime4 = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("installTime between");
+				colvals.put("installTime between", 11 + " and " + 31);
+				long installTime11 = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("installTime between");
+				colvals.put("installTime between", 31 + " and " + 61);
+				long installTime31 = statisticsService.findAllsNum2(colvals);
+				
+				colvals.remove("installTime between");
+				colvals.put("installTime >", 60+"");
+				long installTime61 = statisticsService.findAllsNum2(colvals);
 				
 				
 				float clickRate = showNum!=0 ? (float)clickNum/(float)showNum : 0;
@@ -167,6 +193,11 @@ public class GTimerTask {
 				offerStatistics.setToDownloadUiNum(toDownloadUiNum);
 				offerStatistics.setToDownloadCancelNum(toDownloadCancelNum);
 				offerStatistics.setToDownloadGoNum(toDownloadGoNum);
+				
+				String installTime = "0:" + installTime0 + ",1-3:" + installTime1 + ",4-10:" + installTime4
+						+ ",11-30:" + installTime11 + ",31-60:" + installTime31 + ",>60:" + installTime61;
+				offerStatistics.setInstallTime(installTime);
+				
 				offerStatisticsService.add(offerStatistics);
 			}
 		}

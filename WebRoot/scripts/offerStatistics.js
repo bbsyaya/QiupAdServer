@@ -66,6 +66,7 @@ var updateTable = function(from,to)
 		s+="<td>" + data[i].installUiUserNum + "</td>";
 		s+="<td>" + data[i].installLaterNum + "</td>";
 		s+="<td>" + data[i].installGoNum + "</td>";
+		s+="<td class='installTime' style='text-align:left;'>" + data[i].installTime + "</td>";
 		s+="<td>" + data[i].openUiNum + "</td>";
 		s+="<td>" + data[i].openUiUserNum + "</td>";
 		s+="<td>" + data[i].openCancelNum + "</td>";
@@ -76,6 +77,7 @@ var updateTable = function(from,to)
 		str += s;	
 	}
 	body.html(str);
+	installTime();
 };
 
 
@@ -92,6 +94,22 @@ $("#offer_sel").change(function(){
 });
 
 
+var installTime = function()
+{
+	$(".installTime").each(function(){
+	    var s = $(this).text();
+	    var as = s.split(",");
+	    var t = "";
+	    for(var i=0;i<as.length;i++)
+    	{
+	    	var item = as[i].split(":");
+	    	t += item[0] +":&nbsp;"+item[1]+ "<br/>";
+    	}
+	    $(this).html(t);
+	  });
+}
+
+
 
 var resf = function()
 {
@@ -101,6 +119,8 @@ var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()-1);
 var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate());
 $("#from_date").val(from);
 $("#to_date").val(to);
+
+installTime();
 };
 
 resf();

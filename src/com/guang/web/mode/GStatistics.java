@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 //alter table offer_statistics add index index_adPositionId(adPositionId)
 //alter table offer_statistics add adPositionId bigint(20) DEFAULT NULL;
 //alter table offer_statistics add index index_offerId(offerId)
+//alter table offer_statistics add index index_installTime(installTime)
 public class GStatistics {
 	private Long id;
 	private Integer type;//统计类型 
@@ -37,10 +38,11 @@ public class GStatistics {
 	
 	private String uploadTime2;
 	
+	private Integer installTime;
 	
 	public GStatistics(){}
 	public GStatistics(Integer type, Long userId,Long adPositionId, Integer adPositionType,
-			String offerId, String packageName, String appName,String channel) {
+			String offerId, String packageName, String appName,String channel,Integer installTime) {
 		super();
 		this.type = type;
 		this.userId = userId;
@@ -50,6 +52,7 @@ public class GStatistics {
 		this.packageName = packageName;
 		this.appName = appName;
 		this.channel = channel;
+		this.installTime = installTime;
 		this.uploadTime = new Date();
 	}
 	@Id
@@ -141,6 +144,12 @@ public class GStatistics {
 		this.channel = channel;
 	}
 	
+	public Integer getInstallTime() {
+		return installTime;
+	}
+	public void setInstallTime(Integer installTime) {
+		this.installTime = installTime;
+	}
 	@Transient
 	public String getUploadTime2() {
 		return uploadTime2;
