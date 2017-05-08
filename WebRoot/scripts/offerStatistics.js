@@ -103,7 +103,8 @@ var installTime = function()
 	    for(var i=0;i<as.length;i++)
     	{
 	    	var item = as[i].split(":");
-	    	t += item[0] +":&nbsp;"+item[1]+ "<br/>";
+	    	if(item[1])
+	    		t += item[0] +":&nbsp;"+item[1]+ "<br/>";
     	}
 	    $(this).html(t);
 	  });

@@ -46,6 +46,7 @@
 			<th>应用名</th>	
 			<th>包名</th>
 			<th>渠道</th>
+			<th>安装时间</th>
 			<th>时间</th>	
 			<th>操作</th>
 		</tr>
@@ -61,6 +62,7 @@
 				<td><s:property value="#val.appName" /></td>
 				<td><s:property value="#val.packageName" /></td>
 				<td><s:property value="#val.channel" /></td>
+				<td><s:property value="#val.installTime" />s</td>
 				<td align="center"><s:date name="#val.uploadTime" format="yyyy-MM-dd HH:mm:ss" /></td>
 				
 				<td class="thUpdate"><input type="button" value="操作"/></td>
