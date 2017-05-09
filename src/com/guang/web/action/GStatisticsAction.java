@@ -39,13 +39,12 @@ public class GStatisticsAction extends ActionSupport{
 	
 	public String list()
 	{
-		QueryResult<GStatistics>  qr = statisticsService.findAlls(0);
+		Long num  = statisticsService.findAllsNum2(null);
 		
 		String sindex = ServletActionContext.getRequest().getParameter("index");
 		int index = 0;
 		if (sindex != null && !"".equals(sindex))
 			index = Integer.parseInt(sindex);
-		Long num = qr.getNum();
 		int start = index * 100;
 		if (start > num) {
 			start = 0;

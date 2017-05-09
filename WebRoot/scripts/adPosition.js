@@ -427,6 +427,17 @@ $("#find").click(function()
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
 	}
+	//快捷方式应用页
+	else if(jsonobj.type == 14)
+	{
+		$("#update_showNum").parent().parent().show();
+		$("#update_showTimeInterval").parent().parent().show();
+		$("#update_timeSlot").parent().parent().show();
+		$("#update_addTimeSlot1").parent().parent().show();
+		$("#update_shortcutName").parent().parent().show();
+		$("#update_shortcutUrl").parent().parent().show();
+		$("#update_shortcutIcon").parent().parent().show();
+	}
 	else
 	{
 		$("#update_whiteList").parent().parent().show();
