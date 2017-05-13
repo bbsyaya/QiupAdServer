@@ -306,6 +306,7 @@ $("#find").click(function()
 	$("#update_shortcutIconPath").text(jsonobj.config.shortcutIconPath);
 	$("#update_browerBreakUrl").val(jsonobj.config.browerBreakUrl);
 	$("#update_appSpotDelyTime").val(jsonobj.config.appSpotDelyTime);
+	$("#update_blackList").val(jsonobj.config.blackList);
 	
 	$("#update_whiteList").parent().parent().hide();
 	$("#update_showNum").parent().parent().hide();
@@ -324,6 +325,7 @@ $("#find").click(function()
 	$("#update_shortcutIcon").parent().parent().hide();
 	$("#update_browerBreakUrl").parent().parent().hide();
 	$("#update_appSpotDelyTime").parent().parent().hide();
+	$("#update_blackList").parent().parent().hide();
 	
 	//浏览器插屏
 	if(jsonobj.type == 1)
@@ -369,6 +371,7 @@ $("#find").click(function()
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
 		$("#update_appSpotDelyTime").parent().parent().show();
+		$("#update_blackList").parent().parent().show();
 	}
 	//连接wifi
 	else if(jsonobj.type == 7)
@@ -426,6 +429,7 @@ $("#find").click(function()
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
+		$("#update_blackList").parent().parent().show();
 	}
 	//快捷方式应用页
 	else if(jsonobj.type == 14)
@@ -454,6 +458,7 @@ $("#find").click(function()
 		$("#update_shortcutUrl").parent().parent().show();
 		$("#update_shortcutIcon").parent().parent().show();
 		$("#update_browerBreakUrl").parent().parent().show();
+		$("#update_blackList").parent().parent().show();
 	}
 	if(jsonobj.open)
 	{

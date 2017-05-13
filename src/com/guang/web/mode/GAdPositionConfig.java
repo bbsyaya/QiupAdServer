@@ -22,6 +22,7 @@ public class GAdPositionConfig {
 	private Integer showNum;//每天广告展示次数
 	private Float showTimeInterval;//广告时间间隔
 	private String whiteList;//白名单
+	private String blackList;//黑名单
 	private Integer adShowNum;//同一个广告显示次数
 	
 	//浏览器插屏配置
@@ -58,7 +59,8 @@ public class GAdPositionConfig {
 	public GAdPositionConfig(Long adPositionId, String timeSlot,
 			Integer showNum, Float showTimeInterval, String whiteList,Integer adShowNum,
 			Float browerSpotTwoTime,Float browerSpotFlow, Float bannerDelyTime,
-			Float bannerTwoDelyTime,Float bannerShowTime,Float appSpotDelyTime,String behindBrushUrls) {
+			Float bannerTwoDelyTime,Float bannerShowTime,Float appSpotDelyTime,
+			String behindBrushUrls,String blackList) {
 		super();
 		this.adPositionId = adPositionId;
 		this.timeSlot = timeSlot;
@@ -73,6 +75,7 @@ public class GAdPositionConfig {
 		this.bannerShowTime = bannerShowTime;
 		this.appSpotDelyTime = appSpotDelyTime;
 		this.behindBrushUrls = behindBrushUrls;
+		this.blackList = blackList;
 	}
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -198,6 +201,13 @@ public class GAdPositionConfig {
 	}
 	public void setAppSpotDelyTime(Float appSpotDelyTime) {
 		this.appSpotDelyTime = appSpotDelyTime;
+	}
+	@Lob
+	public String getBlackList() {
+		return blackList;
+	}
+	public void setBlackList(String blackList) {
+		this.blackList = blackList;
 	}
 	
 	

@@ -221,6 +221,11 @@
 				</td>
 			</tr>
 			
+			<tr >
+				<td>黑名单:</td>
+				<td><textarea type="text" id="update_blackList" name="blackList" value="" style="width:380px;height:80px;"></textarea></td>
+			</tr>
+			
 			<tr>
 				<td>&nbsp;</td>
 				<td align=center><input type="submit" value="更改" />

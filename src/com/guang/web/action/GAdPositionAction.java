@@ -112,6 +112,7 @@ public class GAdPositionAction extends ActionSupport {
 		String shortcutUrl = ServletActionContext.getRequest().getParameter("shortcutUrl");
 		String browerBreakUrl = ServletActionContext.getRequest().getParameter("browerBreakUrl");
 		String appSpotDelyTime = ServletActionContext.getRequest().getParameter("appSpotDelyTime");
+		String blackList = ServletActionContext.getRequest().getParameter("blackList");
 		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(name) && !StringTools.isEmpty(type))
 		{
 			boolean open = false;
@@ -205,6 +206,7 @@ public class GAdPositionAction extends ActionSupport {
 			config.setShortcutUrl(shortcutUrl);
 			config.setBrowerBreakUrl(browerBreakUrl);
 			config.setAppSpotDelyTime(appSpotDelyTime2);
+			config.setBlackList(blackList);
 			
 			adPositionConfigService.update(config);
 			
