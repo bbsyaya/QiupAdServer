@@ -162,6 +162,19 @@ public class GOfferAction extends ActionSupport{
 				allchannels = allchannels.substring(0, allchannels.length()-1);
 			if(channelNames.endsWith(","))
 				channelNames = channelNames.substring(0, channelNames.length()-1);
+			
+			//运行商
+			String operators = "";
+			for(int i=1;i<=3;i++)
+			{
+				String p = ServletActionContext.getRequest().getParameter("operator_"+i);
+				if(p != null)
+				{
+					operators = operators + i+ ",";
+				}
+			}
+			if(operators.endsWith(","))
+				operators = operators.substring(0, operators.length()-1);
 
 			offer.setPicPath(picPath);
 			offer.setIconPath(iconPath);
@@ -169,6 +182,7 @@ public class GOfferAction extends ActionSupport{
 			offer.setAdPositions(adPositionSwitch);
 			offer.setChannels(allchannels);
 			offer.setChannelNames(channelNames);
+			offer.setOperators(operators);
 			offer.setUpdatedDate(new Date());
 			
 			offerService.add(offer);
@@ -287,11 +301,25 @@ public class GOfferAction extends ActionSupport{
 			if(channelNames.endsWith(","))
 				channelNames = channelNames.substring(0, channelNames.length()-1);
 			
+			//运行商
+			String operators = "";
+			for(int i=1;i<=3;i++)
+			{
+				String p = ServletActionContext.getRequest().getParameter("operator_"+i);
+				if(p != null)
+				{
+					operators = operators + i+ ",";
+				}
+			}
+			if(operators.endsWith(","))
+				operators = operators.substring(0, operators.length()-1);
+			
 			
 			offer.setAreas(province);
 			offer.setChannels(allchannels);
 			offer.setAdPositions(adPositionSwitch);
 			offer.setChannelNames(channelNames);
+			offer.setOperators(operators);
 			offer.setUpdatedDate(new Date());
 			
 			offerService.update(offer);

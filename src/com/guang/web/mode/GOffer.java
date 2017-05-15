@@ -27,6 +27,7 @@ public class GOffer {
 	private String channels;
 	private String adPositions;
 	private String channelNames;
+	private String operators;//运营商
 	
 	private Float pice;
 	
@@ -153,6 +154,13 @@ public class GOffer {
 	}
 	public void setPice(Float pice) {
 		this.pice = pice;
+	}
+	@Column(length = 16)
+	public String getOperators() {
+		return operators;
+	}
+	public void setOperators(String operators) {
+		this.operators = operators;
 	}
 	
 	

@@ -117,6 +117,15 @@
 					value="" style="width:100px;" />
 				</td>
 			</tr>
+			
+			<tr >
+				<td>运营商：</td>
+				<td >
+				<label><input type="checkbox" name="operator_1" value="1" />移动</label>
+				<label><input type="checkbox" name="operator_2" value="2" />联通</label>
+				<label><input type="checkbox" name="operator_3" value="3" />电信</label>
+				</td>
+			</tr>	
 						
 			<tr >
 				<td>广告位：</td>
@@ -225,6 +234,16 @@
 					value="" style="width:100px;" />
 				</td>
 			</tr>
+			
+			<tr >
+				<td>运营商：</td>
+				<td id="update_perator">
+				<label><input type="checkbox" id="update_operator_1" name="operator_1" value="1" />移动</label>
+				<label><input type="checkbox" id="update_operator_2" name="operator_2" value="2" />联通</label>
+				<label><input type="checkbox" id="update_operator_3" name="operator_3" value="3" />电信</label>
+				</td>
+			</tr>	
+			
 
 			<tr >
 				<td>广告位：</td>
@@ -395,6 +414,21 @@ $("#find").click(function()
 		for(var i=0;i<arr.length;i++)
 		{
 			var id = "#update_channel_" + arr[i];
+			$(id).attr("checked", "checked");
+		}
+	}
+	
+	if(jsonobj.operators != "" && jsonobj.operators != null)
+	{
+		var arr = jsonobj.operators.split(",");
+		var cs = $("#update_operator").children();
+		for(var j=0;j<cs.length;j++)
+		{
+			cs[j].getElementsByTagName("input")[0].checked = "";
+		}
+		for(var i=0;i<arr.length;i++)
+		{
+			var id = "#update_operator_" + arr[i];
 			$(id).attr("checked", "checked");
 		}
 	}
