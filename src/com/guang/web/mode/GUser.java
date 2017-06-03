@@ -18,6 +18,7 @@ uniqueConstraints={@UniqueConstraint(columnNames = {"name","password"})})
 //alter table user add index index_name(name,password)
 //alter table user add index index_created_date(created_date)
 //alter table user add index index_updated_date(updated_date)
+//alter table user add index index_channel(channel)
 public class GUser {
 	private long id;
 	private String name;

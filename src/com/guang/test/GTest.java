@@ -19,9 +19,6 @@ import com.guang.web.tools.GTools;
 public class GTest {
 
 	public static void main(String[] args) {
-	
-		
-		
 	}
 	
 	
