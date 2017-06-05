@@ -64,7 +64,7 @@ public class GUser {
 	
 	private Integer startUpNum;//自启次数
 	private Boolean unInstall;//是否卸载
-	
+		
 	public GUser() {
 	}
 

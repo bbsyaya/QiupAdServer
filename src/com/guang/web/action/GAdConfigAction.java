@@ -2,6 +2,7 @@ package com.guang.web.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,12 +16,15 @@ import com.guang.web.mode.GAdConfig;
 import com.guang.web.mode.GAdPosition;
 import com.guang.web.mode.GAdPositionConfig;
 import com.guang.web.mode.GMedia;
+import com.guang.web.mode.GPhoneModel;
 import com.guang.web.mode.GSdk;
 import com.guang.web.service.GAdConfigService;
 import com.guang.web.service.GAdPositionConfigService;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GMediaService;
+import com.guang.web.service.GPhoneModelService;
 import com.guang.web.service.GSdkService;
+import com.guang.web.service.GUserService;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -34,6 +38,8 @@ public class GAdConfigAction extends ActionSupport{
 	@Resource private GMediaService mediaService;
 	@Resource private GSdkService sdkService;
 	@Resource private GAdPositionConfigService adPositionConfigService;
+	@Resource private GPhoneModelService phoneModelService;
+	@Resource private GUserService userService;
 	
 	public String list() {
 		QueryResult<GAdConfig>  qr = adConfigService.findAlls(0);
@@ -177,6 +183,15 @@ public class GAdConfigAction extends ActionSupport{
 				GSdk sdk = sdkService.findNew2(packageName, channel);
 				if(sdk != null)
 				{
+					//更新用户渠道排名
+					if(sdk.getChannel_paiming() == null || sdk.getChannel_paiming() < sdk.getNewChannelNum())
+					{
+						LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+						colvals.put("channel =", "'"+channel+"'");
+						int channel_paiming = (int) userService.findNum(colvals);
+						sdk.setChannel_paiming(channel_paiming);
+						sdkService.update(sdk);
+					}
 					String adPosition = sdk.getAdPosition();
 					if(!StringTools.isEmpty(adPosition))
 					{
@@ -207,6 +222,25 @@ public class GAdConfigAction extends ActionSupport{
 						}
 					}
 					
+					//获取机型
+					String modes = sdk.getModes();
+					String modess = "";
+					if(!StringTools.isEmpty(modes))
+					{
+						String model[] = modes.split(",");
+						for(String modeId : model)
+						{
+							GPhoneModel phoneModel = phoneModelService.find(Integer.parseInt(modeId));
+							if(phoneModel != null)
+							{
+								if(StringTools.isEmpty(modess))
+									modess = phoneModel.getModel();
+								else
+									modess = modess + "," + phoneModel.getModel();
+							}
+						}
+					}
+					sdk.setModes(modess);
 				}
 				print(JSONObject.fromObject(sdk).toString());
 			}

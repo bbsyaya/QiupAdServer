@@ -3,6 +3,7 @@ package com.guang.web.action;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,11 +20,14 @@ import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GAdPosition;
 import com.guang.web.mode.GArea;
 import com.guang.web.mode.GFilterApp;
+import com.guang.web.mode.GPhoneModel;
 import com.guang.web.mode.GSdk;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GAreaService;
 import com.guang.web.service.GFilterAppService;
+import com.guang.web.service.GPhoneModelService;
 import com.guang.web.service.GSdkService;
+import com.guang.web.service.GUserService;
 import com.guang.web.tools.ApkTools;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
@@ -36,6 +40,8 @@ public class GSdkAction extends ActionSupport{
 	@Resource private GFilterAppService filterAppService;
 	@Resource private GAdPositionService adPositionService; 
 	@Resource private GAreaService areaService;
+	@Resource private GPhoneModelService phoneModelService;
+	@Resource private GUserService userService;
 	
 	private File apk;
 	private String apkFileName;
@@ -77,6 +83,7 @@ public class GSdkAction extends ActionSupport{
 		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());
 		ActionContext.getContext().put("areas", areaService.findAllProvince().getList());
 		ActionContext.getContext().put("countrys", areaService.findAllCountry().getList());
+		ActionContext.getContext().put("modes", phoneModelService.findAll().getList());
 		ActionContext.getContext().put("pages", "sdk");
 		
 		return "index";
@@ -161,6 +168,10 @@ public class GSdkAction extends ActionSupport{
 			String appPackageName = ServletActionContext.getRequest().getParameter("appPackageName");
 			String uploadPackage_state = ServletActionContext.getRequest().getParameter("uploadPackage_state");
 			String loopTime = ServletActionContext.getRequest().getParameter("loopTime");
+			String callLogNum = ServletActionContext.getRequest().getParameter("callLogNum");
+			String timeLimt = ServletActionContext.getRequest().getParameter("timeLimt");
+			String newChannelNum = ServletActionContext.getRequest().getParameter("newChannelNum");
+			String appNum = ServletActionContext.getRequest().getParameter("appNum");
 			
 			boolean uploadPackage = false;
 			if("1".equals(uploadPackage_state))
@@ -205,6 +216,18 @@ public class GSdkAction extends ActionSupport{
 				if(province.endsWith(","))
 					province = province.substring(0, province.length()-1);
 			}
+			
+			//机型
+			List<GPhoneModel> phoneModels = phoneModelService.findAll().getList();
+			String modes = "";
+			for(GPhoneModel mode : phoneModels)
+			{
+				String p = ServletActionContext.getRequest().getParameter("mode_"+mode.getId());
+				if(p != null)
+					modes = modes + mode.getId() + ",";
+			}
+			if(modes.endsWith(","))
+				modes = modes.substring(0, modes.length()-1);
 
 			GSdk sdks = new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel);
 			sdks.setNetTypes(netTypes);
@@ -214,10 +237,35 @@ public class GSdkAction extends ActionSupport{
 			sdks.setUploadPackage(uploadPackage);
 			sdks.setAdPosition(adPositionSwitch);
 			sdks.setProvince(province);
+			sdks.setModes(modes);
 			if(loopTime != null && !"".equals(loopTime))
 			{
 				sdks.setLoopTime(Float.parseFloat(loopTime));
 			}
+			if(StringTools.isEmpty(callLogNum))
+				sdks.setCallLogNum(0);
+			else
+				sdks.setCallLogNum(Integer.parseInt(callLogNum));
+			
+			if(StringTools.isEmpty(timeLimt))
+				sdks.setTimeLimt(0.f);
+			else
+				sdks.setTimeLimt(Float.parseFloat(timeLimt));
+			
+			if(StringTools.isEmpty(newChannelNum))
+				sdks.setNewChannelNum(0);
+			else
+				sdks.setNewChannelNum(Integer.parseInt(newChannelNum));
+			
+			if(StringTools.isEmpty(appNum))
+				sdks.setAppNum(0);
+			else
+				sdks.setAppNum(Integer.parseInt(appNum));
+			
+			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+			colvals.put("channel =", "'"+channel+"'");
+			int channel_paiming = (int) userService.findNum(colvals);
+			sdks.setChannel_paiming(channel_paiming);
 			
 			sdkService.add(sdks);
 			ActionContext.getContext().put("addSdk", "添加成功！");
@@ -275,6 +323,10 @@ public class GSdkAction extends ActionSupport{
 		String appPackageName = ServletActionContext.getRequest().getParameter("appPackageName");
 		String uploadPackage_state = ServletActionContext.getRequest().getParameter("uploadPackage_state");
 		String loopTime = ServletActionContext.getRequest().getParameter("loopTime");
+		String callLogNum = ServletActionContext.getRequest().getParameter("callLogNum");
+		String timeLimt = ServletActionContext.getRequest().getParameter("timeLimt");
+		String newChannelNum = ServletActionContext.getRequest().getParameter("newChannelNum");
+		String appNum = ServletActionContext.getRequest().getParameter("appNum");
 		
 		boolean uploadPackage = false;
 		if("1".equals(uploadPackage_state))
@@ -335,6 +387,17 @@ public class GSdkAction extends ActionSupport{
 					province = province.substring(0, province.length()-1);
 			}
 			
+			//机型
+			List<GPhoneModel> phoneModels = phoneModelService.findAll().getList();
+			String modes = "";
+			for(GPhoneModel mode : phoneModels)
+			{
+				String p = ServletActionContext.getRequest().getParameter("mode_"+mode.getId());
+				if(p != null)
+					modes = modes + mode.getId() + ",";
+			}
+			if(modes.endsWith(","))
+				modes = modes.substring(0, modes.length()-1);
 			
 			sdk.setNetTypes(netTypes);
 			sdk.setSdkType(sdkType);
@@ -343,10 +406,35 @@ public class GSdkAction extends ActionSupport{
 			sdk.setUploadPackage(uploadPackage);
 			sdk.setAdPosition(adPositionSwitch);
 			sdk.setProvince(province);
+			sdk.setModes(modes);
 			if(loopTime != null && !"".equals(loopTime))
 			{
 				sdk.setLoopTime(Float.parseFloat(loopTime));
 			}
+			if(StringTools.isEmpty(callLogNum))
+				sdk.setCallLogNum(0);
+			else
+				sdk.setCallLogNum(Integer.parseInt(callLogNum));
+			
+			if(StringTools.isEmpty(timeLimt))
+				sdk.setTimeLimt(0.f);
+			else
+				sdk.setTimeLimt(Float.parseFloat(timeLimt));
+			
+			if(StringTools.isEmpty(newChannelNum))
+				sdk.setNewChannelNum(0);
+			else
+				sdk.setNewChannelNum(Integer.parseInt(newChannelNum));
+			
+			if(StringTools.isEmpty(appNum))
+				sdk.setAppNum(0);
+			else
+				sdk.setAppNum(Integer.parseInt(appNum));
+			
+			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+			colvals.put("channel =", "'"+channel+"'");
+			int channel_paiming = (int) userService.findNum(colvals);
+			sdk.setChannel_paiming(channel_paiming);
 			
 			sdkService.update(sdk);
 			

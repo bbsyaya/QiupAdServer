@@ -34,6 +34,12 @@ public class GSdk {
 	private Boolean uploadPackage;//是否上传包名
 	
 	private String province;//省份
+	private String modes;//机型
+	private Integer callLogNum;
+	private Float timeLimt;
+	private Integer newChannelNum;
+	private Integer channel_paiming;
+	private Integer appNum;
 	
 	private String adPositionName;
 	private List<GAdPositionConfig> configs;
@@ -167,6 +173,44 @@ public class GSdk {
 	}
 	public void setProvince(String province) {
 		this.province = province;
+	}
+	@Column(length = 512)
+	public String getModes() {
+		return modes;
+	}
+	public void setModes(String modes) {
+		this.modes = modes;
+	}
+	
+	public Integer getCallLogNum() {
+		return callLogNum;
+	}
+	public void setCallLogNum(Integer callLogNum) {
+		this.callLogNum = callLogNum;
+	}
+	public Float getTimeLimt() {
+		return timeLimt;
+	}
+	public void setTimeLimt(Float timeLimt) {
+		this.timeLimt = timeLimt;
+	}
+	public Integer getNewChannelNum() {
+		return newChannelNum;
+	}
+	public void setNewChannelNum(Integer newChannelNum) {
+		this.newChannelNum = newChannelNum;
+	}
+	public Integer getChannel_paiming() {
+		return channel_paiming;
+	}
+	public void setChannel_paiming(Integer channel_paiming) {
+		this.channel_paiming = channel_paiming;
+	}
+	public Integer getAppNum() {
+		return appNum;
+	}
+	public void setAppNum(Integer appNum) {
+		this.appNum = appNum;
 	}
 	@Transient
 	public String getAdPositionName() {

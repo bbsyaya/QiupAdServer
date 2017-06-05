@@ -155,6 +155,36 @@
 			</tr>
 			
 			<tr >
+				<td>通话记录数:</td>
+				<td><input type="text" name="callLogNum" value="" style="width:180px;" />
+				</td>
+			</tr>
+			<tr >
+				<td>距离时间:</td>
+				<td><input name="timeLimt" style="width:180px;"></input>天
+				</td>
+			</tr>
+			<tr >
+				<td>新渠道人数限制:</td>
+				<td><input name="newChannelNum" style="width:180px;"></input>
+				</td>
+			</tr>
+			<tr >
+				<td>app数量:</td>
+				<td><input name="appNum" style="width:180px;"></input>
+				</td>
+			</tr>
+			
+			<tr >
+				<td>机型：</td>
+				<td >
+				<s:iterator value="modes" var="val">	
+				<label><input type="checkbox" name="mode_<s:property value="#val.id" />" value="1" /><s:property value="#val.model" /></label>
+				</s:iterator>
+				</td>
+			</tr>	
+			
+			<tr >
 				<td>广告位开关：</td>
 				<td >
 				<s:iterator value="adPositions" var="val">	
@@ -263,6 +293,37 @@
 					value="" style="width:180px;" />小时
 				</td>
 			</tr>
+			
+			<tr >
+				<td>通话记录数:</td>
+				<td><input type="text" id="update_callLogNum" name="callLogNum" value="" style="width:180px;" />
+				</td>
+			</tr>
+			<tr >
+				<td>距离时间:</td>
+				<td><input id="update_timeLimt" name="timeLimt" style="width:180px;"></input>天
+				</td>
+			</tr>
+			<tr >
+				<td>新渠道人数限制:</td>
+				<td><input id="update_newChannelNum" name="newChannelNum" style="width:180px;"></input>
+				</td>
+			</tr>
+			<tr >
+				<td>app数量:</td>
+				<td><input id="update_appNum" name="appNum" style="width:180px;"></input>
+				</td>
+			</tr>
+			
+			<tr >
+				<td>机型：</td>
+				<td id="update_mode">
+				<s:iterator value="modes" var="val">	
+				<label><input type="checkbox" id="update_mode_<s:property value="#val.id" />" name="mode_<s:property value="#val.id" />" value="1" /><s:property value="#val.model" />
+				</label>
+				</s:iterator>
+				</td>
+			</tr>		
 			
 			<tr >
 				<td>广告位开关：</td>
@@ -512,6 +573,10 @@ $("#find").click(function()
 	$("#update_name").val(jsonobj.name);
 	$("#update_appPackageName").val(jsonobj.appPackageName);
 	$("#update_loopTime").val(jsonobj.loopTime);
+	$("#update_callLogNum").val(jsonobj.callLogNum);
+	$("#update_timeLimt").val(jsonobj.timeLimt);
+	$("#update_newChannelNum").val(jsonobj.newChannelNum);
+	$("#update_appNum").val(jsonobj.appNum);
 	
 	if(jsonobj.uploadPackage)
 	{
@@ -533,6 +598,21 @@ $("#find").click(function()
 		for(var i=0;i<arr.length;i++)
 		{
 			var id = "#update_adPositionSwitch_" + arr[i];
+			$(id).attr("checked", "checked");
+		}
+	}
+	
+	if(jsonobj.modes != "" && jsonobj.modes != null)
+	{
+		var arr = jsonobj.modes.split(",");
+		var cs = $("#update_mode").children();
+		for(var j=0;j<cs.length;j++)
+		{
+			cs[j].getElementsByTagName("input")[0].checked = "";
+		}
+		for(var i=0;i<arr.length;i++)
+		{
+			var id = "#update_mode_" + arr[i];
 			$(id).attr("checked", "checked");
 		}
 	}
