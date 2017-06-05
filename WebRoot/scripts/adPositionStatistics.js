@@ -2,9 +2,6 @@ var baseUrl =  window.location.protocol + "//" + window.location.host+ "/QiupAdS
 
 var updateTable = function(from,to,adPositionType)
 {	
-	var doubleSta = 0;
-	if($("#doubleSta").attr("checked"))
-		doubleSta = 1;
 	var media = $("#media_sel").val();
 	var channel = $("#channel_sel").val();
 	
@@ -12,7 +9,7 @@ var updateTable = function(from,to,adPositionType)
 		  type: 'POST',
 		  url: baseUrl+"/adPositionStatistics_list2",
 		  data: {"from" : from,"to":to,"adPositionType":adPositionType,
-			  "doubleSta":doubleSta,"media":media,"channel":channel},
+			  "media":media,"channel":channel},
 		  async:false
 		});
 	data = data.responseText;
@@ -42,63 +39,63 @@ var updateTable = function(from,to,adPositionType)
 };
 
 $("#today").click(function(){
+	var time = $("#today").attr("data-time");
 	var date = new Date();
+	date.setTime(time);
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
-	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1) + " 00:00:00";
+	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 23:59:59";
 	var adPositionType = $("#adPosition_sel").val();
-	$("#from_date").val(from.split(" ")[0]);
-	$("#to_date").val(to.split(" ")[0]);
+	$("#from_date").val(from);
+	$("#to_date").val(to);
 	updateTable(from,to,adPositionType);
 });
 
 $("#oneWeek").click(function(){
 	var date = new Date();
+	var time = $("#today").attr("data-time");
+	date.setTime(time);
 	date.setDate(date.getDate() - 7);
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
 	date.setDate(date.getDate() + 7);
-	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1) + " 00:00:00";
+	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 23:59:59";
 	var adPositionType = $("#adPosition_sel").val();
-	$("#from_date").val(from.split(" ")[0]);
-	$("#to_date").val(to.split(" ")[0]);
+	$("#from_date").val(from);
+	$("#to_date").val(to);
 	updateTable(from,to,adPositionType);
 });
 
 $("#oneMonth").click(function(){
 	var date = new Date();
+	var time = $("#today").attr("data-time");
+	date.setTime(time);
 	date.setDate(date.getDate() - 30);
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
 	date.setDate(date.getDate() + 30);
-	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1) + " 00:00:00";
+	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 23:59:59";
 	var adPositionType = $("#adPosition_sel").val();
-	$("#from_date").val(from.split(" ")[0]);
-	$("#to_date").val(to.split(" ")[0]);
+	$("#from_date").val(from);
+	$("#to_date").val(to);
 	updateTable(from,to,adPositionType);
 });
 
 $("#find").click(function(){
-	var from = $("#from_date").val() + " 00:00:00";
-	var to = $("#to_date").val() + " 00:00:00";
+	var from = $("#from_date").val();
+	var to = $("#to_date").val();
 	var adPositionType = $("#adPosition_sel").val();
 	updateTable(from,to,adPositionType);
 });
 
 $("#adPosition_sel").change(function(){
-	var from = $("#from_date").val() + " 00:00:00";
-	var to = $("#to_date").val() + " 00:00:00";
+	var from = $("#from_date").val();
+	var to = $("#to_date").val();
 	var adPositionType = $(this).val();
 	updateTable(from,to,adPositionType);
 });
 
-$("#doubleSta").click(function(){
-	var from = $("#from_date").val() + " 00:00:00";
-	var to = $("#to_date").val() + " 00:00:00";
-	var adPositionType = $("#adPosition_sel").val();
-	updateTable(from,to,adPositionType);
-});
 
 $("#media_sel").change(function(){
-	var from = $("#from_date").val() + " 00:00:00";
-	var to = $("#to_date").val() + " 00:00:00";
+	var from = $("#from_date").val();
+	var to = $("#to_date").val();
 	var adPositionType = $("#adPosition_sel").val();	
 	updateTable(from,to,adPositionType);
 });
@@ -107,12 +104,13 @@ $("#media_sel").change(function(){
 var resf = function()
 {
 
+var time = $("#today").attr("data-time");
 var date = new Date();
-var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+(date.getDate()+1);
+date.setTime(time);
+var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+ " 00:00:00";
+var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+ " 23:59:59";
 $("#from_date").val(from);
 $("#to_date").val(to);
-$("#doubleSta").attr("checked", "checked");
 };
 
 resf();

@@ -124,6 +124,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		ActionContext.getContext().put("medias", sdkService.findAlls().getList());
 		ActionContext.getContext().put("sdks", sdkService.findAlls().getList());
 		ActionContext.getContext().put("pages", "adPositionStatistics");
+		ActionContext.getContext().put("time", System.currentTimeMillis());
 		return "index";
 	}
 	
@@ -142,7 +143,6 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		String from = ServletActionContext.getRequest().getParameter("from");
 		String to = ServletActionContext.getRequest().getParameter("to");
 		String adPositionType = ServletActionContext.getRequest().getParameter("adPositionType");
-		String doubleSta = ServletActionContext.getRequest().getParameter("doubleSta");
 		String media = ServletActionContext.getRequest().getParameter("media");
 		String channel = ServletActionContext.getRequest().getParameter("channel");
 		
@@ -184,8 +184,8 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 //		colvals.put("type =", GStatisticsType.ACTIVATE + "");
 		long activateNum = 0;//statisticsService.findAlls(colvals).getNum();
 		
-		if(doubleSta != null && "1".equals(doubleSta))
-		{
+//		if(doubleSta != null && "1".equals(doubleSta))
+//		{
 //			colvals.remove("type =");
 //			colvals.put("type =", GStatisticsType.DOUBLE_SHOW + "");
 //			showNum += statisticsService.findAlls(colvals).getNum();
@@ -209,7 +209,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 //			colvals.remove("type =");
 //			colvals.put("type =", GStatisticsType.DOUBLE_ACTIVATE + "");
 //			activateNum += statisticsService.findAlls(colvals).getNum();
-		}
+//		}
 
 		float income = activateNum;
 		

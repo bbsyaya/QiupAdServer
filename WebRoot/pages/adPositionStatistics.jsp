@@ -10,7 +10,6 @@
 	src="<%=basePath%>scripts/laydate.dev.js"></script>
 <h1>广告位统计</h1>
 <div style="width:800px;float:right;font-size: 14px;text-align:right;margin-top: -40px;">
-<label><input type="checkbox" id="doubleSta" name="doubleSta" value="1" />间接</label>
 <select id="adPosition_sel">
   <option value ="0">广告位选择</option>
   <s:iterator value="adPositions" var="adPosition">
@@ -29,7 +28,7 @@
   	<option value ="<s:property value="#sdk.channel" />"><s:property value="#sdk.channel" /></option>
   </s:iterator>
 </select>
-<input type="button" value="今日" id="today"/>
+<input type="button" value="今日" data-time="${time }" id="today"/>
 <input type="button" value="一周内" id="oneWeek"/>
 <input type="button" value="一月内" id="oneMonth"/>
 <input type="text" id="from_date" name="from_date"  style="width:80px;" /> -
