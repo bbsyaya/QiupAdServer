@@ -39,63 +39,57 @@ var updateTable = function(from,to,adPositionType)
 };
 
 $("#today").click(function(){
-	var time = $("#today").attr("data-time");
 	var date = new Date();
-	date.setTime(time);
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
 	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 23:59:59";
 	var adPositionType = $("#adPosition_sel").val();
-	$("#from_date").val(from);
-	$("#to_date").val(to);
+	$("#from_date").val(from.split(" ")[0]);
+	$("#to_date").val(to.split(" ")[0]);
 	updateTable(from,to,adPositionType);
 });
 
 $("#oneWeek").click(function(){
 	var date = new Date();
-	var time = $("#today").attr("data-time");
-	date.setTime(time);
 	date.setDate(date.getDate() - 7);
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
 	date.setDate(date.getDate() + 7);
 	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 23:59:59";
 	var adPositionType = $("#adPosition_sel").val();
-	$("#from_date").val(from);
-	$("#to_date").val(to);
+	$("#from_date").val(from.split(" ")[0]);
+	$("#to_date").val(to.split(" ")[0]);
 	updateTable(from,to,adPositionType);
 });
 
 $("#oneMonth").click(function(){
 	var date = new Date();
-	var time = $("#today").attr("data-time");
-	date.setTime(time);
 	date.setDate(date.getDate() - 30);
 	var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 00:00:00";
 	date.setDate(date.getDate() + 30);
 	var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate() + " 23:59:59";
 	var adPositionType = $("#adPosition_sel").val();
-	$("#from_date").val(from);
-	$("#to_date").val(to);
+	$("#from_date").val(from.split(" ")[0]);
+	$("#to_date").val(to.split(" ")[0]);
 	updateTable(from,to,adPositionType);
 });
 
 $("#find").click(function(){
-	var from = $("#from_date").val();
-	var to = $("#to_date").val();
+	var from = $("#from_date").val()+ " 00:00:00";
+	var to = $("#to_date").val()+ " 23:59:59";
 	var adPositionType = $("#adPosition_sel").val();
 	updateTable(from,to,adPositionType);
 });
 
 $("#adPosition_sel").change(function(){
-	var from = $("#from_date").val();
-	var to = $("#to_date").val();
+	var from = $("#from_date").val()+ " 00:00:00";
+	var to = $("#to_date").val()+ " 23:59:59";
 	var adPositionType = $(this).val();
 	updateTable(from,to,adPositionType);
 });
 
 
 $("#media_sel").change(function(){
-	var from = $("#from_date").val();
-	var to = $("#to_date").val();
+	var from = $("#from_date").val()+ " 00:00:00";
+	var to = $("#to_date").val()+ " 23:59:59";
 	var adPositionType = $("#adPosition_sel").val();	
 	updateTable(from,to,adPositionType);
 });
@@ -103,14 +97,11 @@ $("#media_sel").change(function(){
 
 var resf = function()
 {
-
-var time = $("#today").attr("data-time");
 var date = new Date();
-date.setTime(time);
 var from = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+ " 00:00:00";
 var to = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+ " 23:59:59";
-$("#from_date").val(from);
-$("#to_date").val(to);
+$("#from_date").val(from.split(" ")[0]);
+$("#to_date").val(to.split(" ")[0]);
 };
 
 resf();

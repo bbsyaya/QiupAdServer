@@ -124,7 +124,6 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		ActionContext.getContext().put("medias", sdkService.findAlls().getList());
 		ActionContext.getContext().put("sdks", sdkService.findAlls().getList());
 		ActionContext.getContext().put("pages", "adPositionStatistics");
-		ActionContext.getContext().put("time", System.currentTimeMillis());
 		return "index";
 	}
 	

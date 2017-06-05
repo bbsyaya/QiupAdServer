@@ -28,7 +28,7 @@
   	<option value ="<s:property value="#sdk.channel" />"><s:property value="#sdk.channel" /></option>
   </s:iterator>
 </select>
-<input type="button" value="今日" data-time="${time }" id="today"/>
+<input type="button" value="今日" id="today"/>
 <input type="button" value="一周内" id="oneWeek"/>
 <input type="button" value="一月内" id="oneMonth"/>
 <input type="text" id="from_date" name="from_date"  style="width:80px;" /> -
