@@ -177,9 +177,9 @@
 			
 			<tr >
 				<td>机型：</td>
-				<td >
+				<td id="f_modes">
 				<s:iterator value="modes" var="val">	
-				<label><input type="checkbox" name="mode_<s:property value="#val.id" />" value="1" /><s:property value="#val.model" /></label>
+				<label style="display:none;"><input type="checkbox" name="mode_<s:property value="#val.id" />" value="1"  data-channel="${val.channel }"/><s:property value="#val.model" /></label>
 				</s:iterator>
 				</td>
 			</tr>	
@@ -235,7 +235,7 @@
 			
 			<tr >
 				<td>ID:</td>
-				<td><input type="text" id="f_id" name="id"
+				<td><input type="text" id="f_id" name="id" data-channel=""
 					value="" style="width:180px;" />
 				</td>
 			</tr>
@@ -319,7 +319,7 @@
 				<td>机型：</td>
 				<td id="update_mode">
 				<s:iterator value="modes" var="val">	
-				<label><input type="checkbox" id="update_mode_<s:property value="#val.id" />" name="mode_<s:property value="#val.id" />" value="1" /><s:property value="#val.model" />
+				<label style="display:none;"><input type="checkbox" id="update_mode_<s:property value="#val.id" />" name="mode_<s:property value="#val.id" />" value="1" data-channel="${val.channel }"/><s:property value="#val.model" />
 				</label>
 				</s:iterator>
 				</td>
@@ -521,6 +521,11 @@ $("#find").click(function()
 	var jsonobj = eval("("+obj+")");
 	
 	$("#f_id").val(jsonobj.id);
+	
+	$("#update_mode label").hide();
+	$("#update_mode input").attr("checked", "");
+	$("#update_mode input[data-channel='"+jsonobj.channel+"']").parent().show();
+	
 	if (jsonobj.online) {
 		$("#up_online_state1").attr("checked", "checked");
 		$("#up_online_state2").attr("checked", "");
@@ -652,6 +657,14 @@ $("#find").click(function()
 	$("#d_addsdk").hide();
 	$("#f_update").show();
 	$("#div_update").hide();
+});
+
+$("#channel").blur(function(){
+	$("#f_modes label").hide();
+	$("#f_modes input").attr("checked", "");
+	var channel = $("#channel").val();
+	$("#f_modes input[data-channel='"+channel+"']").parent().show();
+	//$("#f_modes input[data-channel='"+channel+"']").attr("checked", "checked");
 });
 
 

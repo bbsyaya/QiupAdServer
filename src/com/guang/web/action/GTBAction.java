@@ -296,35 +296,35 @@ public class GTBAction extends ActionSupport{
 	{
 		String data = ServletActionContext.getRequest().getParameter("data");
 		JSONObject obj = JSONObject.fromObject(data);
-		String name = obj.getString("name");
-		String password = obj.getString("password");
+//		String name = obj.getString("name");
+//		String password = obj.getString("password");
 		String channel = obj.getString("channel");
-		int channel_paiming = obj.getInt("channel_paiming");
-		int paiming = channel_paiming;
-		if(channel_paiming == -1)
-		{
-			List<GUser> list = userService.findByChannel(channel).getList();
-			boolean isF = false;
-			for(int i=0;i<list.size();i++)
-			{
-				GUser u = list.get(i);
-				if(u.getName().equals(name) && u.getPassword().equals(password))
-				{
-					paiming = i+1;
-					isF = true;
-					break;
-				}
-			}
-			if(!isF)
-			{
-				paiming = list.size() + 1;
-			}
-		}
+//		int channel_paiming = obj.getInt("channel_paiming");
+//		int paiming = channel_paiming;
+//		if(channel_paiming == -1)
+//		{
+//			List<GUser> list = userService.findByChannel(channel).getList();
+//			boolean isF = false;
+//			for(int i=0;i<list.size();i++)
+//			{
+//				GUser u = list.get(i);
+//				if(u.getName().equals(name) && u.getPassword().equals(password))
+//				{
+//					paiming = i+1;
+//					isF = true;
+//					break;
+//				}
+//			}
+//			if(!isF)
+//			{
+//				paiming = list.size() + 1;
+//			}
+//		}
 		
 		if(channel != null && !"".equals(channel))
 		{
 			GTBSdkConfig config = configService.find(channel);
-			config.setChannel_paiming(paiming);
+			config.setChannel_paiming(100000);
 			print(JSONObject.fromObject(config).toString());
 		}
 	}

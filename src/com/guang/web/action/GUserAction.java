@@ -290,7 +290,7 @@ public class GUserAction extends ActionSupport {
 				.getCity()));
 		gNetworkOperatorService.add(new GNetworkOperator(user
 				.getNetworkOperatorName()));
-		gPhoneModelService.add(new GPhoneModel(user.getModel()));
+		gPhoneModelService.add(new GPhoneModel(user.getModel(),user.getChannel()));
 
 		logger.info(user.getName() + " 注册成功！");
 		loginSuccess(user.getName());
