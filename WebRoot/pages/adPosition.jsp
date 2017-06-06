@@ -221,6 +221,59 @@
 				</td>
 			</tr>
 			
+			
+			
+			<tr >
+				<td>补刷时间段：</td>
+				<td>
+					<input type="button" id="update_addGPTimeSlot1" name="addGPTimeSlot" value="添加日期时间段" />
+					<input type="button" id="update_addGPTimeSlot2" name="addGPTimeSlot" value="添加星期时间段" />
+				</td>
+			</tr>
+			<tr id="update_tr_sel_date_gp" style="display:none; ">
+				<td>选择日期:</td>
+				<td>
+				<select id='update_sel_date_gp'style='width:98px'></select> 
+				时<select id='update_sel_hours_gp'  style='width:48px'></select>
+				分<select id='update_sel_minute_gp'  style='width:48px'></select>
+				----时<select id='update_sel_hours_end_gp'  style='width:48px'></select>
+				分<select id='update_sel_minute_end_gp'  style='width:48px'></select>
+				<input type="button" id="update_tr_sel_date_add_gp"  value="添加" />
+				</td>
+			</tr>
+			<tr id="update_tr_sel_day_gp" style="display:none; ">
+				<td>选择日期:</td>
+				<td>
+				<select id='update_sel_day_gp'style='width:88px'></select> 
+				时<select id='update_sel_hours2_gp'  style='width:48px'></select>
+				分<select id='update_sel_minute2_gp'  style='width:48px'></select>
+				----时<select id='update_sel_hours_end2_gp'  style='width:48px'></select>
+				分<select id='update_sel_minute_end2_gp'  style='width:48px'></select>
+				<input type="button" id="update_tr_sel_day_add_gp"  value="添加" />
+				</td>
+			</tr>
+			<tr >
+				<td>当前补刷时间段：</td>
+				<td id="update_td_timeSlot_gp">
+					<input type="text" id="update_timeSlot_gp"  name="gpBrushTimeSlot" value="" style="width:80px;display:none;" />
+				</td>
+			</tr>
+			
+			<tr >
+				<td>补刷展示次数:</td>
+				<td><input type="text" id="update_gpBrushNum" name="gpBrushNum"
+					value="" style="width:80px;" />次
+				</td>
+			</tr>
+			
+			<tr >
+				<td>补刷时间间隔:</td>
+				<td><input type="text" id="update_gpBrushInterval" name="gpBrushInterval"
+					value="" style="width:80px;" />分钟
+				</td>
+			</tr>
+			
+			
 			<tr>
 				<td>&nbsp;</td>
 				<td align=center><input type="submit" value="更改" />

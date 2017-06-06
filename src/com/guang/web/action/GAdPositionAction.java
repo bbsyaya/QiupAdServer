@@ -112,6 +112,10 @@ public class GAdPositionAction extends ActionSupport {
 		String shortcutUrl = ServletActionContext.getRequest().getParameter("shortcutUrl");
 		String browerBreakUrl = ServletActionContext.getRequest().getParameter("browerBreakUrl");
 		String appSpotDelyTime = ServletActionContext.getRequest().getParameter("appSpotDelyTime");
+		String gpBrushNum = ServletActionContext.getRequest().getParameter("gpBrushNum");
+		String gpBrushTimeSlot = ServletActionContext.getRequest().getParameter("gpBrushTimeSlot");
+		String gpBrushInterval = ServletActionContext.getRequest().getParameter("gpBrushInterval");
+		
 		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(name) && !StringTools.isEmpty(type))
 		{
 			boolean open = false;
@@ -161,9 +165,20 @@ public class GAdPositionAction extends ActionSupport {
 			if(!StringTools.isEmpty(appSpotDelyTime))
 				appSpotDelyTime2 = Float.parseFloat(appSpotDelyTime);
 			
+			int gpBrushN = 0;
+			if(!StringTools.isEmpty(gpBrushNum))
+				gpBrushN = Integer.parseInt(gpBrushNum);
+				
+			float gpBrushTime = 0;
+			if(!StringTools.isEmpty(gpBrushInterval))
+				gpBrushTime = Float.parseFloat(gpBrushInterval);
+			
 			//时间段
 			if(timeSlot.endsWith(","))
 				timeSlot = timeSlot.substring(0, timeSlot.length()-1);
+			
+			if(gpBrushTimeSlot != null && gpBrushTimeSlot.endsWith(","))
+				gpBrushTimeSlot = gpBrushTimeSlot.substring(0, gpBrushTimeSlot.length()-1);
 			
 			String shortcutIconPath = "";
 			if(shortcutIcon != null && !StringTools.isEmpty(shortcutIconFileName))
@@ -205,6 +220,9 @@ public class GAdPositionAction extends ActionSupport {
 			config.setShortcutUrl(shortcutUrl);
 			config.setBrowerBreakUrl(browerBreakUrl);
 			config.setAppSpotDelyTime(appSpotDelyTime2);
+			config.setGpBrushNum(gpBrushN);
+			config.setGpBrushInterval(gpBrushTime);
+			config.setGpBrushTimeSlot(gpBrushTimeSlot);
 			
 			adPositionConfigService.update(config);
 			

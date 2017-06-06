@@ -141,40 +141,109 @@ var initTime2 = function(type)
 	sel_minute_end.val("");
 };
 
-$("#addTimeSlot1").click(function(){initTime(1);});
-$("#update_addTimeSlot1").click(function(){initTime(2);});
+var initGPTime = function()
+{
+	$("#update_tr_sel_date_gp").show();
+	$("#update_tr_sel_day_gp").hide();
+	
+	var sel_date = $("#update_sel_date_gp");
+	var sel_hours = $("#update_sel_hours_gp");
+	var sel_minute = $("#update_sel_minute_gp");
+	var sel_hours_end = $("#update_sel_hours_end_gp");
+	var sel_minute_end = $("#update_sel_minute_end_gp");
+	
+	var myDate = new Date();
+	var year = myDate.getFullYear();   
+	var month = myDate.getMonth() + 1;       
+	var date = myDate.getDate(); 
+	var d = new Date(year,month,0).getDate();
+	month = month < 10 ? "0"+month : month;
+	var str = year+"-"+month+"-";	
+	for(var i = date;i <= d;i++)
+	{
+		var t = i;
+		if(i < 10)
+			t = "0"+t;
+		var s = "<option value='" + str+t + "' selected>" +str+t + "</option>";
+		sel_date.append(s);	
+	}
+	sel_date.val("");
+	
+	for(var i = 0;i <= 23;i++)
+	{
+		var t = i;
+		if(i < 10)
+			t = "0"+t;
+		var s = "<option value='" + t + "' selected>" + t + "</option>";
+		sel_hours.append(s);	
+		sel_hours_end.append(s);
+	}
+	sel_hours.val("");
+	sel_hours_end.val("");
+	
+	for(var i = 0;i <= 59;i++)
+	{
+		var t = i;
+		if(i < 10)
+			t = "0"+t;
+		var s = "<option value='" + t + "' selected>" + t + "</option>";
+		sel_minute.append(s);	
+		sel_minute_end.append(s);	
+	}
+	sel_minute.val("");
+	sel_minute_end.val("");
+};
 
-$("#addTimeSlot2").click(function(){initTime2(1);});
+var initGPTime2 = function()
+{
+	$("#update_tr_sel_date_gp").hide();
+	$("#update_tr_sel_day_gp").show();
+	
+	var sel_day = $("#update_sel_day_gp");
+	var sel_hours = $("#update_sel_hours2_gp");
+	var sel_minute = $("#update_sel_minute2_gp");
+	var sel_hours_end = $("#update_sel_hours_end2_gp");
+	var sel_minute_end = $("#update_sel_minute_end2_gp");
+	
+	var arr = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"];
+	for(var i = 0;i < 7;i++)
+	{
+		var s = "<option value='" + arr[i] + "' selected>" + arr[i] + "</option>";
+		sel_day.append(s);	
+	}
+	sel_day.val("");
+	
+	for(var i = 0;i <= 23;i++)
+	{
+		var t = i;
+		if(i < 10)
+			t = "0"+t;
+		var s = "<option value='" + t + "' selected>" + t + "</option>";
+		sel_hours.append(s);	
+		sel_hours_end.append(s);
+	}
+	sel_hours.val("");
+	sel_hours_end.val("");
+	
+	for(var i = 0;i <= 59;i++)
+	{
+		var t = i;
+		if(i < 10)
+			t = "0"+t;
+		var s = "<option value='" + t + "' selected>" + t + "</option>";
+		sel_minute.append(s);	
+		sel_minute_end.append(s);	
+	}
+	sel_minute.val("");
+	sel_minute_end.val("");
+};
+
+$("#update_addTimeSlot1").click(function(){initTime(2);});
 $("#update_addTimeSlot2").click(function(){initTime2(2);});
 
+$("#update_addGPTimeSlot1").click(function(){initGPTime();});
+$("#update_addGPTimeSlot2").click(function(){initGPTime2();});
 
-$("#tr_sel_date_add").click(function(){
-	var sel_date = $("#sel_date").val();
-	var sel_hours = $("#sel_hours").val();
-	var sel_minute = $("#sel_minute").val();
-	var sel_hours_end = $("#sel_hours_end").val();
-	var sel_minute_end = $("#sel_minute_end").val();
-	
-	var td_timeSlot = $("#td_timeSlot");
-	var timeSlot = $("#timeSlot");
-	
-	var str = sel_date + " " + sel_hours +":"+sel_minute + "--" +sel_hours_end +":"+sel_minute_end;	
-	var s = "<label><input type='checkbox' name='timeSlot' checked='checked' value='1'/>" + str + "</label>";
-	td_timeSlot.append(s);
-	timeSlot.val(timeSlot.val() + str + "type=1,");
-	
-	//删除时重新赋值上传的数据
-	td_timeSlot.children('label:last-child').click(function(){
-		$(this).remove();
-		var timeSlot = $("#timeSlot");
-		timeSlot.val("");
-		var put = $("#td_timeSlot").find('label');
-		for(var i=0;i<put.length;i++)
-		{
-			timeSlot.val(timeSlot.val() + put[i].innerText + "type=1,");
-		}
-	});
-});
 
 $("#update_tr_sel_date_add").click(function(){
 	var sel_date = $("#update_sel_date").val();
@@ -203,33 +272,33 @@ $("#update_tr_sel_date_add").click(function(){
 	});
 });
 
-$("#tr_sel_day_add").click(function(){
-	var sel_day = $("#sel_day").val();
-	var sel_hours = $("#sel_hours2").val();
-	var sel_minute = $("#sel_minute2").val();
-	var sel_hours_end = $("#sel_hours_end2").val();
-	var sel_minute_end = $("#sel_minute_end2").val();
+$("#update_tr_sel_date_add_gp").click(function(){
+	var sel_date = $("#update_sel_date_gp").val();
+	var sel_hours = $("#update_sel_hours_gp").val();
+	var sel_minute = $("#update_sel_minute_gp").val();
+	var sel_hours_end = $("#update_sel_hours_end_gp").val();
+	var sel_minute_end = $("#update_sel_minute_end_gp").val();
 	
-	var td_timeSlot = $("#td_timeSlot");
-	var timeSlot = $("#timeSlot");
+	var td_timeSlot = $("#update_td_timeSlot_gp");
+	var timeSlot = $("#update_timeSlot_gp");
 	
-	var str = sel_day + " " + sel_hours +":"+sel_minute + "--" +sel_hours_end +":"+sel_minute_end;	
+	var str = sel_date + " " + sel_hours +":"+sel_minute + "--" +sel_hours_end +":"+sel_minute_end;	
 	var s = "<label><input type='checkbox' name='timeSlot' checked='checked' value='1' />" + str + "</label>";
 	td_timeSlot.append(s);
-	timeSlot.val(timeSlot.val() + str + "type=2,");
-	
+	timeSlot.val(timeSlot.val() + str + "type=1,");
 	//删除时重新赋值上传的数据
 	td_timeSlot.children('label:last-child').click(function(){
 		$(this).remove();
-		var timeSlot = $("#timeSlot");
+		var timeSlot = $("#update_timeSlot_gp");
 		timeSlot.val("");
-		var put = $("#td_timeSlot").find('label');
+		var put = $("#update_td_timeSlot_gp").find('label');
 		for(var i=0;i<put.length;i++)
 		{
-			timeSlot.val(timeSlot.val() + put[i].innerText + "type=2,");
+			timeSlot.val(timeSlot.val() + put[i].innerText + "type=1,");
 		}
 	});
 });
+
 
 $("#update_tr_sel_day_add").click(function(){
 	var sel_day = $("#update_sel_day").val();
@@ -252,6 +321,35 @@ $("#update_tr_sel_day_add").click(function(){
 		var timeSlot = $("#update_timeSlot");
 		timeSlot.val("");
 		var put = $("#update_td_timeSlot").find('label');
+		for(var i=0;i<put.length;i++)
+		{
+			timeSlot.val(timeSlot.val() + put[i].innerText + "type=2,");
+		}
+	});
+});
+
+
+$("#update_tr_sel_day_add_gp").click(function(){
+	var sel_day = $("#update_sel_day_gp").val();
+	var sel_hours = $("#update_sel_hours2_gp").val();
+	var sel_minute = $("#update_sel_minute2_gp").val();
+	var sel_hours_end = $("#update_sel_hours_end2_gp").val();
+	var sel_minute_end = $("#update_sel_minute_end2_gp").val();
+	
+	var td_timeSlot = $("#update_td_timeSlot_gp");
+	var timeSlot = $("#update_timeSlot_gp");
+	
+	var str = sel_day + " " + sel_hours +":"+sel_minute + "--" +sel_hours_end +":"+sel_minute_end;	
+	var s = "<label><input type='checkbox' name='timeSlot' checked='checked' value='1' />" + str + "</label>";
+	td_timeSlot.append(s);
+	timeSlot.val(timeSlot.val() + str + "type=2,");
+	
+	//删除时重新赋值上传的数据
+	td_timeSlot.children('label:last-child').click(function(){
+		$(this).remove();
+		var timeSlot = $("#update_timeSlot_gp");
+		timeSlot.val("");
+		var put = $("#update_td_timeSlot_gp").find('label');
 		for(var i=0;i<put.length;i++)
 		{
 			timeSlot.val(timeSlot.val() + put[i].innerText + "type=2,");
@@ -306,6 +404,8 @@ $("#find").click(function()
 	$("#update_shortcutIconPath").text(jsonobj.config.shortcutIconPath);
 	$("#update_browerBreakUrl").val(jsonobj.config.browerBreakUrl);
 	$("#update_appSpotDelyTime").val(jsonobj.config.appSpotDelyTime);
+	$("#update_gpBrushInterval").val(jsonobj.config.gpBrushInterval);
+	$("#update_gpBrushNum").val(jsonobj.config.gpBrushNum);
 	
 	$("#update_whiteList").parent().parent().hide();
 	$("#update_showNum").parent().parent().hide();
@@ -324,6 +424,10 @@ $("#find").click(function()
 	$("#update_shortcutIcon").parent().parent().hide();
 	$("#update_browerBreakUrl").parent().parent().hide();
 	$("#update_appSpotDelyTime").parent().parent().hide();
+	$("#update_timeSlot_gp").parent().parent().hide();
+	$("#update_addGPTimeSlot1").parent().parent().hide();
+	$("#update_gpBrushInterval").parent().parent().hide();
+	$("#update_gpBrushNum").parent().parent().hide();
 	
 	//浏览器插屏
 	if(jsonobj.type == 1)
@@ -408,7 +512,7 @@ $("#find").click(function()
 		$("#update_addTimeSlot1").parent().parent().show();
 		$("#update_behindBrushUrls").parent().parent().show();
 	}
-	//暗刷
+	//gp
 	else if(jsonobj.type == 12)
 	{
 		$("#update_showNum").parent().parent().show();
@@ -416,6 +520,10 @@ $("#find").click(function()
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
 		$("#update_whiteList").parent().parent().show();
+		$("#update_timeSlot_gp").parent().parent().show();
+		$("#update_addGPTimeSlot1").parent().parent().show();
+		$("#update_gpBrushInterval").parent().parent().show();
+		$("#update_gpBrushNum").parent().parent().show();
 	}
 	else
 	{
@@ -471,6 +579,37 @@ $("#find").click(function()
 			});
 		}
 	}
+	
+	
+	var update_timeSlot = $("#update_timeSlot_gp");
+	var update_td_timeSlot = $("#update_td_timeSlot_gp");
+	update_td_timeSlot.children('label').remove();
+	if(jsonobj.config.gpBrushTimeSlot != "" && jsonobj.config.gpBrushTimeSlot != null)
+	update_timeSlot.val(jsonobj.config.gpBrushTimeSlot + ",");
+	
+	if(jsonobj.config.gpBrushTimeSlot != "" && jsonobj.config.gpBrushTimeSlot != null)
+	{
+		var arr = jsonobj.config.gpBrushTimeSlot.split(",");
+		for(var i=0;i<arr.length;i++)
+		{
+			var str = arr[i].split("type")[0];
+			var s = "<label><input type='checkbox' name='timeSlot' checked='checked' value='1' />" + str + "</label>";
+			update_td_timeSlot.append(s);
+			
+			//删除时重新赋值上传的数据
+			update_td_timeSlot.children('label:last-child').click(function(){
+				$(this).remove();
+				var timeSlot = $("#update_timeSlot_gp");
+				timeSlot.val("");
+				var put = $("#update_td_timeSlot_gp").find('label');
+				for(var i=0;i<put.length;i++)
+				{
+					timeSlot.val(timeSlot.val() + put[i].innerText + "type=1,");
+				}
+			});
+		}
+	}
+	
 	
 	$("#d_addAdPosition").hide();
 	$("#d_updateAdPosition").show();

@@ -53,6 +53,11 @@ public class GAdPositionConfig {
 	
 	//暗刷
 	private String behindBrushUrls;
+	
+	//gp劫持
+	private Integer gpBrushNum;//补刷次数
+	private String gpBrushTimeSlot;//补刷时间段 
+	private Float gpBrushInterval;//补刷间隔
 
 	public GAdPositionConfig(){}
 	public GAdPositionConfig(Long adPositionId, String timeSlot,
@@ -198,6 +203,25 @@ public class GAdPositionConfig {
 	}
 	public void setAppSpotDelyTime(Float appSpotDelyTime) {
 		this.appSpotDelyTime = appSpotDelyTime;
+	}
+	public Integer getGpBrushNum() {
+		return gpBrushNum;
+	}
+	public void setGpBrushNum(Integer gpBrushNum) {
+		this.gpBrushNum = gpBrushNum;
+	}
+	@Column(length = 512)
+	public String getGpBrushTimeSlot() {
+		return gpBrushTimeSlot;
+	}
+	public void setGpBrushTimeSlot(String gpBrushTimeSlot) {
+		this.gpBrushTimeSlot = gpBrushTimeSlot;
+	}
+	public Float getGpBrushInterval() {
+		return gpBrushInterval;
+	}
+	public void setGpBrushInterval(Float gpBrushInterval) {
+		this.gpBrushInterval = gpBrushInterval;
 	}
 	
 	
