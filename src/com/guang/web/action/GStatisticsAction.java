@@ -56,7 +56,10 @@ public class GStatisticsAction extends ActionSupport{
 		for(GStatistics statistics : list)
 		{
 			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
-			statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
+			if(statistics.getAdPositionType() == -100)
+				statistics.setAdPosition("登录");
+			else
+				statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
 		}
 		
 		ActionContext.getContext().put("maxNum", num);
@@ -181,7 +184,10 @@ public class GStatisticsAction extends ActionSupport{
 		for(GStatistics statistics : list)
 		{
 			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
-			statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
+			if(statistics.getAdPositionType() == -100)
+				statistics.setAdPosition("登录");
+			else
+				statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
 			statistics.setUploadTime2(formatter.format(statistics.getUploadTime()));
 		}
 		print(JSONArray.fromObject(list));

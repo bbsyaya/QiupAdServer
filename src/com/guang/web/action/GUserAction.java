@@ -19,17 +19,20 @@ import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.guang.web.common.GStatisticsType;
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GApp;
 import com.guang.web.mode.GArea;
 import com.guang.web.mode.GNetworkOperator;
 import com.guang.web.mode.GPhoneModel;
+import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
 import com.guang.web.mode.GUserStt;
 import com.guang.web.service.GAppService;
 import com.guang.web.service.GAreaService;
 import com.guang.web.service.GNetworkOperatorService;
 import com.guang.web.service.GPhoneModelService;
+import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GUserService;
 import com.guang.web.service.GUserSttService;
 import com.guang.web.tools.GZipTool;
@@ -54,6 +57,7 @@ public class GUserAction extends ActionSupport {
 	private GNetworkOperatorService gNetworkOperatorService;
 	@Resource
 	private GPhoneModelService gPhoneModelService;
+	@Resource private GStatisticsService statisticsService;
 
 	private File source;
 	private String sourceFileName;
@@ -243,7 +247,7 @@ public class GUserAction extends ActionSupport {
 			user.setUpdatedDate(new Date());
 			userService.update(user);
 
-			loginSuccess(user.getName());
+			loginSuccess(user);
 		} else {
 			result.put("result", false);
 		}
@@ -266,7 +270,7 @@ public class GUserAction extends ActionSupport {
 			user.setUpdatedDate(new Date());
 			userService.update(user);
 
-			loginSuccess(user.getName());
+			loginSuccess(user);
 		} else {
 			obj.put("result", false);
 		}
@@ -293,14 +297,17 @@ public class GUserAction extends ActionSupport {
 		gPhoneModelService.add(new GPhoneModel(user.getModel(),user.getChannel()));
 
 		logger.info(user.getName() + " 注册成功！");
-		loginSuccess(user.getName());
+		loginSuccess(user);
 		print("1");
 	}
 
 	// 登录成功
-	public void loginSuccess(String name) {
+	public void loginSuccess(GUser user) {
 //		logger.info(name + " 登录成功！");
 
+		GStatistics statistics = new GStatistics(GStatisticsType.LOGIN,
+				user.getId(), -100, "login", "login", "login",user.getChannel());
+		statisticsService.add(statistics);
 	}
 
 	// 退出登录

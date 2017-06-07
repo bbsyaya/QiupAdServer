@@ -1,6 +1,7 @@
 package com.guang.web.action;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -39,14 +40,17 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		List<GAdPositionStatistics> slist = new ArrayList<GAdPositionStatistics>();
 		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();	
 		date.setHours(0);
 		date.setMinutes(0);
 		date.setSeconds(0);
 		
-		String from = date.toLocaleString();
-		date.setDate(date.getDate()+1);
-		String to = date.toLocaleString();
+		String from = formatter.format(date);
+		date.setHours(23);
+		date.setMinutes(59);
+		date.setSeconds(59);
+		String to = formatter.format(date);
 		
 		
 		colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
@@ -104,16 +108,22 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		float income = activateNum;
 		
 		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.LOGIN + "");
+		long activeUserNum = statisticsService.findAllsNum(colvals);
+		
+		colvals.remove("type =");
+		colvals.put("type !=", GStatisticsType.LOGIN + "");
 		long adActiveUserNum = statisticsService.findAllsNum(colvals);
 		
+		colvals.remove("type !=");
 		colvals.remove("uploadTime between");
 		
 		colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
 		long newAddUserNum = userService.findNum(colvals);
 		
-		colvals.remove("createdDate between");
-		colvals.put("updatedDate between", "'"+from+"'" + " and " + "'"+to+"'");
-		long activeUserNum = userService.findNum(colvals);
+//		colvals.remove("createdDate between");
+//		colvals.put("updatedDate between", "'"+from+"'" + " and " + "'"+to+"'");
+//		long activeUserNum = userService.findNum(colvals);
 		
 		
 		GAdPositionStatistics adPositionStatistics = new GAdPositionStatistics(requestNum, showNum, clickNum, downloadNum, downloadSuccessNum, installNum, 
@@ -213,8 +223,14 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		float income = activateNum;
 		
 		colvals.remove("type =");
+		colvals.put("type =", GStatisticsType.LOGIN + "");
+		long activeUserNum = statisticsService.findAllsNum(colvals);
+		
+		colvals.remove("type =");
+		colvals.put("type !=", GStatisticsType.LOGIN + "");
 		long adActiveUserNum = statisticsService.findAllsNum(colvals);
 		
+		colvals.remove("type !=");
 		colvals.remove("adPositionType =");
 		colvals.remove("packageName =");
 		colvals.remove("uploadTime between");
@@ -225,10 +241,10 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 			colvals.put("channel =", "'"+channel+"'");
 		long newAddUserNum = userService.findNum(colvals);
 				
-		colvals.remove("createdDate between");
-		colvals.put("updatedDate between", "'"+from+"'" + " and " + "'"+to+"'");
-
-		long activeUserNum = userService.findNum(colvals);
+//		colvals.remove("createdDate between");
+//		colvals.put("updatedDate between", "'"+from+"'" + " and " + "'"+to+"'");
+//
+//		long activeUserNum = userService.findNum(colvals);
 				
 		
 		GAdPositionStatistics adPositionStatistics = new GAdPositionStatistics(requestNum, showNum, clickNum, downloadNum, downloadSuccessNum, installNum, 
