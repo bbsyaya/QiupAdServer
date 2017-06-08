@@ -31,12 +31,17 @@ public class GOffer {
 	
 	private Float pice;
 	
+	private Integer type;
+	private String url;
+	
+	
 	public GOffer(){}
-	public GOffer(String appName, String packageName, String appDesc,
+	public GOffer(Integer type,String appName, String packageName, String appDesc,
 			String picPath, String iconPath, String apkPath, float apkSize,
 			int priority, String areas,String channels,String adPositions,
 			String channelNames) {
 		super();
+		this.type = type;
 		this.appName = appName;
 		this.packageName = packageName;
 		this.appDesc = appDesc;
@@ -162,6 +167,18 @@ public class GOffer {
 	public void setOperators(String operators) {
 		this.operators = operators;
 	}
-	
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	@Column(length = 128)
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	
 }

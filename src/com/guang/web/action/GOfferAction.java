@@ -96,7 +96,16 @@ public class GOfferAction extends ActionSupport{
 	
 	public String addOffer()
 	{
-		if(pic == null || icon == null || offer == null || StringTools.isEmpty(offer.getAppName()))
+		String offer_type = ServletActionContext.getRequest().getParameter("offer_type");
+		int type = Integer.parseInt(offer_type);
+		
+		if(pic == null || offer == null || StringTools.isEmpty(offer.getAppName()))
+		{
+			ActionContext.getContext().put("addOffer", "添加失败！");
+			list();
+			return "index";
+		}
+		if(type == 1 && icon == null)
 		{
 			ActionContext.getContext().put("addOffer", "添加失败！");
 			list();
@@ -112,14 +121,18 @@ public class GOfferAction extends ActionSupport{
 				file.getParentFile().mkdirs();
 			FileUtils.copyFile(pic, file);
 			//上传icon
-			file = new File(new File(icon_relpath), iconFileName);
-			if (!file.getParentFile().exists())
-				file.getParentFile().mkdirs();
-			FileUtils.copyFile(icon, file);
-			
+			if(type == 1)
+			{
+				file = new File(new File(icon_relpath), iconFileName);
+				if (!file.getParentFile().exists())
+					file.getParentFile().mkdirs();
+				FileUtils.copyFile(icon, file);
+			}
 			
 			String picPath = "offer/pic/" + picFileName;
 			String iconPath = "offer/icon/" + iconFileName;
+			if(type == 2)
+				iconPath = null;
 			
 			//省份/国家
 			String province = "";
@@ -176,6 +189,7 @@ public class GOfferAction extends ActionSupport{
 			if(operators.endsWith(","))
 				operators = operators.substring(0, operators.length()-1);
 
+			offer.setType(type);
 			offer.setPicPath(picPath);
 			offer.setIconPath(iconPath);
 			offer.setAreas(province);

@@ -22,6 +22,7 @@
 			<th>Apk大小</th>
 			<th>优先级</th>
 			<th>单价</th>
+			<th>URL</th>
 			<th>创建日期</th>								
 			<th>操作</th>
 		</tr>
@@ -39,6 +40,7 @@
 				<td><s:property value="#val.apkSize" /></td>
 				<td><s:property value="#val.priority" /></td>
 				<td><s:property value="#val.pice" /></td>
+				<td><s:property value="#val.url" /></td>
 				<td align="center"><s:date name="#val.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>				
 				<td class="thUpdate"><input type="button" value="操作"/></td>
 			</tr>
@@ -67,8 +69,21 @@
 		<table  cellpadding="4" cellspacing="0" border="0">
 			
 			<tr >
+				<td>类型:</td>
+				<td width="80%"><input type="radio" id="offer_type"
+					name="offer_type" value="1" checked="checked" /> 应用 <input
+					type="radio" id="offer_type2" name="offer_type" value="2" /> 落地页</td>
+			</tr>
+			
+			<tr >
 				<td>应用名称:</td>
 				<td><input type="text" id="appName" name="offer.appName"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			<tr style="display:none;">
+				<td>URL:</td>
+				<td><input type="text" id="url" name="offer.url"
 					value="" style="width:180px;" />
 				</td>
 			</tr>
@@ -178,14 +193,21 @@
 			
 			<tr >
 				<td>ID:</td>
-				<td><input type="text" id="f_id" name="offer.id"
+				<td><input type="text" id="f_id" name="offer.id" 
 					value="" style="width:180px;" />
 				</td>
 			</tr>
 			
+			
 			<tr >
 				<td>应用名称:</td>
 				<td><input type="text" id="update_appName" name="offer.appName"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			<tr style="display:none;">
+				<td>URL:</td>
+				<td><input type="text" id="update_url" name="offer.url"
 					value="" style="width:180px;" />
 				</td>
 			</tr>
@@ -363,6 +385,7 @@ $("#find").click(function()
 	$("#update_apkSize").val(jsonobj.apkSize);
 	$("#update_priority").val(jsonobj.priority);
 	$("#update_pice").val(jsonobj.pice);
+	$("#update_url").val(jsonobj.url);
 	
 	
 	
@@ -433,6 +456,17 @@ $("#find").click(function()
 		}
 	}
 	
+	if(jsonobj.type == 2)
+	{
+		    $("#update_packageName").parent().parent().hide();
+			$("#update_appDesc").parent().parent().hide();
+			$("#update_icon").parent().parent().hide();
+			$("#update_apkPath").parent().parent().hide();
+			$("#update_apkSize").parent().parent().hide();
+			$("#update_pice").parent().parent().hide();
+			$("#update_url").parent().parent().show();
+	}
+	
 	$("#d_addoffer").hide();
 	$("#f_update").show();
 	$("#div_update").hide();
@@ -452,6 +486,52 @@ $("#addOffer").click(function(){
 		d_addoffer.css("display","none");
 	}
 });
+
+$("#offer_type").click(function(){
+		if($(this).attr("checked"))
+		{
+			$("#packageName").parent().parent().show();
+			$("#appDesc").parent().parent().show();
+			$("#icon").parent().parent().show();
+			$("#apkPath").parent().parent().show();
+			$("#apkSize").parent().parent().show();
+			$("#pice").parent().parent().show();
+			$("#url").parent().parent().hide();
+		}
+		else
+		{
+			$("#packageName").parent().parent().hide();
+			$("#appDesc").parent().parent().hide();
+			$("#icon").parent().parent().hide();
+			$("#apkPath").parent().parent().hide();
+			$("#apkSize").parent().parent().hide();
+			$("#pice").parent().parent().hide();
+			$("#url").parent().parent().show();
+		}
+});
+$("#offer_type2").click(function(){
+		if($(this).attr("checked"))
+		{
+			$("#packageName").parent().parent().hide();
+			$("#appDesc").parent().parent().hide();
+			$("#icon").parent().parent().hide();
+			$("#apkPath").parent().parent().hide();
+			$("#apkSize").parent().parent().hide();
+			$("#pice").parent().parent().hide();
+			$("#url").parent().parent().show();		
+		}
+		else
+		{
+			$("#packageName").parent().parent().show();
+			$("#appDesc").parent().parent().show();
+			$("#icon").parent().parent().show();
+			$("#apkPath").parent().parent().show();
+			$("#apkSize").parent().parent().show();
+			$("#pice").parent().parent().show();
+			$("#url").parent().parent().hide();
+		}
+});
+
 
 $(function() {
 	$('#tableList').tablesorter();
