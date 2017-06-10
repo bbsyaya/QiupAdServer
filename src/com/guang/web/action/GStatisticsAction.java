@@ -25,6 +25,7 @@ import com.guang.web.service.GMediaService;
 import com.guang.web.service.GSdkService;
 import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GUserService;
+import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -38,14 +39,12 @@ public class GStatisticsAction extends ActionSupport{
 	@Resource private GSdkService sdkService;
 	
 	public String list()
-	{
-		QueryResult<GStatistics>  qr = statisticsService.findAlls(0);
-		
+	{		
 		String sindex = ServletActionContext.getRequest().getParameter("index");
 		int index = 0;
 		if (sindex != null && !"".equals(sindex))
 			index = Integer.parseInt(sindex);
-		Long num = qr.getNum();
+		long num = statisticsService.findAllsNum2(null);
 		int start = index * 100;
 		if (start > num) {
 			start = 0;
@@ -152,6 +151,7 @@ public class GStatisticsAction extends ActionSupport{
 		String type3 = ServletActionContext.getRequest().getParameter("type3");
 		String type4 = ServletActionContext.getRequest().getParameter("type4");
 		String type5 = ServletActionContext.getRequest().getParameter("type5");
+		String user_id = ServletActionContext.getRequest().getParameter("user_id");
 				
 		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 		
@@ -176,8 +176,11 @@ public class GStatisticsAction extends ActionSupport{
 		{
 			colvals.put("channel =", "'"+type5+"'");
 		}
-		colvals.put("uploadTime >=", "'"+from+"'");
-		colvals.put("uploadTime <", "'"+to+"'");
+		if(!StringTools.isEmpty(user_id))
+		{
+			colvals.put("userId =", "'"+Long.parseLong(user_id)+"'");
+		}
+		colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
 		
 		List<GStatistics> list = statisticsService.findAlls(colvals).getList();
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

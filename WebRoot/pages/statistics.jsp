@@ -31,6 +31,7 @@
 <input type="button" value="一月内" id="oneMonth"/>
 <input type="text" id="from_date" name="from_date"  style="width:80px;" /> -
 <input type="text" id="to_date" name="to_date" style="width:80px;" />
+<b style="font-size:10px;">用户ID</b><input type="text" id="user_id" name="user_id" style="width:50px;" />
 <input type="button" value="查询" id="find"/>
 <input type="button" id="out" value="导出" />
 </div>
@@ -98,12 +99,12 @@ $(function() {
 laydate({
 			istime: true,
             elem: '#from_date',
-            format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD hh:mm:ss'
         });
 laydate({
 			istime: true,
             elem: '#to_date',
-            format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD hh:mm:ss'
         });   
  $("#to_date").click(function(){
  	laydate.resetPosition(-100);

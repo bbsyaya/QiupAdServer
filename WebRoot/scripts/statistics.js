@@ -113,12 +113,13 @@ var updateTable = function(from,to)
 	var type3 = $("#filed_sel_3").val();
 	var type4 = $("#filed_sel_4").val();
 	var type5 = $("#filed_sel_5").val();
+	var user_id = $("#user_id").val();
 	
 	var data = $.ajax({
 		  type: 'POST',
 		  url: baseUrl+"/statistics_list2",
 		  data: {"from" : from,"to":to,"type1":type1,
-			  "type2":type2,"type3":type3,"type4":type4,"type5":type5},
+			  "type2":type2,"type3":type3,"type4":type4,"type5":type5,"user_id":user_id},
 		  async:false
 		});
 	data = data.responseText;
@@ -179,8 +180,8 @@ $("#oneMonth").click(function(){
 });
 
 $("#find").click(function(){
-	var from = $("#from_date").val() + " 00:00:00";
-	var to = $("#to_date").val() + " 00:00:00";
+	var from = $("#from_date").val();
+	var to = $("#to_date").val();
 	updateTable(from,to);
 });
 

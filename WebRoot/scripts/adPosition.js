@@ -516,6 +516,7 @@ $("#find").click(function()
 	else if(jsonobj.type == 12)
 	{
 		$("#update_showNum").parent().parent().show();
+		$("#update_adShowNum").parent().parent().show();
 		$("#update_showTimeInterval").parent().parent().show();
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
