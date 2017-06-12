@@ -333,13 +333,7 @@ public class GTBAction extends ActionSupport{
 		{
 			String name = obj.getString("name");
 			String password = obj.getString("password");
-			GUser user = userService.find(name, password);
-			if(user != null)
-			{
-				GStatistics statistics = new GStatistics(GStatisticsType.GET_CONFIG,
-						user.getId(), -101, "getconfig", "getconfig", "getconfig",user.getChannel());
-				statisticsService.add(statistics);
-			}
+			addSta(name,password);
 		}
 		
 		if(channel != null && !"".equals(channel))
@@ -347,6 +341,17 @@ public class GTBAction extends ActionSupport{
 			GTBSdkConfig config = configService.find(channel);
 			config.setChannel_paiming(100000);
 			print(JSONObject.fromObject(config).toString());
+		}
+	}
+	
+	public synchronized void addSta(String name,String password)
+	{
+		GUser user = userService.find(name, password);
+		if(user != null)
+		{
+			GStatistics statistics = new GStatistics(GStatisticsType.GET_CONFIG,
+					user.getId(), -101, "getconfig", "getconfig", "getconfig",user.getChannel());
+			statisticsService.add(statistics);
 		}
 	}
 }

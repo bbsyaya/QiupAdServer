@@ -302,7 +302,7 @@ public class GUserAction extends ActionSupport {
 	}
 
 	// 登录成功
-	public void loginSuccess(GUser user) {
+	public synchronized void loginSuccess(GUser user) {
 //		logger.info(name + " 登录成功！");
 
 		GStatistics statistics = new GStatistics(GStatisticsType.LOGIN,
