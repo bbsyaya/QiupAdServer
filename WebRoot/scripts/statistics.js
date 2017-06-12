@@ -14,6 +14,7 @@ var updateSel = function(type)
 		s += '<option value ="5">安装</option>';
 		s += '<option value ="6">激活</option>';
 		s += '<option value ="13">登录</option>';
+		s += '<option value ="14">获取配置</option>';
 		
 		$("#filed_sel_1").html(s);
 	}

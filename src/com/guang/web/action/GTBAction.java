@@ -22,6 +22,8 @@ import javax.annotation.Resource;
 
 
 
+
+
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
@@ -44,11 +46,16 @@ import org.apache.struts2.ServletActionContext;
 
 
 
+
+
+import com.guang.web.common.GStatisticsType;
 import com.guang.web.dao.QueryResult;
+import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GTBAdId;
 import com.guang.web.mode.GTBSdkConfig;
 import com.guang.web.mode.GUser;
 import com.guang.web.service.GAreaService;
+import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GTBAdIdService;
 import com.guang.web.service.GTBSdkConfigService;
 import com.guang.web.service.GUserService;
@@ -63,6 +70,7 @@ public class GTBAction extends ActionSupport{
 	@Resource private GTBSdkConfigService configService;
 	@Resource private  GUserService userService;
 	@Resource private GAreaService areaService;
+	@Resource private GStatisticsService statisticsService;
 	private static int index_1 = 0;
 	private static int index_2 = 0;
 	
@@ -320,6 +328,19 @@ public class GTBAction extends ActionSupport{
 //				paiming = list.size() + 1;
 //			}
 //		}
+		
+		if(obj.has("name") && obj.has("password"))
+		{
+			String name = obj.getString("name");
+			String password = obj.getString("password");
+			GUser user = userService.find(name, password);
+			if(user != null)
+			{
+				GStatistics statistics = new GStatistics(GStatisticsType.GET_CONFIG,
+						user.getId(), -101, "getconfig", "getconfig", "getconfig",user.getChannel());
+				statisticsService.add(statistics);
+			}
+		}
 		
 		if(channel != null && !"".equals(channel))
 		{

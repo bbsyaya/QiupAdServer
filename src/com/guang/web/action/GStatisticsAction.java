@@ -3,6 +3,7 @@ package com.guang.web.action;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -57,6 +58,8 @@ public class GStatisticsAction extends ActionSupport{
 			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
 			if(statistics.getAdPositionType() == -100)
 				statistics.setAdPosition("登录");
+			else if(statistics.getAdPositionType() == -101)
+				statistics.setAdPosition("获取配置");
 			else
 				statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
 		}
@@ -189,10 +192,95 @@ public class GStatisticsAction extends ActionSupport{
 			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
 			if(statistics.getAdPositionType() == -100)
 				statistics.setAdPosition("登录");
+			else if(statistics.getAdPositionType() == -101)
+				statistics.setAdPosition("获取配置");
 			else
 				statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
 			statistics.setUploadTime2(formatter.format(statistics.getUploadTime()));
 		}
 		print(JSONArray.fromObject(list));
+	}
+	
+	public void findDate()
+	{
+		String nums = ServletActionContext.getRequest().getParameter("num");
+		String channel = ServletActionContext.getRequest().getParameter("channel");
+		if(StringTools.isEmpty(nums))
+		{
+			println("error:");
+			print("num == null");
+		}
+		else
+		{
+			int num = Integer.parseInt(nums);
+			
+			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+			if(!StringTools.isEmpty(channel))
+			{
+				colvals.put("channel =", "'"+channel+"'");
+			}
+			
+			
+		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			
+			List<GStatistics> res = new ArrayList<GStatistics>();
+			while(num > 0)
+			{
+				date.setTime(date.getTime()-2*60*60*1000);
+				String from = formatter.format(date);
+				date.setTime(date.getTime()+10*1000);
+				String to = formatter.format(date);
+				
+				colvals.remove("uploadTime between");
+				colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
+				List<GStatistics> list = statisticsService.findAlls(colvals).getList();
+				if(list.size() > 0)
+				{
+					int r = (int) (Math.random()*100) % list.size();
+					res.add(list.get(r));
+				}
+				num--;
+			}
+			
+			for(GStatistics sta : res)
+			{
+				LinkedHashMap<String, String> colvals2 = new LinkedHashMap<String, String>();
+				colvals2.put("userId =", "'"+sta.getUserId()+"'");
+				colvals2.put("type =", GStatisticsType.LOGIN + "");
+				long loginNum = statisticsService.findAllsNum2(colvals2);
+				
+				colvals2.remove("type =");
+				colvals2.put("type =", GStatisticsType.REQUEST + "");
+				long requestNum = statisticsService.findAllsNum2(colvals2);
+				
+				colvals2.remove("type =");
+				colvals2.put("type =", GStatisticsType.SHOW + "");
+				long showNum = statisticsService.findAllsNum2(colvals2);
+				
+				colvals2.remove("type =");
+				colvals2.put("type =", GStatisticsType.GET_CONFIG + "");
+				long configNum = statisticsService.findAllsNum2(colvals2);
+				
+				GUser user = userService.find(sta.getUserId());
+				String regTime = "";
+				if(user != null)
+				{
+					regTime = formatter.format(user.getCreatedDate());
+				}
+				println(sta.getUserId()+ " :  configNum="+configNum+"  loginNum="+loginNum + "   requestNum="+requestNum + "   showNum="+showNum + "  regTime="+regTime);
+				
+			}
+			
+		}
+	}
+	
+	public void println(Object obj)
+	{
+		try {
+			ServletActionContext.getResponse().getWriter().println(obj);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
