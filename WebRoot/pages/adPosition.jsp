@@ -273,6 +273,13 @@
 				</td>
 			</tr>
 			
+			<tr >
+				<td>Offer优先级:</td>
+				<td><input type="text" id="update_gpOfferPriority" name="gpOfferPriority"
+					value="" style="width:280px;" />
+				</td>
+			</tr>
+			
 			
 			<tr>
 				<td>&nbsp;</td>

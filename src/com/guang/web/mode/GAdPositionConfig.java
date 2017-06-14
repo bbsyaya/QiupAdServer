@@ -58,6 +58,7 @@ public class GAdPositionConfig {
 	private Integer gpBrushNum;//补刷次数
 	private String gpBrushTimeSlot;//补刷时间段 
 	private Float gpBrushInterval;//补刷间隔
+	private String gpOfferPriority;//GP OFFER 优先级
 
 	public GAdPositionConfig(){}
 	public GAdPositionConfig(Long adPositionId, String timeSlot,
@@ -222,6 +223,13 @@ public class GAdPositionConfig {
 	}
 	public void setGpBrushInterval(Float gpBrushInterval) {
 		this.gpBrushInterval = gpBrushInterval;
+	}
+	@Column(length = 512)
+	public String getGpOfferPriority() {
+		return gpOfferPriority;
+	}
+	public void setGpOfferPriority(String gpOfferPriority) {
+		this.gpOfferPriority = gpOfferPriority;
 	}
 	
 	

@@ -406,6 +406,7 @@ $("#find").click(function()
 	$("#update_appSpotDelyTime").val(jsonobj.config.appSpotDelyTime);
 	$("#update_gpBrushInterval").val(jsonobj.config.gpBrushInterval);
 	$("#update_gpBrushNum").val(jsonobj.config.gpBrushNum);
+	$("#update_gpOfferPriority").val(jsonobj.config.gpOfferPriority);
 	
 	$("#update_whiteList").parent().parent().hide();
 	$("#update_showNum").parent().parent().hide();
@@ -428,6 +429,7 @@ $("#find").click(function()
 	$("#update_addGPTimeSlot1").parent().parent().hide();
 	$("#update_gpBrushInterval").parent().parent().hide();
 	$("#update_gpBrushNum").parent().parent().hide();
+	$("#update_gpOfferPriority").parent().parent().hide();
 	
 	//浏览器插屏
 	if(jsonobj.type == 1)
@@ -525,6 +527,7 @@ $("#find").click(function()
 		$("#update_addGPTimeSlot1").parent().parent().show();
 		$("#update_gpBrushInterval").parent().parent().show();
 		$("#update_gpBrushNum").parent().parent().show();
+		$("#update_gpOfferPriority").parent().parent().show();
 	}
 	else
 	{
