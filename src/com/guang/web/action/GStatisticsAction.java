@@ -15,9 +15,7 @@ import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 
 import com.guang.web.common.GStatisticsType;
-import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GAdPosition;
-import com.guang.web.mode.GMedia;
 import com.guang.web.mode.GSdk;
 import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
@@ -58,8 +56,6 @@ public class GStatisticsAction extends ActionSupport{
 			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
 			if(statistics.getAdPositionType() == -100)
 				statistics.setAdPosition("登录");
-			else if(statistics.getAdPositionType() == -101)
-				statistics.setAdPosition("获取配置");
 			else
 				statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
 		}
@@ -192,8 +188,6 @@ public class GStatisticsAction extends ActionSupport{
 			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
 			if(statistics.getAdPositionType() == -100)
 				statistics.setAdPosition("登录");
-			else if(statistics.getAdPositionType() == -101)
-				statistics.setAdPosition("获取配置");
 			else
 				statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
 			statistics.setUploadTime2(formatter.format(statistics.getUploadTime()));
@@ -227,7 +221,7 @@ public class GStatisticsAction extends ActionSupport{
 			List<GStatistics> res = new ArrayList<GStatistics>();
 			while(num > 0)
 			{
-				date.setTime(date.getTime()-2*60*60*1000);
+				date.setTime(date.getTime()-2*60*1000);
 				String from = formatter.format(date);
 				date.setTime(date.getTime()+10*1000);
 				String to = formatter.format(date);
@@ -258,17 +252,17 @@ public class GStatisticsAction extends ActionSupport{
 				colvals2.put("type =", GStatisticsType.SHOW + "");
 				long showNum = statisticsService.findAllsNum2(colvals2);
 				
-				colvals2.remove("type =");
-				colvals2.put("type =", GStatisticsType.GET_CONFIG + "");
-				long configNum = statisticsService.findAllsNum2(colvals2);
 				
 				GUser user = userService.find(sta.getUserId());
 				String regTime = "";
+				String loginTime = "";
 				if(user != null)
 				{
 					regTime = formatter.format(user.getCreatedDate());
+					loginTime = formatter.format(user.getUpdatedDate());
 				}
-				println(sta.getUserId()+ " :  configNum="+configNum+"  loginNum="+loginNum + "   requestNum="+requestNum + "   showNum="+showNum + "  regTime="+regTime);
+				println(sta.getUserId()+ " :   loginNum="+loginNum + "   requestNum="+requestNum 
+						+ "   showNum="+showNum + "  regTime="+regTime+ "  loginTime="+loginTime);
 				
 			}
 			

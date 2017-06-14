@@ -329,12 +329,6 @@ public class GTBAction extends ActionSupport{
 //			}
 //		}
 		
-		if(obj.has("name") && obj.has("password"))
-		{
-			String name = obj.getString("name");
-			String password = obj.getString("password");
-			addSta(name,password);
-		}
 		
 		if(channel != null && !"".equals(channel))
 		{
@@ -344,14 +338,5 @@ public class GTBAction extends ActionSupport{
 		}
 	}
 	
-	public synchronized void addSta(String name,String password)
-	{
-		GUser user = userService.find(name, password);
-		if(user != null)
-		{
-			GStatistics statistics = new GStatistics(GStatisticsType.GET_CONFIG,
-					user.getId(), -101, "getconfig", "getconfig", "getconfig",user.getChannel());
-			statisticsService.add(statistics);
-		}
-	}
+	
 }
