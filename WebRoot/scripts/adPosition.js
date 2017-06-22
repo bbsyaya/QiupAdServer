@@ -529,6 +529,11 @@ $("#find").click(function()
 		$("#update_gpBrushNum").parent().parent().show();
 		$("#update_gpOfferPriority").parent().parent().show();
 	}
+	//自然量劫持
+	else if(jsonobj.type == 16)
+	{
+		
+	}
 	else
 	{
 		$("#update_whiteList").parent().parent().show();

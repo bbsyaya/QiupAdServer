@@ -218,42 +218,60 @@ public class GStatisticsAction extends ActionSupport{
 		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			
-			List<GStatistics> res = new ArrayList<GStatistics>();
+			List<GUser> res = new ArrayList<GUser>();
 			while(num > 0)
 			{
-				date.setTime(date.getTime()-2*60*1000);
+				date.setTime(date.getTime()-30*60*1000);
 				String from = formatter.format(date);
-				date.setTime(date.getTime()+10*1000);
+				date.setTime(date.getTime()+5*60*1000);
 				String to = formatter.format(date);
 				
-				colvals.remove("uploadTime between");
-				colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
-				List<GStatistics> list = statisticsService.findAlls(colvals).getList();
+				colvals.remove("createdDate between");
+				colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
+				List<GUser> list = userService.find(colvals).getList();
 				if(list.size() > 0)
 				{
-					int r = (int) (Math.random()*100) % list.size();
-					res.add(list.get(r));
+					for(int i=0;i<list.size();i+=2)
+					{
+						res.add(list.get(i));
+						num--;
+					}
+//					int r = (int) (Math.random()*100) % list.size();
+					
 				}
-				num--;
+				else
+				{
+					num--;
+				}
 			}
 			
-			for(GStatistics sta : res)
+			for(GUser user : res)
 			{
 				LinkedHashMap<String, String> colvals2 = new LinkedHashMap<String, String>();
-				colvals2.put("userId =", "'"+sta.getUserId()+"'");
+				colvals2.put("userId =", "'"+user.getId()+"'");
 				colvals2.put("type =", GStatisticsType.LOGIN + "");
 				long loginNum = statisticsService.findAllsNum2(colvals2);
 				
 				colvals2.remove("type =");
 				colvals2.put("type =", GStatisticsType.REQUEST + "");
-				long requestNum = statisticsService.findAllsNum2(colvals2);
+				colvals2.put("offerId =", "'mi'");
+				long requestNum_mi = statisticsService.findAllsNum2(colvals2);
 				
+				colvals2.remove("offerId =");
+				colvals2.put("offerId =", "'appNext'");
+				long requestNum_app = statisticsService.findAllsNum2(colvals2);
+				
+				colvals2.remove("offerId =");
 				colvals2.remove("type =");
 				colvals2.put("type =", GStatisticsType.SHOW + "");
-				long showNum = statisticsService.findAllsNum2(colvals2);
+				colvals2.put("offerId =", "'mi'");
+				long showNum_mi = statisticsService.findAllsNum2(colvals2);
+				
+				colvals2.remove("offerId =");
+				colvals2.put("offerId =", "'appNext'");
+				long showNum_app = statisticsService.findAllsNum2(colvals2);
 				
 				
-				GUser user = userService.find(sta.getUserId());
 				String regTime = "";
 				String loginTime = "";
 				if(user != null)
@@ -261,8 +279,9 @@ public class GStatisticsAction extends ActionSupport{
 					regTime = formatter.format(user.getCreatedDate());
 					loginTime = formatter.format(user.getUpdatedDate());
 				}
-				println(sta.getUserId()+ " :   loginNum="+loginNum + "   requestNum="+requestNum 
-						+ "   showNum="+showNum + "  regTime="+regTime+ "  loginTime="+loginTime);
+				println(user.getId()+ " :   loginNum="+loginNum + "   requestNum_app="+requestNum_app 
+						+ "   showNum_app="+showNum_app + "   requestNum_mi="+requestNum_mi 
+						+ "   showNum_mi="+showNum_mi+ "  regTime="+regTime+ "  loginTime="+loginTime);
 				
 			}
 			

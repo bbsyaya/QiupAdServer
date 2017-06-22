@@ -48,6 +48,8 @@ var updateSel = function(type)
 		s += '<option value ="appNext">appNext</option>';
 		s += '<option value ="avazu">avazu</option>';
 		s += '<option value ="MobVista">MobVista</option>';
+		s += '<option value ="mi">mi</option>';
+		s += '<option value ="mioff">mioff</option>';
 		
 		$("#filed_sel_3").html(s);
 	}

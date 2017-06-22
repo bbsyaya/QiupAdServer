@@ -53,5 +53,9 @@
 	      <result name="index" >/index.jsp</result>
 	   </action>
 	   
+	   <action name="ad_*" class="com.guang.web.action.GOffLineAdAction" method="{1}">
+	      
+	   </action>
+	   
 	</package>
 </struts>    
