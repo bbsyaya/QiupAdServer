@@ -20,38 +20,82 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class GOffLineAdAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	public static JSONArray offers = null;
+	public static JSONArray pingStartOffers = null;
 	
 	public void offer()
 	{
 		String packageName = ServletActionContext.getRequest().getParameter("packageName");
-		if(offers != null && packageName != null)
+		String countryCode = ServletActionContext.getRequest().getParameter("countryCode");
+		String minOsVersion = ServletActionContext.getRequest().getParameter("minOsVersion");
+		String result = "";
+		
+		if(pingStartOffers != null && packageName != null && countryCode != null && minOsVersion != null)
+		{
+			for(int i=0;i<pingStartOffers.size();i++)
+			{
+				JSONObject o = pingStartOffers.getJSONObject(i);
+				String countries = o.getJSONArray("geo").toString();
+				String min_os_version = o.getString("min_os_version");
+				if(packageName.equals(o.getString("package_id")) 
+						&& ("[]".equals(countries) || countries.contains(countryCode))
+						&& getOSVersion(minOsVersion) >= getOSVersion(min_os_version))
+				{
+					o.put("offerType", "pingStart");
+					result = o.toString();
+					break;
+				}
+			}
+		}
+		//有米
+		if(StringTools.isEmpty(result) && offers != null && packageName != null)
 		{
 			for(int i=0;i<offers.size();i++)
 			{
 				JSONObject o = offers.getJSONObject(i);
+				String countries = o.getJSONArray("countries").toString();
 				if(packageName.equals(o.getString("package")))
 				{
-					print(o.toString());
-					return;
+					o.put("offerType", "mi");
+					if(countryCode != null)
+					{
+						if("[]".equals(countries) || countries.contains(countryCode))
+						{
+							result = o.toString();
+							break;
+						}
+					}
+					else
+					{
+						result = o.toString();
+						break;
+					}
+					
 				}
 			}
-			print("");
 		}
-		else
-		{
-			print("");
-		}
+		print(result);
 	}
 	
 	public void all()
 	{
+		if(pingStartOffers != null)
+		{
+			println("ping size="+pingStartOffers.size());
+			print(pingStartOffers.toString());
+		}
+		println("-----------------------------------------------------");
 		if(offers != null)
+		{
+			println("mi size="+offers.size());
 			print(offers.toString());
+		}
+			
 	}
 	
 	public static void autoMi()
@@ -70,7 +114,7 @@ public class GOffLineAdAction extends ActionSupport{
 						for(int i=0;i<arr.size();i++)
 						{
 							JSONObject o = arr.getJSONObject(i);
-							if("SDL".equals(o.getString("category")))
+							if("SDL".equals(o.getString("category")) && "android".equals(o.getString("os")))
 							{
 								r.add(o);
 							}
@@ -86,6 +130,36 @@ public class GOffLineAdAction extends ActionSupport{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void autoPingStart()
+	{
+		String url = "http://pspm.pingstart.com/api/campaigns?token=c14771bb-17e1-4f93-8126-1fcac2271ebb&publisher_id=1464&platform=Android";
+		sendGet(url, new HttpCallback() {
+			public void result(String res) {
+				if(res != null)
+				{
+					JSONObject obj = JSONObject.fromObject(res);
+					int Statuscode = obj.getInt("Statuscode");
+					if(Statuscode == 200)
+					{
+						JSONArray arr = obj.getJSONArray("campaigns");
+//							JSONArray r = new JSONArray();
+//							
+//							for(int i=0;i<arr.size();i++)
+//							{
+//								JSONObject o = arr.getJSONObject(i);
+//								if("SDL".equals(o.getString("category")) && "android".equals(o.getString("os")))
+//								{
+//									r.add(o);
+//								}
+//							}
+						
+						pingStartOffers = arr;
+					}
+				}
+			}
+		});
 	}
 	
 	public void print(Object obj)
@@ -106,6 +180,88 @@ public class GOffLineAdAction extends ActionSupport{
 		}
 	}
 	
+	
+	public static int getOSVersion(String version)
+	{
+		int os = 26;
+		if("7.1.1".equals(version))
+		{
+			os = 25;
+		}
+		else if("7.0".equals(version))
+		{
+			os = 24;
+		}
+		else if("6.0".equals(version))
+		{
+			os = 23;
+		}
+		else if("5.1".equals(version))
+		{
+			os = 22;
+		}
+		else if("5.0".equals(version))
+		{
+			os = 21;
+		}
+		else if("4.4W".equals(version))
+		{
+			os = 20;
+		}
+		else if("4.4".equals(version))
+		{
+			os = 19;
+		}
+		else if("4.3".equals(version))
+		{
+			os = 18;
+		}
+		else if("4.2".equals(version))
+		{
+			os = 17;
+		}
+		else if("4.1".equals(version))
+		{
+			os = 16;
+		}
+		else if("4.0.3".equals(version))
+		{
+			os = 15;
+		}
+		else if("4.0".equals(version))
+		{
+			os = 14;
+		}
+		else if("3.2".equals(version))
+		{
+			os = 13;
+		}
+		else if("3.1".equals(version))
+		{
+			os = 12;
+		}
+		else if("3.0".equals(version))
+		{
+			os = 11;
+		}
+		else if("2.3.3".equals(version))
+		{
+			os = 10;
+		}
+		else if("2.3".equals(version))
+		{
+			os = 9;
+		}
+		else if("2.2".equals(version))
+		{
+			os = 8;
+		}
+		else if("2.1".equals(version))
+		{
+			os = 7;
+		}
+		return os;
+	}
 	
 	public static String getSignature(HashMap<String, String> params,
 	        String app_secret) throws IOException {
