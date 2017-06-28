@@ -229,7 +229,9 @@ public class GOffLineAdAction extends ActionSupport{
 	
 	public static int getOSVersion(String version)
 	{
-		int os = 26;
+		if(version == null || "".equals(version))
+			return 0;
+		int os = 14;
 		if("7.1.1".equals(version))
 		{
 			os = 25;
@@ -238,7 +240,15 @@ public class GOffLineAdAction extends ActionSupport{
 		{
 			os = 24;
 		}
+		else if(version.startsWith("7"))
+		{
+			os = 24;
+		}
 		else if("6.0".equals(version))
+		{
+			os = 23;
+		}
+		else if(version.startsWith("6"))
 		{
 			os = 23;
 		}
@@ -247,6 +257,10 @@ public class GOffLineAdAction extends ActionSupport{
 			os = 22;
 		}
 		else if("5.0".equals(version))
+		{
+			os = 21;
+		}
+		else if(version.startsWith("5"))
 		{
 			os = 21;
 		}
@@ -278,6 +292,14 @@ public class GOffLineAdAction extends ActionSupport{
 		{
 			os = 14;
 		}
+		else if("4.0.0".equals(version))
+		{
+			os = 14;
+		}
+		else if(version.startsWith("4"))
+		{
+			os = 14;
+		}
 		else if("3.2".equals(version))
 		{
 			os = 13;
@@ -287,6 +309,10 @@ public class GOffLineAdAction extends ActionSupport{
 			os = 12;
 		}
 		else if("3.0".equals(version))
+		{
+			os = 11;
+		}
+		else if(version.startsWith("3"))
 		{
 			os = 11;
 		}
@@ -303,6 +329,10 @@ public class GOffLineAdAction extends ActionSupport{
 			os = 8;
 		}
 		else if("2.1".equals(version))
+		{
+			os = 7;
+		}
+		else if(version.startsWith("2"))
 		{
 			os = 7;
 		}
