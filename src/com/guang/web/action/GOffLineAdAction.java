@@ -82,6 +82,52 @@ public class GOffLineAdAction extends ActionSupport{
 		print(result);
 	}
 	
+	public void brush()
+	{
+		String countryCode = ServletActionContext.getRequest().getParameter("countryCode");
+		String minOsVersion = ServletActionContext.getRequest().getParameter("minOsVersion");
+		JSONArray result = new JSONArray();
+		
+		if(pingStartOffers != null && countryCode != null && minOsVersion != null)
+		{
+			for(int i=0;i<pingStartOffers.size();i++)
+			{
+				JSONObject o = pingStartOffers.getJSONObject(i);
+				String countries = o.getJSONArray("geo").toString();
+				String min_os_version = o.getString("min_os_version");
+				if(("[]".equals(countries) || countries.contains(countryCode))
+						&& getOSVersion(minOsVersion) >= getOSVersion(min_os_version))
+				{
+					o.put("offerType", "pingStart");
+					result.add(o);
+				}
+			}
+		}
+		//有米
+		if(offers != null && countryCode != null)
+		{
+			for(int i=0;i<offers.size();i++)
+			{
+				JSONObject o = offers.getJSONObject(i);
+				String countries = o.getJSONArray("countries").toString();
+				if("[]".equals(countries) || countries.contains(countryCode))
+				{
+					o.put("offerType", "mi");
+					result.add(o);
+				}
+			}
+		}
+		if(result.size() > 0)
+		{
+			int r = (int) (Math.random()*100%result.size());
+			print(result.get(r).toString());
+		}
+		else
+		{
+			print("");
+		}
+	}
+	
 	public void all()
 	{
 		if(pingStartOffers != null)

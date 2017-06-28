@@ -19,7 +19,13 @@ import com.guang.web.tools.GTools;
 public class GTest {
 
 	public static void main(String[] args) {
-		System.out.println("u".startsWith("u"));
+		
+		
+		for(int i=0;i<50;i++)
+		{
+			int r = (int) (Math.random()*100%100000000);
+			System.out.println(r);
+		}
 		
 	}
 	

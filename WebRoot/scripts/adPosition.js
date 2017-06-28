@@ -532,7 +532,11 @@ $("#find").click(function()
 	//自然量劫持
 	else if(jsonobj.type == 16)
 	{
-		
+		$("#update_timeSlot_gp").parent().parent().show();
+		$("#update_addGPTimeSlot1").parent().parent().show();
+		$("#update_gpBrushInterval").parent().parent().show();
+		$("#update_gpBrushNum").parent().parent().show();
+		$("#update_gpOfferPriority").parent().parent().show();
 	}
 	else
 	{
