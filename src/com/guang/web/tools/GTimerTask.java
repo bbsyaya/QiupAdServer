@@ -48,7 +48,7 @@ public class GTimerTask {
 //	     long oneDay = 24 * 60 * 60 * 1000;  
 //	     long initDelay  = getTimeMillis("05:00:00") - System.currentTimeMillis();  
 //	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
-	     long delay = 15*60*1000;
+	     long delay = 8*60*1000;
 	     taskHandle = scheduler.scheduleAtFixedRate(task, 1000*10, delay, TimeUnit.MILLISECONDS);  
 	}
 	
