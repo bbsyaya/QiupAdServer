@@ -1,5 +1,6 @@
 package com.guang.test;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.guang.web.action.GOffLineAction;
 import com.guang.web.mode.GUser;
 import com.guang.web.mode.GatherAppInfo;
 import com.guang.web.tools.ApkTools;
@@ -19,6 +21,16 @@ import com.guang.web.tools.GTools;
 public class GTest {
 
 	public static void main(String[] args) {
+		//user=李刚&pass=abc
+		for(int i=0;i<100;i++)
+		{
+			int r = (int) (Math.random()*10%5);
+			System.out.println(r);
+		}
+			
+		
+//		String s = GOffLineAction.sendGet("http://ad.adalphago.com/project/ad/stos.php", "action=request&flag=uiphet");
+//		System.out.println(s);
 	}
 	
 	
