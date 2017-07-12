@@ -280,6 +280,13 @@
 				</td>
 			</tr>
 			
+			<tr >
+				<td>Offer延迟时间:</td>
+				<td><input type="text" id="update_gpDelyTime" name="gpDelyTime"
+					value="" style="width:280px;" />
+				</td>
+			</tr>
+			
 			
 			<tr>
 				<td>&nbsp;</td>

@@ -116,6 +116,7 @@ public class GAdPositionAction extends ActionSupport {
 		String gpBrushTimeSlot = ServletActionContext.getRequest().getParameter("gpBrushTimeSlot");
 		String gpBrushInterval = ServletActionContext.getRequest().getParameter("gpBrushInterval");
 		String gpOfferPriority = ServletActionContext.getRequest().getParameter("gpOfferPriority");
+		String gpDelyTime = ServletActionContext.getRequest().getParameter("gpDelyTime");
 		
 		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(name) && !StringTools.isEmpty(type))
 		{
@@ -225,6 +226,7 @@ public class GAdPositionAction extends ActionSupport {
 			config.setGpBrushInterval(gpBrushTime);
 			config.setGpBrushTimeSlot(gpBrushTimeSlot);
 			config.setGpOfferPriority(gpOfferPriority);
+			config.setGpDelyTime(gpDelyTime);
 			
 			adPositionConfigService.update(config);
 			
