@@ -408,6 +408,7 @@ $("#find").click(function()
 	$("#update_gpBrushNum").val(jsonobj.config.gpBrushNum);
 	$("#update_gpOfferPriority").val(jsonobj.config.gpOfferPriority);
 	$("#update_gpDelyTime").val(jsonobj.config.gpDelyTime);
+	$("#update_blackList").val(jsonobj.config.blackList);
 	
 	$("#update_whiteList").parent().parent().hide();
 	$("#update_showNum").parent().parent().hide();
@@ -432,6 +433,7 @@ $("#find").click(function()
 	$("#update_gpBrushNum").parent().parent().hide();
 	$("#update_gpOfferPriority").parent().parent().hide();
 	$("#update_gpDelyTime").parent().parent().hide();
+	$("#update_blackList").parent().parent().hide();
 	
 	//浏览器插屏
 	if(jsonobj.type == 1)
@@ -461,6 +463,7 @@ $("#find").click(function()
 		$("#update_addTimeSlot1").parent().parent().show();
 		$("#update_bannerTwoDelyTime").parent().parent().show();
 		$("#update_bannerShowTime").parent().parent().show();
+		$("#update_blackList").parent().parent().show();
 	}
 	//充电锁
 	else if(jsonobj.type == 5)
@@ -477,6 +480,7 @@ $("#find").click(function()
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
 		$("#update_appSpotDelyTime").parent().parent().show();
+		$("#update_blackList").parent().parent().show();
 	}
 	//连接wifi
 	else if(jsonobj.type == 7)

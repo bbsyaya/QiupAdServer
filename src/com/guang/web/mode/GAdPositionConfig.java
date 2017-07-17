@@ -61,6 +61,8 @@ public class GAdPositionConfig {
 	private String gpOfferPriority;//GP OFFER 优先级
 	
 	private String gpDelyTime;//自然量劫持等待时间
+	
+	private String blackList;//黑名单
 
 	public GAdPositionConfig(){}
 	public GAdPositionConfig(Long adPositionId, String timeSlot,
@@ -239,6 +241,13 @@ public class GAdPositionConfig {
 	}
 	public void setGpDelyTime(String gpDelyTime) {
 		this.gpDelyTime = gpDelyTime;
+	}
+	@Lob
+	public String getBlackList() {
+		return blackList;
+	}
+	public void setBlackList(String blackList) {
+		this.blackList = blackList;
 	}
 	
 	
