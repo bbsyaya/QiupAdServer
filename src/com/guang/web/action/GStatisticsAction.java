@@ -20,9 +20,9 @@ import com.guang.web.mode.GSdk;
 import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
 import com.guang.web.service.GAdPositionService;
+import com.guang.web.service.GFStatisticsService;
 import com.guang.web.service.GMediaService;
 import com.guang.web.service.GSdkService;
-import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GUserService;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
@@ -31,7 +31,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class GStatisticsAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 
-	@Resource private GStatisticsService statisticsService;
+	@Resource private GFStatisticsService statisticsService;
 	@Resource private GAdPositionService adPositionService;
 	@Resource private GUserService userService;
 	@Resource private GMediaService mediaService;
@@ -43,13 +43,13 @@ public class GStatisticsAction extends ActionSupport{
 		int index = 0;
 		if (sindex != null && !"".equals(sindex))
 			index = Integer.parseInt(sindex);
-		long num = statisticsService.findAllsNum2(null);
+		long num = statisticsService.findAllsNum();
 		int start = index * 100;
 		if (start > num) {
 			start = 0;
 		}
 		
-		List<GStatistics> list = statisticsService.findAlls(start).getList();
+		List<GStatistics> list = statisticsService.findAlls(start);
 		
 		for(GStatistics statistics : list)
 		{
@@ -154,14 +154,13 @@ public class GStatisticsAction extends ActionSupport{
 				
 		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 		
-		
 		if(!"-1".equals(type1))
 		{
-			colvals.put("type =", "'"+type1+"'");
+			colvals.put("type =", type1+"");
 		}
 		if(!"-1".equals(type2))
 		{
-			colvals.put("adPositionType =", "'"+type2+"'");
+			colvals.put("adPositionType =", type2+"");
 		}
 		if(!"-1".equals(type3))
 		{
@@ -177,11 +176,11 @@ public class GStatisticsAction extends ActionSupport{
 		}
 		if(!StringTools.isEmpty(user_id))
 		{
-			colvals.put("userId =", "'"+Long.parseLong(user_id)+"'");
+			colvals.put("userId =", Long.parseLong(user_id)+"");
 		}
-		colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
+//		colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
 		
-		List<GStatistics> list = statisticsService.findAlls(colvals).getList();
+		List<GStatistics> list = statisticsService.findAlls(colvals);
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for(GStatistics statistics : list)
 		{
@@ -250,26 +249,26 @@ public class GStatisticsAction extends ActionSupport{
 				LinkedHashMap<String, String> colvals2 = new LinkedHashMap<String, String>();
 				colvals2.put("userId =", "'"+user.getId()+"'");
 				colvals2.put("type =", GStatisticsType.LOGIN + "");
-				long loginNum = statisticsService.findAllsNum2(colvals2);
+				long loginNum = statisticsService.findNum(colvals2,null,null);
 				
 				colvals2.remove("type =");
 				colvals2.put("type =", GStatisticsType.REQUEST + "");
 				colvals2.put("offerId =", "'mi'");
-				long requestNum_mi = statisticsService.findAllsNum2(colvals2);
+				long requestNum_mi = statisticsService.findNum(colvals2,null,null);
 				
 				colvals2.remove("offerId =");
 				colvals2.put("offerId =", "'appNext'");
-				long requestNum_app = statisticsService.findAllsNum2(colvals2);
+				long requestNum_app = statisticsService.findNum(colvals2,null,null);
 				
 				colvals2.remove("offerId =");
 				colvals2.remove("type =");
 				colvals2.put("type =", GStatisticsType.SHOW + "");
 				colvals2.put("offerId =", "'mi'");
-				long showNum_mi = statisticsService.findAllsNum2(colvals2);
+				long showNum_mi = statisticsService.findNum(colvals2,null,null);
 				
 				colvals2.remove("offerId =");
 				colvals2.put("offerId =", "'appNext'");
-				long showNum_app = statisticsService.findAllsNum2(colvals2);
+				long showNum_app = statisticsService.findNum(colvals2,null,null);
 				
 				
 				String regTime = "";
@@ -285,6 +284,49 @@ public class GStatisticsAction extends ActionSupport{
 				
 			}
 			
+		}
+	}
+	
+	public void delData()
+	{
+		String id = ServletActionContext.getRequest().getParameter("id");
+		String num = ServletActionContext.getRequest().getParameter("num");
+		if(!StringTools.isEmpty(id) && !StringTools.isEmpty(num))
+		{
+			int n = Integer.parseInt(num);
+			long tid = Long.parseLong(id);
+			int c = 0;
+			long time = System.currentTimeMillis();
+			while(n>0)
+			{
+				GStatistics sta = statisticsService.find(tid);
+				if(sta != null)
+				{
+					statisticsService.delete(sta.getId());
+					c++;
+					println("delete id:"+sta.getId() +"   count:"+c +"   time:"+((System.currentTimeMillis()-time)/1000));
+				}
+				else
+				{
+					n -= n/10;
+					tid -= n/10;
+					println("find id:"+tid+"   time:"+((System.currentTimeMillis()-time)/1000));
+				}
+				n--;
+				tid--;
+			}
+			
+//			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+//			colvals.put("id <", tid+"");
+//			colvals.put("id >=", (tid-n)+"");
+//			List<GStatistics> list = statisticsService.findAlls(colvals).getList();
+//			
+//			for(GStatistics sta : list)
+//			{
+//				statisticsService.delete(sta.getId());
+//				c++;
+//				println("delete id:"+sta.getId() +"   count:"+c);
+//			}
 		}
 	}
 	

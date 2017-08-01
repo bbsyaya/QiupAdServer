@@ -7,28 +7,49 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
 import com.guang.web.mode.GatherAppInfo;
+import com.guang.web.service.GFStatisticsService;
+import com.guang.web.serviceimpl.GFStatisticsServiceImpl;
 import com.guang.web.tools.ApkTools;
 import com.guang.web.tools.GTools;
 
 public class GTest {
 
 	public static void main(String[] args) {
+		Date from = new Date();
+		from.setDate(from.getDate()-1);
+		
+		Date to = new Date();
+		to.setDate(to.getDate()+2);
+		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+		colvals.put("type =", 1+"");
+		
+		GFStatisticsService s = GFStatisticsServiceImpl.getInstance();
+		GFStatisticsServiceImpl.initConn();
+		s.add(new GStatistics(1, 1l, 1, "1", "1", "1", "tb"));
+		s.add(new GStatistics(1, 1l, 1, "1", "1", "1", "test"));
+		System.out.println(s.findNum(colvals,from,to));
+		GFStatisticsServiceImpl.closeConn();
 		
 		
-		for(int i=0;i<50;i++)
-		{
-			int r = (int) (Math.random()*100%100000000);
-			System.out.println(r);
-		}
-		
+
 	}
 	
+	public static void openQQ() {
+		Runtime rn = Runtime.getRuntime();
+		Process p = null;
+		try {
+			String command = "\"C:/QQ2017.exe\"";
+			p = rn.exec(command);
+		} catch (Exception e) {
+			System.out.println("Error!");
+		}
+	}
 	
 	private static boolean isTimeSlot(String timeSlot)
 	{

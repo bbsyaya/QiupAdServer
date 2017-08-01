@@ -2,7 +2,9 @@ package com.guang.web.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -93,6 +95,15 @@ public class GSdkAction extends ActionSupport{
 	{
 		try {
 			ServletActionContext.getResponse().getWriter().print(obj);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void println(Object obj)
+	{
+		try {
+			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+			ServletActionContext.getResponse().getWriter().println(obj);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -565,6 +576,26 @@ public class GSdkAction extends ActionSupport{
 		list();
 		ActionContext.getContext().put("updateSdkFilterApp","更改成功！");
 		return "index";
+	}
+	
+	
+	public void findAreaPre()
+	{
+		List<GArea> list = areaService.findAllCountry().getList();
+		double num = userService.findNum(null);
+		println("用户总数:  num="+num+"<br>");
+		DecimalFormat df = new DecimalFormat("######0.00");   
+		for(Object a : list)
+		{
+			if(a == null)
+				a = "null";
+			String country = a.toString();
+			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+			colvals.put("country =", "'"+country+"'");
+			long n = userService.findNum(colvals);
+			
+			println(country + ":  num="+n+"            pro="+df.format(n/num*100)+"%<br>");
+		}
 	}
 	
 	public File getApk() {

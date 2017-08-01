@@ -15,7 +15,11 @@ import javax.persistence.Transient;
 //alter table offer_statistics add index index_userId(userId)
 //alter table offer_statistics add index index_type(type)
 //alter table offer_statistics add index index_uploadTime_type(uploadTime,type)
+
 //alter table offer_statistics drop index index_type
+//alter table offer_statistics drop index index_uploadTime_type
+//alter table offer_statistics drop index index_userId
+//alter table offer_statistics drop index index_uploadTime
 public class GStatistics {
 	private Long id;
 	private Integer type;//统计类型 
@@ -137,4 +141,14 @@ public class GStatistics {
 	public void setUploadTime2(String uploadTime2) {
 		this.uploadTime2 = uploadTime2;
 	}
+	@Override
+	public String toString() {
+		return "GStatistics [id=" + id + ", type=" + type + ", userId="
+				+ userId + ", adPositionType=" + adPositionType + ", offerId="
+				+ offerId + ", packageName=" + packageName + ", appName="
+				+ appName + ", uploadTime=" + uploadTime + ", channel="
+				+ channel + "]";
+	}
+	
+	
 }

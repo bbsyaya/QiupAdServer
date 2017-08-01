@@ -24,6 +24,7 @@
 </select>
 <select id="channel_sel">
   <option value ="0">渠道选择</option>
+  <option value ="all">所有渠道</option>
   <s:iterator value="sdks" var="sdk">
   	<option value ="<s:property value="#sdk.channel" />"><s:property value="#sdk.channel" /></option>
   </s:iterator>
