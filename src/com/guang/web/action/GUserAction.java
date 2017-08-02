@@ -242,12 +242,11 @@ public class GUserAction extends ActionSupport {
 		JSONObject result = new JSONObject();
 		if (user != null) {
 			result.put("result", true);
-
+			loginSuccess(user);
+			
 			user.setNetworkType(obj.getString("networkType"));
 			user.setUpdatedDate(new Date());
 			userService.update(user);
-
-			loginSuccess(user);
 		} else {
 			result.put("result", false);
 		}
@@ -266,11 +265,10 @@ public class GUserAction extends ActionSupport {
 		obj = new JSONObject();
 		if (user != null) {
 			obj.put("result", true);
+			loginSuccess(user);
 			user.setNetworkType(networkType);
 			user.setUpdatedDate(new Date());
 			userService.update(user);
-
-			loginSuccess(user);
 		} else {
 			obj.put("result", false);
 		}
@@ -297,6 +295,7 @@ public class GUserAction extends ActionSupport {
 		gPhoneModelService.add(new GPhoneModel(user.getModel(),user.getChannel()));
 
 		logger.info(user.getName() + " 注册成功！");
+		user.setUpdatedDate(new Date(System.currentTimeMillis()-24*60*60*1000));
 		loginSuccess(user);
 		print("1");
 	}
@@ -304,10 +303,12 @@ public class GUserAction extends ActionSupport {
 	// 登录成功
 	public synchronized void loginSuccess(GUser user) {
 //		logger.info(name + " 登录成功！");
-
-		GStatistics statistics = new GStatistics(GStatisticsType.LOGIN,
-				user.getId(), -100, "login", "login", "login",user.getChannel());
-		statisticsService.add(statistics);
+		if(System.currentTimeMillis() - user.getUpdatedDate().getTime() > 12*60*60*1000)
+		{
+			GStatistics statistics = new GStatistics(GStatisticsType.LOGIN,
+					user.getId(), -100, "login", "login", "login",user.getChannel());
+			statisticsService.add(statistics);
+		}
 	}
 
 	// 退出登录
