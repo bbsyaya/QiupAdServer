@@ -30,9 +30,9 @@ import com.guang.web.mode.GUser;
 import com.guang.web.mode.GUserStt;
 import com.guang.web.service.GAppService;
 import com.guang.web.service.GAreaService;
+import com.guang.web.service.GFStatisticsService;
 import com.guang.web.service.GNetworkOperatorService;
 import com.guang.web.service.GPhoneModelService;
-import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GUserService;
 import com.guang.web.service.GUserSttService;
 import com.guang.web.tools.GZipTool;
@@ -57,7 +57,7 @@ public class GUserAction extends ActionSupport {
 	private GNetworkOperatorService gNetworkOperatorService;
 	@Resource
 	private GPhoneModelService gPhoneModelService;
-	@Resource private GStatisticsService statisticsService;
+	@Resource private GFStatisticsService statisticsService;
 
 	private File source;
 	private String sourceFileName;
