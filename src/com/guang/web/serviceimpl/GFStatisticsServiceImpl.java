@@ -22,7 +22,6 @@ import com.guang.web.mode.GStatistics;
 import com.guang.web.service.GFStatisticsService;
 @Service
 public class GFStatisticsServiceImpl implements GFStatisticsService{
-	private static Connection conn;
 	private static GFStatisticsService service;
 	
 	public static GFStatisticsService getInstance()
@@ -32,8 +31,9 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 		return service;
 	}
 	
-	public void add(GStatistics statistics) {
-		if(isConn() && isCanUpdate())
+	public synchronized void add(GStatistics statistics) {
+		Connection conn = getConn();
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			String tableName = getCurrTableName();
 			String sql="insert into "+tableName+" (type,userId,adPositionType,offerId,packageName,appName,uploadTime,channel) values (?,?,?,?,?,?,?,?)";  
@@ -54,10 +54,12 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				e.printStackTrace();
 			} 
 		}
+		closeConn(conn);
 	}
 
 	public void delete(Long id) {
-		if(isConn() && isCanUpdate())
+		Connection conn = getConn();
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			String tableName = getCurrTableName();
 			String sql="delete from "+tableName+" where id=?";  
@@ -71,10 +73,12 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				e.printStackTrace();
 			} 
 		}
+		closeConn(conn);
 	}
 
 	public void update(GStatistics statistics) {
-		if(isConn() && isCanUpdate())
+		Connection conn = getConn();
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			String tableName = getCurrTableName();
 			String sql="update "+tableName+" set type=?,userId=?,adPositionType=?,offerId=?,packageName=?,appName=?,uploadTime=?,channel=? where id=?";  
@@ -96,10 +100,12 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				e.printStackTrace();
 			} 
 		}
+		closeConn(conn);
 	}
 
 	public GStatistics find(Long id) {
-		if(isConn() && isCanUpdate())
+		Connection conn = getConn();
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			String tableName = getCurrTableName();
 			String sql="select * from "+tableName+" where id=?";  
@@ -122,17 +128,20 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 					sta.setChannel(rs.getString("channel"));
 				}
 				preStmt.close();
+				closeConn(conn);
 				return sta;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} 
 		}
+		closeConn(conn);
 		return null;
 	}
 
 	public List<GStatistics> findAlls(int firstindex) {
 		List<GStatistics> list = new ArrayList<GStatistics>();
-		if(isConn() && isCanUpdate())
+		Connection conn = getConn();
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			String tableName = getCurrTableName();
 			String sql="select * from "+tableName+" order by id desc limit ?,100";  
@@ -162,12 +171,14 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				e.printStackTrace();
 			} 
 		}
+		closeConn(conn);
 		return list;
 	}
 
 	public List<GStatistics> findAlls(LinkedHashMap<String, String> colvals) {
 		List<GStatistics> list = new ArrayList<GStatistics>();
-		if(isConn() && isCanUpdate())
+		Connection conn = getConn();
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			String tableName = getCurrTableName();
 			
@@ -198,11 +209,13 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				e.printStackTrace();
 			} 
 		}
+		closeConn(conn);
 		return list;
 	}
 
 	public long findAllsNum() {
-		if(isConn() && isCanUpdate())
+		Connection conn = getConn();
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			try {
 				String tableName = getCurrTableName();
@@ -215,11 +228,13 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 					num = rs.getLong(1);
 				}
 				preStmt.close();
+				closeConn(conn);
 				return num;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} 
 		}
+		closeConn(conn);
 		return 0;
 	}
 	
@@ -259,14 +274,14 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				}
 			}
 		}
-			
+		Connection conn = getConn();
 		long num = 0;
-		if(isConn() && isCanUpdate())
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			String sql = getColVals(colvals);
 			for(String tableName : tables)
 			{
-				if(!validateTableExist(tableName))
+				if(!validateTableExist(conn,tableName))
 					continue;
 				String ssql="select count(*) from "+tableName;
 				if(sql != null && !"".equals(sql))
@@ -284,7 +299,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				}
 			}
 		}
-		
+		closeConn(conn);
 		return num;
 	}
 	
@@ -325,14 +340,15 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 			}
 		}
 			
+		Connection conn = getConn();
 		long num = 0;
-		if(isConn() && isCanUpdate())
+		if(isConn(conn) && isCanUpdate(conn))
 		{
 			String sql = getColVals(colvals);
 			
 			for(String tableName : tables)
 			{
-				if(!validateTableExist(tableName))
+				if(!validateTableExist(conn,tableName))
 					continue;
 				String ssql="select count(distinct userId) from "+tableName;
 				if(sql != null && !"".equals(sql))
@@ -350,7 +366,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				}
 			}
 		}
-		
+		closeConn(conn);
 		return num;
 	}
 	
@@ -373,21 +389,21 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 		String tableName = "statistics_"+formatter.format(d);
 		return tableName;
 	}
-	public boolean isCanUpdate()
+	public boolean isCanUpdate(Connection conn)
 	{
-		if(validateTableExist(getCurrTableName()))
+		if(validateTableExist(conn,getCurrTableName()))
 		{
 			return true;
 		}
 		else
 		{
-			return createTable();
+			return createTable(conn);
 		}
 	}
 	
-	public static boolean validateTableExist(String tableName)
+	public static boolean validateTableExist(Connection conn,String tableName)
 	{  
-		if(isConn())
+		if(isConn(conn))
 		{
 	        try {
 	        	Statement stmt = (Statement) conn.createStatement();
@@ -406,9 +422,9 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 		return false;  
 	}  
 	
-	public static boolean createTable()
+	public static boolean createTable(Connection conn)
 	{
-		if(isConn())
+		if(isConn(conn))
 		{
 			String tableName = getCurrTableName();
 			String sql = "CREATE TABLE "+tableName+" ("
@@ -437,19 +453,13 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			
 		}
 		return false;
 	}
 
-	public static boolean isConn()
+	public static boolean isConn(Connection conn)
 	{
-		try {
-			if(conn != null && !conn.isClosed())
-				return true;
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		initConn();
 		try {
 			if(conn != null && !conn.isClosed())
 				return true;
@@ -459,8 +469,9 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 		return false;
 	}
 	
-	public static void initConn()
+	public static Connection getConn()
 	{
+		Connection conn = null;
 		String path = GFStatisticsServiceImpl.class.getClassLoader().getResource("jdbc.properties").getPath();  
 		Properties prop = new Properties();  
 		try {
@@ -479,18 +490,19 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
             // 连续数据库
             conn = DriverManager.getConnection(jdbcUrl, user, password);
             
-            if(conn != null && !conn.isClosed())
-            	System.out.println("数据库连接成功！");
+//            if(conn != null && !conn.isClosed())
+//            	System.out.println("数据库连接成功！");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}   
+		} 
+		return conn;
 	}
 	
-	public static void closeConn()
+	public static void closeConn(Connection conn)
 	{
 		if(conn != null)
 		{

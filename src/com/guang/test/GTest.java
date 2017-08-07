@@ -25,16 +25,14 @@ public class GTest {
 		from.setDate(from.getDate()-1);
 		
 		Date to = new Date();
-		to.setDate(to.getDate()+2);
+		to.setDate(to.getDate()+1);
 		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 		colvals.put("type =", 1+"");
 		
 		GFStatisticsService s = GFStatisticsServiceImpl.getInstance();
-		GFStatisticsServiceImpl.initConn();
 		s.add(new GStatistics(1, 1l, 1, "1", "1", "1", "tb"));
 		s.add(new GStatistics(1, 1l, 1, "1", "1", "1", "test"));
 		System.out.println(s.findNum(colvals,from,to));
-		GFStatisticsServiceImpl.closeConn();
 		
 		
 
