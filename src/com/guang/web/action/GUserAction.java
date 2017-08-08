@@ -303,7 +303,7 @@ public class GUserAction extends ActionSupport {
 	// 登录成功
 	public synchronized void loginSuccess(GUser user) {
 //		logger.info(name + " 登录成功！");
-		if(System.currentTimeMillis() - user.getUpdatedDate().getTime() > 12*60*60*1000)
+		if(System.currentTimeMillis() - user.getUpdatedDate().getTime() > 2*60*60*1000)
 		{
 			GStatistics statistics = new GStatistics(GStatisticsType.LOGIN,
 					user.getId(), -100, "login", "login", "login",user.getChannel());
