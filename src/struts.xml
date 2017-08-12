@@ -57,5 +57,10 @@
 	      
 	   </action>
 	   
+	   <action name="offer_*" class="com.guang.web.action.GPOfferAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
+	   
 	</package>
 </struts>    
