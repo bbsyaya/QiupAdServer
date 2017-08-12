@@ -24,10 +24,12 @@ public class GPOffer {
 	private String countrys;
 	private Date updatedDate;
 	
+	private String channelNames;
+	
 	public GPOffer(){}
 	public GPOffer(String name, String packageName, String trackUrl,
 			String gpUrl, int priority, String adPositions, String channels,
-			String countrys) {
+			String countrys,String channelNames) {
 		super();
 		this.name = name;
 		this.packageName = packageName;
@@ -37,6 +39,7 @@ public class GPOffer {
 		this.adPositions = adPositions;
 		this.channels = channels;
 		this.countrys = countrys;
+		this.channelNames = channelNames;
 		this.updatedDate = new Date();
 	}
 	@Id
@@ -107,6 +110,13 @@ public class GPOffer {
 	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	@Lob
+	public String getChannelNames() {
+		return channelNames;
+	}
+	public void setChannelNames(String channelNames) {
+		this.channelNames = channelNames;
 	}
 
 	
