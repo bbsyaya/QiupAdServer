@@ -61,6 +61,10 @@
 	      <result name="index" >/index.jsp</result>
 	   </action>
 	   
+	   <action name="gpstatistics_*" class="com.guang.web.action.GPOfferStatisticsAction" method="{1}">
+	      <result name="index" >/index.jsp</result>
+	   </action>
+	   
 	   
 	</package>
 </struts>    

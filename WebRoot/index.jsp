@@ -67,6 +67,12 @@
 						</li>
 					</s:if>
 					
+					<s:if test="#session.admin.permission.model_admin == true">
+						<li><a href="gpstatistics_list"
+						class="<s:if test="#request.pages == 'gpstatistics'">current</s:if>">OFFER统计</a>
+						</li>
+					</s:if>
+					
 					
 					<%-- <s:if test="#session.admin.permission.model_admin == true">
 						<li><a href="config_list"

@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "gp_offer")
@@ -25,6 +26,8 @@ public class GPOffer {
 	private Date updatedDate;
 	
 	private String channelNames;
+	
+	private long showNum;
 	
 	public GPOffer(){}
 	public GPOffer(String name, String packageName, String trackUrl,
@@ -117,6 +120,14 @@ public class GPOffer {
 	}
 	public void setChannelNames(String channelNames) {
 		this.channelNames = channelNames;
+	}
+	
+	@Transient
+	public long getShowNum() {
+		return showNum;
+	}
+	public void setShowNum(long showNum) {
+		this.showNum = showNum;
 	}
 
 	
