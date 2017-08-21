@@ -35,6 +35,11 @@ public class GOffer {
 	private String url;
 	
 	
+	private String pushStatusIcon;//状态图标
+	private String pushNotifyIcon;//通知栏图标
+	private String pushTitle;
+	private String pushDesc;
+	
 	public GOffer(){}
 	public GOffer(Integer type,String appName, String packageName, String appDesc,
 			String picPath, String iconPath, String apkPath, float apkSize,
@@ -180,5 +185,34 @@ public class GOffer {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	@Column(length = 128)
+	public String getPushStatusIcon() {
+		return pushStatusIcon;
+	}
+	public void setPushStatusIcon(String pushStatusIcon) {
+		this.pushStatusIcon = pushStatusIcon;
+	}
+	@Column(length = 128)
+	public String getPushNotifyIcon() {
+		return pushNotifyIcon;
+	}
+	public void setPushNotifyIcon(String pushNotifyIcon) {
+		this.pushNotifyIcon = pushNotifyIcon;
+	}
+	@Column(length = 128)
+	public String getPushTitle() {
+		return pushTitle;
+	}
+	public void setPushTitle(String pushTitle) {
+		this.pushTitle = pushTitle;
+	}
+	@Column(length = 256)
+	public String getPushDesc() {
+		return pushDesc;
+	}
+	public void setPushDesc(String pushDesc) {
+		this.pushDesc = pushDesc;
+	}
+	
 	
 }

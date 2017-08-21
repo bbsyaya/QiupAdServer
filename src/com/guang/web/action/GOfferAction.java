@@ -37,6 +37,12 @@ public class GOfferAction extends ActionSupport{
 	private String picFileName;
 	private File icon;
 	private String iconFileName;
+	
+	private File pushStatusIcon;
+	private String pushStatusIconFileName;
+	private File pushNotifyIcon;
+	private String pushNotifyIconFileName;
+	
 	private GOffer offer;
 	
 	
@@ -103,12 +109,14 @@ public class GOfferAction extends ActionSupport{
 		{
 			ActionContext.getContext().put("addOffer", "添加失败！");
 			list();
+			System.out.println("-------1-------");
 			return "index";
 		}
 		if(type == 1 && icon == null)
 		{
 			ActionContext.getContext().put("addOffer", "添加失败！");
 			list();
+			System.out.println("-------2-------");
 			return "index";
 		}
 			
@@ -127,12 +135,25 @@ public class GOfferAction extends ActionSupport{
 				if (!file.getParentFile().exists())
 					file.getParentFile().mkdirs();
 				FileUtils.copyFile(icon, file);
+				
+				file = new File(new File(icon_relpath), pushStatusIconFileName);
+				FileUtils.copyFile(pushStatusIcon, file);
+				
+				file = new File(new File(icon_relpath), pushNotifyIconFileName);
+				FileUtils.copyFile(pushNotifyIcon, file);
 			}
 			
 			String picPath = "offer/pic/" + picFileName;
 			String iconPath = "offer/icon/" + iconFileName;
+			String pushStatusIconPath = "offer/icon/" + pushStatusIconFileName;
+			String pushNotifyIconPath = "offer/icon/" + pushNotifyIconFileName;
 			if(type == 2)
+			{
 				iconPath = null;
+				pushStatusIconPath = null;
+				pushNotifyIconPath = null;
+			}
+				
 			
 			//省份/国家
 			String province = "";
@@ -198,10 +219,13 @@ public class GOfferAction extends ActionSupport{
 			offer.setChannelNames(channelNames);
 			offer.setOperators(operators);
 			offer.setUpdatedDate(new Date());
+			offer.setPushStatusIcon(pushStatusIconPath);
+			offer.setPushNotifyIcon(pushNotifyIconPath);
 			
 			offerService.add(offer);
 			ActionContext.getContext().put("addOffer", "添加成功！");
 		} catch (Exception e) {
+			System.out.println("-------5-------");
 			ActionContext.getContext().put("addOffer", "添加失败！");
 		}
 		list();
@@ -231,6 +255,7 @@ public class GOfferAction extends ActionSupport{
 	{
 		if(offer != null)
 		{
+			GOffer offer2 = offerService.find(offer.getId());
 			if(pic != null)
 			{
 				String pic_relpath = ServletActionContext.getServletContext().getRealPath("offer/pic/");
@@ -248,7 +273,6 @@ public class GOfferAction extends ActionSupport{
 			}
 			else
 			{
-				GOffer offer2 = offerService.find(offer.getId());
 				offer.setPicPath(offer2.getPicPath());
 			}
 			
@@ -269,8 +293,47 @@ public class GOfferAction extends ActionSupport{
 			}
 			else
 			{
-				GOffer offer2 = offerService.find(offer.getId());
 				offer.setIconPath(offer2.getIconPath());
+			}
+			
+			if(pushStatusIcon != null)
+			{
+				String icon_relpath = ServletActionContext.getServletContext().getRealPath("offer/icon/");
+				try {
+					//上传icon
+					File file = new File(new File(icon_relpath), pushStatusIconFileName);
+					if (!file.getParentFile().exists())
+						file.getParentFile().mkdirs();
+					FileUtils.copyFile(icon, file);
+					
+					String pushStatusIconPath = "offer/icon/" + pushStatusIconFileName;
+					offer.setPushStatusIcon(pushStatusIconPath);
+				} catch (Exception e) {
+				}
+			}
+			else
+			{
+				offer.setPushStatusIcon(offer2.getPushStatusIcon());
+			}
+			
+			if(pushNotifyIcon != null)
+			{
+				String icon_relpath = ServletActionContext.getServletContext().getRealPath("offer/icon/");
+				try {
+					//上传icon
+					File file = new File(new File(icon_relpath), pushNotifyIconFileName);
+					if (!file.getParentFile().exists())
+						file.getParentFile().mkdirs();
+					FileUtils.copyFile(icon, file);
+					
+					String pushNotifyIconPath = "offer/icon/" + pushNotifyIconFileName;
+					offer.setPushNotifyIcon(pushNotifyIconPath);
+				} catch (Exception e) {
+				}
+			}
+			else
+			{
+				offer.setPushNotifyIcon(offer2.getPushNotifyIcon());
 			}
 			
 			//省份/国家
@@ -383,6 +446,40 @@ public class GOfferAction extends ActionSupport{
 	public void setOffer(GOffer offer) {
 		this.offer = offer;
 	}
+
+	public File getPushStatusIcon() {
+		return pushStatusIcon;
+	}
+
+	public void setPushStatusIcon(File pushStatusIcon) {
+		this.pushStatusIcon = pushStatusIcon;
+	}
+
+	public File getPushNotifyIcon() {
+		return pushNotifyIcon;
+	}
+
+	public void setPushNotifyIcon(File pushNotifyIcon) {
+		this.pushNotifyIcon = pushNotifyIcon;
+	}
+
+	public String getPushStatusIconFileName() {
+		return pushStatusIconFileName;
+	}
+
+	public void setPushStatusIconFileName(String pushStatusIconFileName) {
+		this.pushStatusIconFileName = pushStatusIconFileName;
+	}
+
+	public String getPushNotifyIconFileName() {
+		return pushNotifyIconFileName;
+	}
+
+	public void setPushNotifyIconFileName(String pushNotifyIconFileName) {
+		this.pushNotifyIconFileName = pushNotifyIconFileName;
+	}
+
+	
 	
 	
 	

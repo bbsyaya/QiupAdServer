@@ -23,6 +23,10 @@
 			<th>优先级</th>
 			<th>单价</th>
 			<th>URL</th>
+			<th>状态栏</th>
+			<th>通知栏</th>
+			<th>push标题</th>
+			<th>push描述</th>
 			<th>创建日期</th>								
 			<th>操作</th>
 		</tr>
@@ -41,6 +45,10 @@
 				<td><s:property value="#val.priority" /></td>
 				<td><s:property value="#val.pice" /></td>
 				<td><s:property value="#val.url" /></td>
+				<td><s:property value="#val.pushStatusIcon" /></td>
+				<td><s:property value="#val.pushNotifyIcon" /></td>
+				<td><s:property value="#val.pushTitle" /></td>
+				<td><s:property value="#val.pushDesc" /></td>
 				<td align="center"><s:date name="#val.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>				
 				<td class="thUpdate"><input type="button" value="操作"/></td>
 			</tr>
@@ -119,6 +127,28 @@
 					value="" style="width:100px;" />M
 				</td>
 			</tr>
+			
+			<tr>
+				<td>状态栏:</td>
+				<td><input type="file" id="pushStatusIcon" name="pushStatusIcon" value="浏览" style="width:180px;" /></td>
+			</tr>
+			<tr>
+				<td>通知栏:</td>
+				<td><input type="file" id="pushNotifyIcon" name="pushNotifyIcon" value="浏览" style="width:180px;" /></td>
+			</tr>
+			<tr >
+				<td>push标题:</td>
+				<td><input type="text" id="pushTitle" name="offer.pushTitle"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			<tr >
+				<td>push描述:</td>
+				<td><input type="text" id="pushDesc" name="offer.pushDesc"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			
 			<tr >
 				<td>优先级:</td>
 				<td><input type="text" id="priority" name="offer.priority"
@@ -243,6 +273,28 @@
 					value="" style="width:100px;" />M
 				</td>
 			</tr>
+			
+			<tr>
+				<td>状态栏:</td>
+				<td><input type="file" name="pushStatusIcon" value="浏览" style="width:180px;" /><b id="update_pushStatusIcon"></b></td>
+			</tr>
+			<tr>
+				<td>通知栏:</td>
+				<td><input type="file" name="pushNotifyIcon" value="浏览" style="width:180px;" /><b id="update_pushNotifyIcon"></b></td>
+			</tr>
+			<tr >
+				<td>push标题:</td>
+				<td><input type="text" id="update_pushTitle" name="offer.pushTitle"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			<tr >
+				<td>push描述:</td>
+				<td><input type="text" id="update_pushDesc" name="offer.pushDesc"
+					value="" style="width:180px;" />
+				</td>
+			</tr>
+			
 			<tr >
 				<td>优先级:</td>
 				<td><input type="text" id="update_priority" name="offer.priority"
@@ -387,6 +439,11 @@ $("#find").click(function()
 	$("#update_pice").val(jsonobj.pice);
 	$("#update_url").val(jsonobj.url);
 	
+	$("#update_pushStatusIcon").text(jsonobj.pushStatusIcon);
+	$("#update_pushNotifyIcon").text(jsonobj.pushNotifyIcon);
+	$("#update_pushTitle").val(jsonobj.pushTitle);
+	$("#update_pushDesc").val(jsonobj.pushDesc);
+	
 	
 	
 	var update_type = "#update_areas";
@@ -465,6 +522,11 @@ $("#find").click(function()
 			$("#update_apkSize").parent().parent().hide();
 			$("#update_pice").parent().parent().hide();
 			$("#update_url").parent().parent().show();
+			
+			$("#update_pushStatusIcon").parent().parent().hide();
+			$("#update_pushNotifyIcon").parent().parent().hide();
+			$("#update_pushTitle").parent().parent().hide();
+			$("#update_pushDesc").parent().parent().hide();
 	}
 	
 	$("#d_addoffer").hide();
@@ -497,6 +559,11 @@ $("#offer_type").click(function(){
 			$("#apkSize").parent().parent().show();
 			$("#pice").parent().parent().show();
 			$("#url").parent().parent().hide();
+			
+			$("#pushStatusIcon").parent().parent().show();
+			$("#pushNotifyIcon").parent().parent().show();
+			$("#pushTitle").parent().parent().show();
+			$("#pushDesc").parent().parent().show();
 		}
 		else
 		{
@@ -507,6 +574,11 @@ $("#offer_type").click(function(){
 			$("#apkSize").parent().parent().hide();
 			$("#pice").parent().parent().hide();
 			$("#url").parent().parent().show();
+			
+			$("#pushStatusIcon").parent().parent().hide();
+			$("#pushNotifyIcon").parent().parent().hide();
+			$("#pushTitle").parent().parent().hide();
+			$("#pushDesc").parent().parent().hide();
 		}
 });
 $("#offer_type2").click(function(){
@@ -518,7 +590,12 @@ $("#offer_type2").click(function(){
 			$("#apkPath").parent().parent().hide();
 			$("#apkSize").parent().parent().hide();
 			$("#pice").parent().parent().hide();
-			$("#url").parent().parent().show();		
+			$("#url").parent().parent().show();	
+			
+			$("#pushStatusIcon").parent().parent().hide();
+			$("#pushNotifyIcon").parent().parent().hide();
+			$("#pushTitle").parent().parent().hide();
+			$("#pushDesc").parent().parent().hide();	
 		}
 		else
 		{
@@ -529,6 +606,11 @@ $("#offer_type2").click(function(){
 			$("#apkSize").parent().parent().show();
 			$("#pice").parent().parent().show();
 			$("#url").parent().parent().hide();
+			
+			$("#pushStatusIcon").parent().parent().show();
+			$("#pushNotifyIcon").parent().parent().show();
+			$("#pushTitle").parent().parent().show();
+			$("#pushDesc").parent().parent().show();
 		}
 });
 

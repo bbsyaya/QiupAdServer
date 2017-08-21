@@ -442,6 +442,15 @@ $("#find").click(function()
 		$("#update_shortcutUrl").parent().parent().show();
 		$("#update_shortcutIcon").parent().parent().show();
 	}
+	//push
+	else if(jsonobj.type == 17)
+	{
+		$("#update_showNum").parent().parent().show();
+		$("#update_adShowNum").parent().parent().show();
+		$("#update_showTimeInterval").parent().parent().show();
+		$("#update_timeSlot").parent().parent().show();
+		$("#update_addTimeSlot1").parent().parent().show();
+	}
 	else
 	{
 		$("#update_whiteList").parent().parent().show();
