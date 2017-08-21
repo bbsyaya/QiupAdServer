@@ -304,7 +304,7 @@ public class GOfferAction extends ActionSupport{
 					File file = new File(new File(icon_relpath), pushStatusIconFileName);
 					if (!file.getParentFile().exists())
 						file.getParentFile().mkdirs();
-					FileUtils.copyFile(icon, file);
+					FileUtils.copyFile(pushStatusIcon, file);
 					
 					String pushStatusIconPath = "offer/icon/" + pushStatusIconFileName;
 					offer.setPushStatusIcon(pushStatusIconPath);
@@ -324,7 +324,7 @@ public class GOfferAction extends ActionSupport{
 					File file = new File(new File(icon_relpath), pushNotifyIconFileName);
 					if (!file.getParentFile().exists())
 						file.getParentFile().mkdirs();
-					FileUtils.copyFile(icon, file);
+					FileUtils.copyFile(pushNotifyIcon, file);
 					
 					String pushNotifyIconPath = "offer/icon/" + pushNotifyIconFileName;
 					offer.setPushNotifyIcon(pushNotifyIconPath);
