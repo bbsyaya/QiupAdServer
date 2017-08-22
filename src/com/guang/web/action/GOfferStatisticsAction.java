@@ -78,6 +78,34 @@ public class GOfferStatisticsAction extends ActionSupport{
 		print(JSONArray.fromObject(list));
 	}
 	
+	
+	public void find1()
+	{
+		String num = ServletActionContext.getRequest().getParameter("num");
+		if(!StringTools.isEmpty(num))
+		{
+			List<GUser> list = userService.findAlls(0,Integer.parseInt(num)).getList();
+			int open = 0;
+			int close = 0;
+			int non = 0;
+			
+			for(GUser u : list)
+			{
+				if(u.getOpenInstall() == 1)
+					open += 1;
+				else if(u.getOpenInstall() == 0)
+					close += 1;
+				else
+					non += 1;
+			}
+			println("find size:"+list.size());
+			println("open:"+open);
+			println("close:"+close);
+			println("non:"+non);
+		}
+		
+	}
+	
 	public void findData()
 	{
 		String from = ServletActionContext.getRequest().getParameter("from");

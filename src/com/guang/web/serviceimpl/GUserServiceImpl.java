@@ -43,6 +43,12 @@ public class GUserServiceImpl implements GUserService{
 		lhm.put("id", "desc");
 		return daoTools.find(GUser.class, null, null, firstindex, 100, lhm);
 	}
+	
+	public QueryResult<GUser> findAlls(int firstindex,int maxresult) {
+		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
+		lhm.put("id", "desc");
+		return daoTools.find(GUser.class, null, null, firstindex, maxresult, lhm);
+	}
 
 	public QueryResult<GUser> find(LinkedHashMap<String, String> colvals) {
 		return daoTools.find(GUser.class, colvals, 0, 100000000, null);
