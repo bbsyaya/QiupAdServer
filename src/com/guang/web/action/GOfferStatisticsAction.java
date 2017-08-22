@@ -1,6 +1,7 @@
 package com.guang.web.action;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -10,10 +11,16 @@ import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.guang.web.common.GStatisticsType;
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GOfferStatistics;
+import com.guang.web.mode.GStatistics;
+import com.guang.web.mode.GUser;
 import com.guang.web.service.GOfferService;
 import com.guang.web.service.GOfferStatisticsService;
+import com.guang.web.service.GStatisticsService;
+import com.guang.web.service.GUserService;
+import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -22,7 +29,8 @@ public class GOfferStatisticsAction extends ActionSupport{
 
 	@Resource private GOfferStatisticsService offerStatisticsService;
 	@Resource private GOfferService offerService;
-	
+	@Resource private GStatisticsService statisticsService;	
+	@Resource private  GUserService userService;
 	
 	public String list() 
 	{		
@@ -68,6 +76,30 @@ public class GOfferStatisticsAction extends ActionSupport{
 		List<GOfferStatistics> list = offerStatisticsService.findAll(colvals,0).getList();
 	   
 		print(JSONArray.fromObject(list));
+	}
+	
+	public void findData()
+	{
+		String from = ServletActionContext.getRequest().getParameter("from");
+		String to = ServletActionContext.getRequest().getParameter("to");
+		
+		if(!StringTools.isEmpty(from) && !StringTools.isEmpty(to))
+		{
+			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+			colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
+			colvals.put("type =", GStatisticsType.INSTALL_UI_TIME + "");
+			colvals.put("installTime =", 1 + "");
+			
+			List<GStatistics> list = statisticsService.findAlls(colvals).getList();
+			
+			println("find size:"+list.size());
+			
+			for(GStatistics sta : list)
+			{
+				GUser user = userService.find(sta.getUserId());
+				println("user:"+user.getId() +"  model:"+user.getModel());
+			}
+		}
 	}
 	
 	public void print(Object obj)

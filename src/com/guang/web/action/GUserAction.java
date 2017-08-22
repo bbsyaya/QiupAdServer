@@ -275,6 +275,9 @@ public class GUserAction extends ActionSupport{
 		String name = obj.getString("name");
 		String password = obj.getString("password");
 		String networkType = obj.getString("networkType");
+		int openInstall = -1;
+		if(obj.containsKey("openInstall"))
+			openInstall = obj.getInt("openInstall");
 		
 		GUser user = userService.find(name,password);
 		obj = new JSONObject();
@@ -283,6 +286,7 @@ public class GUserAction extends ActionSupport{
 			obj.put("result", true);
 			user.setNetworkType(networkType);
 			user.setUpdatedDate(new Date());
+			user.setOpenInstall(openInstall);
 			userService.update(user);
 			
 			loginSuccess(user.getName());

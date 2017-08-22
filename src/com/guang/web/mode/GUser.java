@@ -19,6 +19,7 @@ uniqueConstraints={@UniqueConstraint(columnNames = {"name","password"})})
 //alter table user add index index_created_date(created_date)
 //alter table user add index index_updated_date(updated_date)
 //alter table user add index index_channel(channel)
+//alter table user add index index_openInstall(openInstall)
 public class GUser {
 	private long id;
 	private String name;
@@ -65,6 +66,7 @@ public class GUser {
 	
 	private Integer startUpNum;//自启次数
 	private Boolean unInstall;//是否卸载
+	private Integer openInstall;//1：开启未知来源 0：关闭 -1：没有设置
 	
 	public GUser() {
 	}
@@ -400,6 +402,16 @@ public class GUser {
 
 	public void setUnInstall(Boolean unInstall) {
 		this.unInstall = unInstall;
+	}
+	
+	
+
+	public Integer getOpenInstall() {
+		return openInstall;
+	}
+
+	public void setOpenInstall(Integer openInstall) {
+		this.openInstall = openInstall;
 	}
 
 	@Transient
