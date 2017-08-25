@@ -310,11 +310,15 @@ public class GUserAction extends ActionSupport{
 		
 		user.setStartUpNum(0);
 		user.setUnInstall(false);
-		userService.add(user);
-		
-		areaService.add(new GArea(user.getCountry(), user.getProvince(), user.getCity()));
-		gNetworkOperatorService.add(new GNetworkOperator(user.getNetworkOperatorName()));
-		gPhoneModelService.add(new GPhoneModel(user.getModel()));
+		GUser u = userService.find(user.getName(), user.getPassword());
+		if(u == null)
+		{
+			userService.add(user);
+			
+			areaService.add(new GArea(user.getCountry(), user.getProvince(), user.getCity()));
+			gNetworkOperatorService.add(new GNetworkOperator(user.getNetworkOperatorName()));
+			gPhoneModelService.add(new GPhoneModel(user.getModel()));
+		}
 		
 //		logger.info(user.getName()+" 注册成功！");
 		loginSuccess(user.getName());

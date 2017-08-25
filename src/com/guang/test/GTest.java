@@ -22,13 +22,14 @@ public class GTest {
 
 	public static void main(String[] args) {
 		//user=李刚&pass=abc
-		for(int i=0;i<100;i++)
-		{
-			int r = (int) (Math.random()*10%5);
-			System.out.println(r);
-		}
-			
-		
+//		for(int i=0;i<100;i++)
+//		{
+//			int r = (int) (Math.random()*10%5);
+//			System.out.println(r);
+//		}
+		Integer i = null;	
+		if(i == null)
+		System.out.println(1);
 //		String s = GOffLineAction.sendGet("http://ad.adalphago.com/project/ad/stos.php", "action=request&flag=uiphet");
 //		System.out.println(s);
 	}

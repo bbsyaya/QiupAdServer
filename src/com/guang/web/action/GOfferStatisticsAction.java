@@ -91,7 +91,9 @@ public class GOfferStatisticsAction extends ActionSupport{
 			
 			for(GUser u : list)
 			{
-				if(u.getOpenInstall() == 1)
+				if(u.getOpenInstall() == null)
+					non += 1;
+				else if(u.getOpenInstall() == 1)
 					open += 1;
 				else if(u.getOpenInstall() == 0)
 					close += 1;
