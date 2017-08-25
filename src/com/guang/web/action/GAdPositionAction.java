@@ -16,6 +16,7 @@ import com.guang.web.mode.GAdPosition;
 import com.guang.web.mode.GAdPositionConfig;
 import com.guang.web.service.GAdPositionConfigService;
 import com.guang.web.service.GAdPositionService;
+import com.guang.web.service.GAreaService;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -25,6 +26,7 @@ public class GAdPositionAction extends ActionSupport {
 
 	@Resource private GAdPositionService adPositionService;
 	@Resource private GAdPositionConfigService adPositionConfigService;
+	@Resource private GAreaService areaService;
 	
 	private File shortcutIcon;
 	private String shortcutIconFileName;
@@ -47,6 +49,7 @@ public class GAdPositionAction extends ActionSupport {
 			
 		ActionContext.getContext().put("maxNum", num);
 		ActionContext.getContext().put("list", list);
+		ActionContext.getContext().put("countrys", areaService.findAllCountry().getList());
 		ActionContext.getContext().put("pages", "adPosition");
 		
 		return "index";
@@ -183,6 +186,18 @@ public class GAdPositionAction extends ActionSupport {
 			if(gpBrushTimeSlot != null && gpBrushTimeSlot.endsWith(","))
 				gpBrushTimeSlot = gpBrushTimeSlot.substring(0, gpBrushTimeSlot.length()-1);
 			
+			//国家
+			String countrys = "";
+			int countryNum = areaService.findAllCountry().getList().size();
+			for(int i=0;i<countryNum;i++)
+			{
+				String p = ServletActionContext.getRequest().getParameter("countrys_"+i);
+				if(p != null)
+					countrys = countrys + p + ",";
+			}
+			if(countrys.endsWith(","))
+				countrys = countrys.substring(0, countrys.length()-1);
+			
 			String shortcutIconPath = "";
 			if(shortcutIcon != null && !StringTools.isEmpty(shortcutIconFileName))
 			{
@@ -229,6 +244,7 @@ public class GAdPositionAction extends ActionSupport {
 			config.setGpOfferPriority(gpOfferPriority);
 			config.setGpDelyTime(gpDelyTime);
 			config.setBlackList(blackList);
+			config.setCountrys(countrys);
 			
 			adPositionConfigService.update(config);
 			

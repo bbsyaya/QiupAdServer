@@ -1,6 +1,23 @@
 var baseUrl =  window.location.protocol + "//" + window.location.host + "/QiupAdServer/";
 
 
+$("#sel_areas_all").click(function(){
+	var num = $("#update_country").children().length;
+	for(var j=0;j<num;j++)
+	{
+		var id = "#update_country_"+j;
+		$(id).attr("checked", "checked");
+	} 
+});
+$("#sel_areas_no").click(function(){
+	var num = $("#update_country").children().length;
+	for(var j=0;j<num;j++)
+	{
+		var id = "#update_country_"+j;
+		$(id).attr("checked", "");
+	} 
+});
+
 $("#addAdPosition").click(function(){
 	var d_addAdPosition = $("#d_addAdPosition");
 	if(d_addAdPosition.css("display") == "none")
@@ -410,6 +427,27 @@ $("#find").click(function()
 	$("#update_gpDelyTime").val(jsonobj.config.gpDelyTime);
 	$("#update_blackList").val(jsonobj.config.blackList);
 	
+	var update_type = "#update_country";
+	var num = $(update_type).children().length;
+	for(var j=0;j<num;j++)
+	{
+		var id = update_type+"_"+j;
+		$(id).attr("checked", "");
+	} 
+	if(jsonobj.config.countrys != "" && jsonobj.config.countrys != null)
+	{
+		var arr = jsonobj.config.countrys.split(",");
+		for(var i=0;i<arr.length;i++)
+		{
+			for(var j=0;j<num;j++)
+			{
+				var id = update_type+"_"+j;
+				if($(id).val() == arr[i])
+					$(id).attr("checked", "checked");
+			}
+		}		
+	}
+	
 	$("#update_whiteList").parent().parent().hide();
 	$("#update_showNum").parent().parent().hide();
 	$("#update_adShowNum").parent().parent().hide();
@@ -434,6 +472,8 @@ $("#find").click(function()
 	$("#update_gpOfferPriority").parent().parent().hide();
 	$("#update_gpDelyTime").parent().parent().hide();
 	$("#update_blackList").parent().parent().hide();
+	$("#update_country_tr").hide();
+	$("#sel_areas_all").parent().parent().hide();
 	
 	//浏览器插屏
 	if(jsonobj.type == 1)
@@ -499,6 +539,8 @@ $("#find").click(function()
 		$("#update_timeSlot").parent().parent().show();
 		$("#update_addTimeSlot1").parent().parent().show();
 		$("#update_browerBreakUrl").parent().parent().show();
+		$("#update_country_tr").show();
+		$("#sel_areas_all").parent().parent().show();
 	}
 	//快捷方式
 	else if(jsonobj.type == 9)

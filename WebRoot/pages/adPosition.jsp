@@ -292,6 +292,22 @@
 				<td><textarea type="text" id="update_blackList" name="blackList" value="" style="width:380px;height:80px;"></textarea></td>
 			</tr>
 			
+			<tr id="update_country_tr">
+				<td>国家：</td>
+				<td id="update_country">
+				<s:iterator value="countrys" var="val" status="sta">	
+				<label><input type="checkbox" id="update_country_<s:property value="#sta.index" />" name="countrys_<s:property value="#sta.index" />" value="<s:property value="#val" />" /><s:property value="#val" /></label>
+				</s:iterator>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input id="sel_areas_all" type="button" value="全选" />
+					<input id="sel_areas_no" type="button" value="全不选" />
+				</td>
+			</tr>
 			
 			<tr>
 				<td>&nbsp;</td>
