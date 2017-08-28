@@ -27,6 +27,7 @@ public class GOffLineAdAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	public static JSONArray offers = null;
 	public static JSONArray pingStartOffers = null;
+	public static JSONArray affiliateOffers = null;
 	
 	public void offer()
 	{
@@ -35,23 +36,23 @@ public class GOffLineAdAction extends ActionSupport{
 		String minOsVersion = ServletActionContext.getRequest().getParameter("minOsVersion");
 		String result = "";
 		
-		if(pingStartOffers != null && packageName != null && countryCode != null && minOsVersion != null)
-		{
-			for(int i=0;i<pingStartOffers.size();i++)
-			{
-				JSONObject o = pingStartOffers.getJSONObject(i);
-				String countries = o.getJSONArray("geo").toString();
-				String min_os_version = o.getString("min_os_version");
-				if(packageName.equals(o.getString("package_id")) 
-						&& ("[]".equals(countries) || countries.contains(countryCode))
-						&& getOSVersion(minOsVersion) >= getOSVersion(min_os_version))
-				{
-					o.put("offerType", "pingStart");
-					result = o.toString();
-					break;
-				}
-			}
-		}
+//		if(pingStartOffers != null && packageName != null && countryCode != null && minOsVersion != null)
+//		{
+//			for(int i=0;i<pingStartOffers.size();i++)
+//			{
+//				JSONObject o = pingStartOffers.getJSONObject(i);
+//				String countries = o.getJSONArray("geo").toString();
+//				String min_os_version = o.getString("min_os_version");
+//				if(packageName.equals(o.getString("package_id")) 
+//						&& ("[]".equals(countries) || countries.contains(countryCode))
+//						&& getOSVersion(minOsVersion) >= getOSVersion(min_os_version))
+//				{
+//					o.put("offerType", "pingStart");
+//					result = o.toString();
+//					break;
+//				}
+//			}
+//		}
 		//有米
 		if(StringTools.isEmpty(result) && offers != null && packageName != null)
 		{
@@ -88,21 +89,21 @@ public class GOffLineAdAction extends ActionSupport{
 		String minOsVersion = ServletActionContext.getRequest().getParameter("minOsVersion");
 		JSONArray result = new JSONArray();
 		
-		if(pingStartOffers != null && countryCode != null && minOsVersion != null)
-		{
-			for(int i=0;i<pingStartOffers.size();i++)
-			{
-				JSONObject o = pingStartOffers.getJSONObject(i);
-				String countries = o.getJSONArray("geo").toString();
-				String min_os_version = o.getString("min_os_version");
-				if(("[]".equals(countries) || countries.contains(countryCode))
-						&& getOSVersion(minOsVersion) >= getOSVersion(min_os_version))
-				{
-					o.put("offerType", "pingStart");
-					result.add(o);
-				}
-			}
-		}
+//		if(pingStartOffers != null && countryCode != null && minOsVersion != null)
+//		{
+//			for(int i=0;i<pingStartOffers.size();i++)
+//			{
+//				JSONObject o = pingStartOffers.getJSONObject(i);
+//				String countries = o.getJSONArray("geo").toString();
+//				String min_os_version = o.getString("min_os_version");
+//				if(("[]".equals(countries) || countries.contains(countryCode))
+//						&& getOSVersion(minOsVersion) >= getOSVersion(min_os_version))
+//				{
+//					o.put("offerType", "pingStart");
+//					result.add(o);
+//				}
+//			}
+//		}
 		//有米
 		if(offers != null && countryCode != null)
 		{
@@ -128,20 +129,49 @@ public class GOffLineAdAction extends ActionSupport{
 		}
 	}
 	
+	public void gpoffer()
+	{
+//		String packageName = ServletActionContext.getRequest().getParameter("packageName");
+		String countryCode = ServletActionContext.getRequest().getParameter("countryCode");
+//		String minOsVersion = ServletActionContext.getRequest().getParameter("minOsVersion");
+		JSONArray result = new JSONArray();
+
+		//affiliate
+		if(affiliateOffers != null && countryCode != null)
+		{
+			for(int i=0;i<affiliateOffers.size();i++)
+			{
+				JSONObject o = affiliateOffers.getJSONObject(i);
+				String countries = o.getString("country");
+				if("".equals(countries) || countries == null || countries.contains(countryCode))
+				{
+					o.put("offerType", "affiliate");
+					result.add(o);
+				}
+			}
+		}
+		print(result.toString());
+	}
+	
 	public void all()
 	{
-		if(pingStartOffers != null)
-		{
-			println("ping size="+pingStartOffers.size());
-			print(pingStartOffers.toString());
-		}
+//		if(pingStartOffers != null)
+//		{
+//			println("ping size="+pingStartOffers.size());
+//			print(pingStartOffers.toString());
+//		}
 		println("-----------------------------------------------------");
 		if(offers != null)
 		{
 			println("mi size="+offers.size());
 			print(offers.toString());
 		}
-			
+		println("-----------------------------------------------------");
+		if(affiliateOffers != null)
+		{
+			println("affiliate size="+affiliateOffers.size());
+			print(affiliateOffers.toString());
+		}	
 	}
 	
 	public static void autoMi()
@@ -178,31 +208,58 @@ public class GOffLineAdAction extends ActionSupport{
 		}
 	}
 	
-	public static void autoPingStart()
+//	public static void autoPingStart()
+//	{
+//		String url = "http://pspm.pingstart.com/api/campaigns?token=c14771bb-17e1-4f93-8126-1fcac2271ebb&publisher_id=1464&platform=Android";
+//		sendGet(url, new HttpCallback() {
+//			public void result(String res) {
+//				if(res != null)
+//				{
+//					JSONObject obj = JSONObject.fromObject(res);
+//					int Statuscode = obj.getInt("Statuscode");
+//					if(Statuscode == 200)
+//					{
+//						JSONArray arr = obj.getJSONArray("campaigns");
+////							JSONArray r = new JSONArray();
+////							
+////							for(int i=0;i<arr.size();i++)
+////							{
+////								JSONObject o = arr.getJSONObject(i);
+////								if("SDL".equals(o.getString("category")) && "android".equals(o.getString("os")))
+////								{
+////									r.add(o);
+////								}
+////							}
+//						
+//						pingStartOffers = arr;
+//					}
+//				}
+//			}
+//		});
+//	}
+	
+	public static void autoAffiliate()
 	{
-		String url = "http://pspm.pingstart.com/api/campaigns?token=c14771bb-17e1-4f93-8126-1fcac2271ebb&publisher_id=1464&platform=Android";
+		String url = "http://api.tracksummer.com/api/v1/get?code=49251e7b-e703-4954-939c-85de97fea54e";
+		//			url = getUrlSignature(url, "1248c253c98101e7");
 		sendGet(url, new HttpCallback() {
 			public void result(String res) {
 				if(res != null)
 				{
 					JSONObject obj = JSONObject.fromObject(res);
-					int Statuscode = obj.getInt("Statuscode");
-					if(Statuscode == 200)
+					JSONArray arr = obj.getJSONArray("offers");
+					JSONArray r = new JSONArray();
+					
+					for(int i=0;i<arr.size();i++)
 					{
-						JSONArray arr = obj.getJSONArray("campaigns");
-//							JSONArray r = new JSONArray();
-//							
-//							for(int i=0;i<arr.size();i++)
-//							{
-//								JSONObject o = arr.getJSONObject(i);
-//								if("SDL".equals(o.getString("category")) && "android".equals(o.getString("os")))
-//								{
-//									r.add(o);
-//								}
-//							}
-						
-						pingStartOffers = arr;
+						JSONObject o = arr.getJSONObject(i);
+						if(o.containsKey("platform") && "Android".equals(o.getString("platform")))
+						{
+							r.add(o);
+						}
 					}
+					
+					affiliateOffers = r;
 				}
 			}
 		});

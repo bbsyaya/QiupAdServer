@@ -32,7 +32,7 @@ public class GTimerTask {
 	
 	private void update()
 	{
-		GOffLineAdAction.autoPingStart();
+		GOffLineAdAction.autoAffiliate();
 		GOffLineAdAction.autoMi();
 	}
 	
