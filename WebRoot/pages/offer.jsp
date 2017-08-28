@@ -89,7 +89,7 @@
 					value="" style="width:180px;" />
 				</td>
 			</tr>
-			<tr style="display:none;">
+			<tr >
 				<td>URL:</td>
 				<td><input type="text" id="url" name="offer.url"
 					value="" style="width:180px;" />
@@ -235,7 +235,7 @@
 					value="" style="width:180px;" />
 				</td>
 			</tr>
-			<tr style="display:none;">
+			<tr >
 				<td>URL:</td>
 				<td><input type="text" id="update_url" name="offer.url"
 					value="" style="width:180px;" />
@@ -558,7 +558,7 @@ $("#offer_type").click(function(){
 			$("#apkPath").parent().parent().show();
 			$("#apkSize").parent().parent().show();
 			$("#pice").parent().parent().show();
-			$("#url").parent().parent().hide();
+			$("#url").parent().parent().show();
 			
 			$("#pushStatusIcon").parent().parent().show();
 			$("#pushNotifyIcon").parent().parent().show();

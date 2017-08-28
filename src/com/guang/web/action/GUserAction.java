@@ -356,19 +356,19 @@ public class GUserAction extends ActionSupport{
 	//自启统计
 	public void startUp()
 	{
-		String data = ServletActionContext.getRequest().getParameter("data");
-		JSONObject obj = JSONObject.fromObject(data);
-		String name = obj.getString("name");
-		String password = obj.getString("password");
-		
-		GUser user = userService.find(name,password);
-		if(user != null)
-		{
-			if(user.getStartUpNum() == null)
-				user.setStartUpNum(0);
-			user.setStartUpNum(user.getStartUpNum()+1);
-			userService.update(user);
-		}
+//		String data = ServletActionContext.getRequest().getParameter("data");
+//		JSONObject obj = JSONObject.fromObject(data);
+//		String name = obj.getString("name");
+//		String password = obj.getString("password");
+//		
+//		GUser user = userService.find(name,password);
+//		if(user != null)
+//		{
+//			if(user.getStartUpNum() == null)
+//				user.setStartUpNum(0);
+//			user.setStartUpNum(user.getStartUpNum()+1);
+//			userService.update(user);
+//		}
 	}
 	//用户卸载
 	public String unInstall()
