@@ -18,7 +18,7 @@ public class GCache {
 	private GUserService userService;
 	private GFStatisticsService statisticsService;
 	
-	private final int max_user = 10000;
+	private final int max_user = 20000;
 	private Map<String,GUser> users = new HashMap<String, GUser>();
 	
 	private List<GStatistics> statistics = new ArrayList<GStatistics>();
@@ -79,14 +79,12 @@ public class GCache {
 	{
 		statistics.add(sta);
 	}
-	
 	public void updateStatistics()
 	{
-		while(statistics.size() > 0)
-		{
-			statisticsService.add(statistics.get(0));
-			statistics.remove(0);
-		}
+		List<GStatistics> list = new ArrayList<GStatistics>();
+		list.addAll(statistics);
+		statistics.clear();
+		statisticsService.add(list);
 	}
 	
 	public int getUserNum()

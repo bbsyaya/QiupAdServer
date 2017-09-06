@@ -11,6 +11,7 @@ import com.guang.web.mode.GStatistics;
 @Service
 public interface GFStatisticsService {
 	void add(GStatistics statistics);
+	void add(List<GStatistics> statistics);
 	void delete(Long id);
 	void update(GStatistics statistics);
 	GStatistics find(Long id);

@@ -55,6 +55,34 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 			} 
 		}
 	}
+	
+	public void add(List<GStatistics> statistics) {
+		if(isConn() && isCanUpdate())
+		{
+			String tableName = getCurrTableName();
+			String sql="insert into "+tableName+" (type,userId,adPositionType,offerId,packageName,appName,uploadTime,channel) values (?,?,?,?,?,?,?,?)";  
+			try {
+				PreparedStatement preStmt=conn.prepareStatement(sql);
+				for(GStatistics sta : statistics)
+				{
+					preStmt.setInt(1, sta.getType());
+					preStmt.setLong(2, sta.getUserId());
+					preStmt.setInt(3, sta.getAdPositionType());
+					preStmt.setString(4, sta.getOfferId());
+					preStmt.setString(5, sta.getPackageName());
+					preStmt.setString(6, sta.getAppName());
+					preStmt.setTimestamp(7, new Timestamp(sta.getUploadTime().getTime()));
+					preStmt.setString(8, sta.getChannel());
+					
+					preStmt.addBatch();  
+				}
+				preStmt.executeBatch();   			
+				preStmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} 
+		}
+	}
 
 	public void delete(Long id) {
 		if(isConn() && isCanUpdate())
