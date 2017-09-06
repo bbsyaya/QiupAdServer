@@ -24,6 +24,7 @@ import com.guang.web.service.GFStatisticsService;
 import com.guang.web.service.GMediaService;
 import com.guang.web.service.GSdkService;
 import com.guang.web.service.GUserService;
+import com.guang.web.tools.GCache;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -94,7 +95,8 @@ public class GStatisticsAction extends ActionSupport{
 		String channel = user.getChannel();
 		
 		GStatistics statistics = new GStatistics(type, userId, adPositionType, offerId, packageName, appName,channel);
-		statisticsService.add(statistics);
+//		statisticsService.add(statistics);
+		GCache.getInstance().addStatistics(statistics);
 	}
 	
 	public void print(Object obj)

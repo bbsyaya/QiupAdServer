@@ -24,10 +24,17 @@ public class GTimerTask {
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);  
 	private ScheduledFuture<?> taskHandle;  
     
+	private final ScheduledExecutorService user_scheduler = Executors.newScheduledThreadPool(1);  
+	private ScheduledFuture<?> user_taskHandle;  
+	
+	private final ScheduledExecutorService sta_scheduler = Executors.newScheduledThreadPool(1);  
+	private ScheduledFuture<?> sta_taskHandle;  
 
 	private  void init()
 	{
 		start();
+		startUser();
+		startSta();
 	}
 	
 	private void update()
@@ -58,6 +65,16 @@ public class GTimerTask {
 		{
 			taskHandle.cancel(true);
 		}
+		
+		if(user_taskHandle != null && !user_taskHandle.isCancelled())
+		{
+			user_taskHandle.cancel(true);
+		}
+		
+		if(sta_taskHandle != null && !sta_taskHandle.isCancelled())
+		{
+			sta_taskHandle.cancel(true);
+		}
 	}
 	
 	/** 
@@ -76,4 +93,36 @@ public class GTimerTask {
 	    }  
 	    return 0;  
 	}  
+	
+	
+	public void startUser()
+	{
+		 final Runnable task = new Runnable() {  
+	            public void run() {  
+	            	GCache.getInstance().updateUser();
+	            }  
+	     };  
+	     
+//	     long oneDay = 24 * 60 * 60 * 1000;  
+//	     long initDelay  = getTimeMillis("05:00:00") - System.currentTimeMillis();  
+//	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
+	     long delay = 30*60*1000;
+	     user_taskHandle = user_scheduler.scheduleAtFixedRate(task, 1000*10, delay, TimeUnit.MILLISECONDS);  
+	}
+	
+	
+	public void startSta()
+	{
+		 final Runnable task = new Runnable() {  
+	            public void run() {  
+	            	GCache.getInstance().updateStatistics();
+	            }  
+	     };  
+	     
+//	     long oneDay = 24 * 60 * 60 * 1000;  
+//	     long initDelay  = getTimeMillis("05:00:00") - System.currentTimeMillis();  
+//	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
+	     long delay = 1*60*1000;
+	     sta_taskHandle = sta_scheduler.scheduleAtFixedRate(task, 1000*10, delay, TimeUnit.MILLISECONDS);  
+	}
 }

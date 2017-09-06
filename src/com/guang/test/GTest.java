@@ -22,19 +22,19 @@ public class GTest {
 
 	public static void main(String[] args) {
 		Date from = new Date();
-		from.setDate(from.getDate()-1);
+//		from.setDate(from.getDate()-1);
+//		
+//		Date to = new Date();
+//		to.setDate(to.getDate()+1);
+//		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+//		colvals.put("type =", 1+"");
+//		
+//		GFStatisticsService s = GFStatisticsServiceImpl.getInstance();
+//		s.add(new GStatistics(1, 1l, 1, "1", "1", "1", "tb"));
+//		s.add(new GStatistics(1, 1l, 1, "1", "1", "1", "test"));
+//		System.out.println(s.findNum(colvals,from,to));
 		
-		Date to = new Date();
-		to.setDate(to.getDate()+1);
-		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
-		colvals.put("type =", 1+"");
-		
-		GFStatisticsService s = GFStatisticsServiceImpl.getInstance();
-		s.add(new GStatistics(1, 1l, 1, "1", "1", "1", "tb"));
-		s.add(new GStatistics(1, 1l, 1, "1", "1", "1", "test"));
-		System.out.println(s.findNum(colvals,from,to));
-		
-		
+		System.out.println(from.getDate());
 
 	}
 	

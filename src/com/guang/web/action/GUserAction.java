@@ -35,6 +35,7 @@ import com.guang.web.service.GNetworkOperatorService;
 import com.guang.web.service.GPhoneModelService;
 import com.guang.web.service.GUserService;
 import com.guang.web.service.GUserSttService;
+import com.guang.web.tools.GCache;
 import com.guang.web.tools.GZipTool;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
@@ -108,7 +109,11 @@ public class GUserAction extends ActionSupport {
 		String versionName = null;
 		String sdkVersion = null;
 
-		GUser user = userService.find(obj.getString("id"), password);
+		GUser user = GCache.getInstance().findUser(obj.getString("id")+"-"+password);
+		if(user == null)
+		{
+			user = userService.find(obj.getString("id"), password);
+		}	
 
 		if (obj.containsKey("versionName"))
 			versionName = obj.getString("versionName");
@@ -125,9 +130,12 @@ public class GUserAction extends ActionSupport {
 		for (GApp a : list) {
 			if (a.getPackageName().equals(packageName)) {
 				isExist = true;
-				a.setUpdateSdkVersion(sdkVersion);
-				a.setUpdateVersionName(versionName);
-				appService.update(a);
+				if(!a.getUpdateSdkVersion().equals(sdkVersion) || !a.getUpdateVersionName().equals(versionName))
+				{
+					a.setUpdateSdkVersion(sdkVersion);
+					a.setUpdateVersionName(versionName);
+					appService.update(a);
+				}
 				break;
 			}
 		}
@@ -238,16 +246,25 @@ public class GUserAction extends ActionSupport {
 
 		String name = obj.getString("name");
 		String password = obj.getString("password");
-		GUser user = userService.find(name, password);
+		GUser user = GCache.getInstance().findUser(name+"-"+password);
+		if(user == null)
+		{
+			user = userService.find(name, password);
+		}	
 		JSONObject result = new JSONObject();
-		if (user != null) {
+		if(user != null)
+		{
 			result.put("result", true);
 			loginSuccess(user);
 			
 			user.setNetworkType(obj.getString("networkType"));
 			user.setUpdatedDate(new Date());
-			userService.update(user);
-		} else {
+//			userService.update(user);
+			
+			GCache.getInstance().addUser(user);
+		}
+		else
+		{
 			result.put("result", false);
 		}
 		print(result.toString());
@@ -261,14 +278,19 @@ public class GUserAction extends ActionSupport {
 		String password = obj.getString("password");
 		String networkType = obj.getString("networkType");
 
-		GUser user = userService.find(name, password);
+		GUser user = GCache.getInstance().findUser(name+"-"+password);
+		if(user == null)
+		{
+			user = userService.find(name, password);
+		}	
 		obj = new JSONObject();
 		if (user != null) {
 			obj.put("result", true);
 			loginSuccess(user);
 			user.setNetworkType(networkType);
 			user.setUpdatedDate(new Date());
-			userService.update(user);
+//			userService.update(user);
+			GCache.getInstance().addUser(user);
 		} else {
 			obj.put("result", false);
 		}
@@ -307,7 +329,8 @@ public class GUserAction extends ActionSupport {
 		{
 			GStatistics statistics = new GStatistics(GStatisticsType.LOGIN,
 					user.getId(), -100, "login", "login", "login",user.getChannel());
-			statisticsService.add(statistics);
+//			statisticsService.add(statistics);
+			GCache.getInstance().addStatistics(statistics);
 		}
 	}
 
@@ -402,6 +425,54 @@ public class GUserAction extends ActionSupport {
 		userStt.setTodayAdd(num);
 
 		userSttService.update(userStt);
+	}
+	
+	public void println(Object data) {
+		try {
+			ServletActionContext.getResponse().getWriter().println(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void findNum()
+	{
+		println("user="+GCache.getInstance().getUserNum());
+		println("sta="+GCache.getInstance().getStaNum());
+	}
+	public void findNum2() {
+		println("user="+GCache.getInstance().getUserNum());
+		println("sta="+GCache.getInstance().getStaNum());
+		
+		String data = ServletActionContext.getRequest().getParameter("data");
+		println("-----0------"+data);
+//		JSONObject obj = JSONObject.fromObject(data);
+//		println("-----01------");
+//		String name = obj.getString("name");
+//		String password = obj.getString("password");
+//		String networkType = obj.getString("networkType");
+//		println("data="+data);
+				
+//		GUser user = GCache.getInstance().findUser(name+"-"+password);
+//		if(user == null)
+//		{
+//			user = userService.find(name, password);
+//			println("-----1------");
+//		}	
+//		obj = new JSONObject();
+//		if (user != null) {
+//			obj.put("result", true);
+//			loginSuccess(user);
+//			user.setNetworkType(networkType);
+//			user.setUpdatedDate(new Date());
+////			userService.update(user);
+//			GCache.getInstance().addUser(user);
+//			println("-----2------");
+//		} else {
+//			obj.put("result", false);
+//			println("-----3------");
+//		}
+//		println("-----4------"+obj.toString());
+//		print(obj.toString());
 	}
 
 	public String debug() {
