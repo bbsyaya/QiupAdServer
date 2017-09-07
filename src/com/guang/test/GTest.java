@@ -31,14 +31,17 @@ public class GTest {
 		
 		GFStatisticsService s = GFStatisticsServiceImpl.getInstance();
 		List<GStatistics> list = new ArrayList<GStatistics>();
-		list.add(new GStatistics(1, 1l, 1, "1", "1", "1", "tb"));
+		for(int i=0;i<10000;i++)
+		{
+			list.add(new GStatistics(1, 1l, 1, "1", "1", "1", "tb"));
+		}
+		
 		list.add(new GStatistics(1, 1l, 1, "1", "1", "1", "test"));
-		List<GStatistics> list2 = new ArrayList<GStatistics>();
-		list2.addAll(list);
-		s.add(list2);
+		long now = System.currentTimeMillis();
+		s.add(list);
 		System.out.println(s.findNum(colvals,from,to));
 		
-		System.out.println(from.getDate());
+		System.out.println(System.currentTimeMillis() - now);
 
 	}
 	

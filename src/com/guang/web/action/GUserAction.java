@@ -438,43 +438,10 @@ public class GUserAction extends ActionSupport {
 	{
 		println("user="+GCache.getInstance().getUserNum());
 		println("sta="+GCache.getInstance().getStaNum());
+		println("sta_time="+GCache.getInstance().getStaTime());
+		println("max_sta_time="+GCache.getInstance().getMaxStaTime());
 	}
-	public void findNum2() {
-		println("user="+GCache.getInstance().getUserNum());
-		println("sta="+GCache.getInstance().getStaNum());
-		
-		String data = ServletActionContext.getRequest().getParameter("data");
-		println("-----0------"+data);
-//		JSONObject obj = JSONObject.fromObject(data);
-//		println("-----01------");
-//		String name = obj.getString("name");
-//		String password = obj.getString("password");
-//		String networkType = obj.getString("networkType");
-//		println("data="+data);
-				
-//		GUser user = GCache.getInstance().findUser(name+"-"+password);
-//		if(user == null)
-//		{
-//			user = userService.find(name, password);
-//			println("-----1------");
-//		}	
-//		obj = new JSONObject();
-//		if (user != null) {
-//			obj.put("result", true);
-//			loginSuccess(user);
-//			user.setNetworkType(networkType);
-//			user.setUpdatedDate(new Date());
-////			userService.update(user);
-//			GCache.getInstance().addUser(user);
-//			println("-----2------");
-//		} else {
-//			obj.put("result", false);
-//			println("-----3------");
-//		}
-//		println("-----4------"+obj.toString());
-//		print(obj.toString());
-	}
-
+	
 	public String debug() {
 		ActionContext.getContext().put("pages", "debug");
 		return "index";

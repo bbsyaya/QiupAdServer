@@ -18,7 +18,7 @@ public class GCache {
 	private GUserService userService;
 	private GFStatisticsService statisticsService;
 	
-	private final int max_user = 20000;
+	private final int max_user = 10000;
 	private Map<String,GUser> users = new HashMap<String, GUser>();
 	
 	private List<GStatistics> statistics = new ArrayList<GStatistics>();
@@ -79,12 +79,19 @@ public class GCache {
 	{
 		statistics.add(sta);
 	}
+	private long sta_time = 0;
+	private long max_sta_time = 0;
 	public void updateStatistics()
 	{
+		long now = System.currentTimeMillis();
 		List<GStatistics> list = new ArrayList<GStatistics>();
 		list.addAll(statistics);
 		statistics.clear();
 		statisticsService.add(list);
+		
+		sta_time = System.currentTimeMillis() - now;
+		if(sta_time > max_sta_time)
+			max_sta_time = sta_time;
 	}
 	
 	public int getUserNum()
@@ -95,5 +102,14 @@ public class GCache {
 	public int getStaNum()
 	{
 		return statistics.size();
+	}
+	
+	public long getStaTime()
+	{
+		return sta_time;
+	}
+	public long getMaxStaTime()
+	{
+		return max_sta_time;
 	}
 }
