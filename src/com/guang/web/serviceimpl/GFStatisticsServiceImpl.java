@@ -62,6 +62,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 			String tableName = getCurrTableName();
 			String sql="insert into "+tableName+" (type,userId,adPositionType,offerId,packageName,appName,uploadTime,channel) values (?,?,?,?,?,?,?,?)";  
 			try {
+				conn.setAutoCommit(false);
 				PreparedStatement preStmt=conn.prepareStatement(sql);
 				for(GStatistics sta : statistics)
 				{
@@ -76,7 +77,8 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 					
 					preStmt.addBatch();  
 				}
-				preStmt.executeBatch();   			
+				preStmt.executeBatch();   	
+				conn.commit();
 				preStmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
