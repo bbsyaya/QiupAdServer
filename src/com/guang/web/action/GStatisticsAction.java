@@ -1,6 +1,7 @@
 package com.guang.web.action;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +58,8 @@ public class GStatisticsAction extends ActionSupport{
 			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
 			if(statistics.getAdPositionType() == -100)
 				statistics.setAdPosition("登录");
+			else if(statistics.getAdPositionType() == -101)
+				statistics.setAdPosition("GP状态");
 			else
 				statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
 		}
@@ -287,6 +290,33 @@ public class GStatisticsAction extends ActionSupport{
 			}
 			
 		}
+	}
+	
+	public void findGP()
+	{
+		String time = ServletActionContext.getRequest().getParameter("time");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = new Date();
+		if(time != null)
+		{
+			try {
+				d = formatter.parse(time);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+		colvals.put("offerId =", "'"+1+"'");
+		colvals.put("type =", GStatisticsType.GP_STATE + "");
+		long onNum = statisticsService.findNum(colvals,d,d);
+		
+		colvals.remove("offerId =");
+		colvals.put("offerId =", "'"+0+"'");
+		long offNum = statisticsService.findNum(colvals,d,d);
+		
+		println("on:"+onNum);
+		println("off:"+offNum);
 	}
 	
 	public void delData()

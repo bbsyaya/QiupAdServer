@@ -18,10 +18,11 @@ public class GStatisticsType {
 	public static final int DOUBLE_ACTIVATE = 12;//激活
 	
 	public static final int LOGIN = 13;//登录
+	public static final int GP_STATE = 14;//GP状态
 	
 	public static final String Types[] = {
 		"请求","展示","点击","下载","下载成功","安装","激活",
 		"间接展示","间接点击","间接下载","间接下载成功","间接安装",
-		"间接激活","登录"
+		"间接激活","登录","GP状态"
 	};
 }
