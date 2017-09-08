@@ -17,6 +17,7 @@ public interface GSdkService {
 	GSdk findNew(String channel);
 	GSdk findNew(String packageName,String channel);
 	GSdk findNew2(String appPackageName,String channel);
+	QueryResult<GSdk> findNewLow(String appPackageName,String channel);
 	QueryResult<GSdk> findAlls(int firstindex);
 	QueryResult<GSdk> findAlls();
 	QueryResult<GSdk> find(LinkedHashMap<String, String> colvals);

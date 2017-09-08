@@ -72,6 +72,18 @@ public class GSdkServiceImpl implements GSdkService{
 			return list.get(0);
 		return null;
 	}
+	
+	public QueryResult<GSdk> findNewLow(String appPackageName,String channel) {
+		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+		colvals.put("online =", 1+"");
+		colvals.put("appPackageName =", "'"+appPackageName+"'");
+		colvals.put("channel =", "'"+channel+"'");
+		
+		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
+		lhm.put("id", "desc");
+	
+		return daoTools.find(GSdk.class, colvals, 0, 2, lhm);
+	}
 
 	public QueryResult<GSdk> findAlls(int firstindex) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();

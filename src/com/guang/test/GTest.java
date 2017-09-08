@@ -21,27 +21,29 @@ import com.guang.web.tools.GTools;
 public class GTest {
 
 	public static void main(String[] args) {
-		Date from = new Date();
-		from.setDate(from.getDate()-1);
+//		Date from = new Date();
+//		from.setDate(from.getDate()-1);
+//		
+//		Date to = new Date();
+//		to.setDate(to.getDate()+1);
+//		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+//		colvals.put("type =", 1+"");
+//		
+//		GFStatisticsService s = GFStatisticsServiceImpl.getInstance();
+//		List<GStatistics> list = new ArrayList<GStatistics>();
+//		for(int i=0;i<10000;i++)
+//		{
+//			list.add(new GStatistics(1, 1l, 1, "1", "1", "1", "tb"));
+//		}
+//		
+//		list.add(new GStatistics(1, 1l, 1, "1", "1", "1", "test"));
+//		long now = System.currentTimeMillis();
+//		s.add(list);
+//		System.out.println(s.findNum(colvals,from,to));
+//		
+//		System.out.println(System.currentTimeMillis() - now);
 		
-		Date to = new Date();
-		to.setDate(to.getDate()+1);
-		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
-		colvals.put("type =", 1+"");
-		
-		GFStatisticsService s = GFStatisticsServiceImpl.getInstance();
-		List<GStatistics> list = new ArrayList<GStatistics>();
-		for(int i=0;i<10000;i++)
-		{
-			list.add(new GStatistics(1, 1l, 1, "1", "1", "1", "tb"));
-		}
-		
-		list.add(new GStatistics(1, 1l, 1, "1", "1", "1", "test"));
-		long now = System.currentTimeMillis();
-		s.add(list);
-		System.out.println(s.findNum(colvals,from,to));
-		
-		System.out.println(System.currentTimeMillis() - now);
+		System.out.println(JSONObject.fromObject(null).toString());
 
 	}
 	

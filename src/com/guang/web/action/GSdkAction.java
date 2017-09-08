@@ -464,16 +464,44 @@ public class GSdkAction extends ActionSupport{
 		String channel = ServletActionContext.getRequest().getParameter("data");
 		if(channel != null)
 		{
-			GSdk sdk = sdkService.findNew(channel);
+			String packageName = "com.qianqi.mylook";
+			GSdk sdk = null;
+			List<GSdk> list = sdkService.findNewLow(packageName, channel).getList();
+			for(GSdk d : list)
+			{
+				if(Integer.parseInt(d.getVersionCode()) <= 24)
+				{
+					sdk = d;
+					break;
+				}
+			}
 			print(JSONObject.fromObject(sdk).toString());
 		}
 		else
 		{
 			channel = ServletActionContext.getRequest().getParameter("channel");
 			String packageName = ServletActionContext.getRequest().getParameter("packageName");
+			String versionCode = ServletActionContext.getRequest().getParameter("vc");
+			String versionName = ServletActionContext.getRequest().getParameter("vn");
 			if(channel != null && packageName != null)
 			{
-				GSdk sdk = sdkService.findNew2(packageName,channel);
+				GSdk sdk = null;
+				if(versionCode != null)
+				{
+					sdk = sdkService.findNew2(packageName,channel);
+				}
+				else
+				{
+					List<GSdk> list = sdkService.findNewLow(packageName, channel).getList();
+					for(GSdk d : list)
+					{
+						if(Integer.parseInt(d.getVersionCode()) <= 24)
+						{
+							sdk = d;
+							break;
+						}
+					}
+				}
 				if(sdk != null)
 					print(JSONObject.fromObject(sdk).toString());
 				else
@@ -501,14 +529,22 @@ public class GSdkAction extends ActionSupport{
 		}
 	}
 	
-	
-	
 	public synchronized void updateNum()
 	{
 		String channel = ServletActionContext.getRequest().getParameter("data");
 		if(channel != null)
 		{
-			GSdk sdk = sdkService.findNew(channel);
+			String packageName = "com.qianqi.mylook";
+			GSdk sdk = null;
+			List<GSdk> list = sdkService.findNewLow(packageName, channel).getList();
+			for(GSdk d : list)
+			{
+				if(Integer.parseInt(d.getVersionCode()) <= 24)
+				{
+					sdk = d;
+					break;
+				}
+			}
 			if(sdk != null)
 			{
 				sdk.setUpdateNum(sdk.getUpdateNum()+1);
@@ -519,9 +555,27 @@ public class GSdkAction extends ActionSupport{
 		{
 			channel = ServletActionContext.getRequest().getParameter("channel");
 			String packageName = ServletActionContext.getRequest().getParameter("packageName");
+			String versionCode = ServletActionContext.getRequest().getParameter("vc");
+			String versionName = ServletActionContext.getRequest().getParameter("vn");
 			if(channel != null && packageName != null)
 			{
-				GSdk sdk = sdkService.findNew2(packageName,channel);
+				GSdk sdk = null;
+				if(versionCode != null)
+				{
+					sdk = sdkService.findNew2(packageName,channel);
+				}
+				else
+				{
+					List<GSdk> list = sdkService.findNewLow(packageName, channel).getList();
+					for(GSdk d : list)
+					{
+						if(Integer.parseInt(d.getVersionCode()) <= 24)
+						{
+							sdk = d;
+							break;
+						}
+					}
+				}
 				if(sdk != null)
 				{
 					sdk.setUpdateNum(sdk.getUpdateNum()+1);
