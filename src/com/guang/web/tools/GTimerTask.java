@@ -107,7 +107,7 @@ public class GTimerTask {
 //	     long initDelay  = getTimeMillis("05:00:00") - System.currentTimeMillis();  
 //	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
 	     long delay = 30*60*1000;
-	     user_taskHandle = user_scheduler.scheduleAtFixedRate(task, 1000*10, delay, TimeUnit.MILLISECONDS);  
+	     user_taskHandle = user_scheduler.scheduleAtFixedRate(task, 1000*20, delay, TimeUnit.MILLISECONDS);  
 	}
 	
 	
@@ -123,6 +123,6 @@ public class GTimerTask {
 //	     long initDelay  = getTimeMillis("05:00:00") - System.currentTimeMillis();  
 //	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
 	     long delay = 1*60*1000;
-	     sta_taskHandle = sta_scheduler.scheduleAtFixedRate(task, 1000*10, delay, TimeUnit.MILLISECONDS);  
+	     sta_taskHandle = sta_scheduler.scheduleAtFixedRate(task, 1000*30, delay, TimeUnit.MILLISECONDS);  
 	}
 }
