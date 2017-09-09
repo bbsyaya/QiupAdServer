@@ -48,12 +48,10 @@ public class GCache {
 	
 	public void addUser(GUser u)
 	{
-		while(users.size() > max_user-5)
+		if(users.size() > max_user)
 		{
-			String key = users.keySet().iterator().next();
-			users.remove(key);
+			users.clear();
 		}
-		
 		users.put(u.getName()+"-"+u.getPassword(), u);
 	}
 	
