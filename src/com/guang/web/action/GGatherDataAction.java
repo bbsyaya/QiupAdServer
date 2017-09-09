@@ -184,6 +184,7 @@ public class GGatherDataAction {
 	public void print(Object obj)
 	{
 		try {
+			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().print(obj);
 		} catch (IOException e) {
 			e.printStackTrace();
