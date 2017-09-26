@@ -587,6 +587,12 @@ $("#find").click(function()
 		$("#update_gpOfferPriority").parent().parent().show();
 		$("#update_gpDelyTime").parent().parent().show();
 	}
+	//新闻
+	else if(jsonobj.type == 18)
+	{
+		$("#update_country_tr").show();
+		$("#sel_areas_all").parent().parent().show();
+	}
 	else
 	{
 		$("#update_whiteList").parent().parent().show();

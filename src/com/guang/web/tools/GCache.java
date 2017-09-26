@@ -18,7 +18,7 @@ public class GCache {
 	private GUserService userService;
 	private GFStatisticsService statisticsService;
 	
-	private final int max_user = 10000;
+	private final int max_user = 1000;
 	private Map<String,GUser> users = new HashMap<String, GUser>();
 	
 	private List<GStatistics> statistics = new ArrayList<GStatistics>();

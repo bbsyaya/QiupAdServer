@@ -1,5 +1,10 @@
 package com.guang.test;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,8 +48,33 @@ public class GTest {
 //		
 //		System.out.println(System.currentTimeMillis() - now);
 		
-		System.out.println(JSONObject.fromObject(null).toString());
-
+//		System.out.println(JSONObject.fromObject(null).toString());
+//		try {
+//			// 驱动程序名
+//			String driver ="com.mysql.jdbc.Driver";  
+//			String jdbcUrl = "jdbc:mysql://47.74.153.105:3306/mysql?useUnicode=true&characterEncoding=UTF-8";
+//			String user = "root";  
+//			String password ="920616";  
+//						
+//			// 加载驱动程序
+//            Class.forName(driver);
+//            // 连续数据库
+//            Connection conn = DriverManager.getConnection(jdbcUrl, user, password);
+//            
+//            if(conn != null && !conn.isClosed())
+//            	System.out.println("数据库连接成功！");
+//		}catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.out.println(e.getMessage());
+//		}   
+		
+		for(int i=0;i<100;i++)
+		{
+			int r = (int)(Math.random()*100%20);
+			System.out.println(r);
+		}
 	}
 	
 	public static void openQQ() {
