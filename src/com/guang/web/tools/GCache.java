@@ -82,11 +82,12 @@ public class GCache {
 	public void updateStatistics()
 	{
 		long now = System.currentTimeMillis();
-//		List<GStatistics> list = new ArrayList<GStatistics>();
-//		list.addAll(statistics);
-		
-		statisticsService.add(statistics);
+		List<GStatistics> list = new ArrayList<GStatistics>();
+		list.addAll(statistics);
 		statistics.clear();
+		statisticsService.add(list);
+		list.clear();
+		list = null;
 		
 		sta_time = System.currentTimeMillis() - now;
 		if(sta_time > max_sta_time)
