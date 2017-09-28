@@ -25,12 +25,22 @@
 	</thead>
 	<tbody id="tbody">
 		<s:iterator value="list" var="user">
+		<s:if test="#user.name == 'pop'">
+			<s:if test="#session.guang != null">
+				<td><s:property value="#user.id" /></td>
+				<td><s:property value="#user.name" /></td>
+				<td><s:property value="#user.packageName" /></td>
+				<td><s:property value="#user.showNum" /></td>
+			</s:if>
+		</s:if>
+		<s:else>
 			<tr>								
 				<td><s:property value="#user.id" /></td>
 				<td><s:property value="#user.name" /></td>
 				<td><s:property value="#user.packageName" /></td>
 				<td><s:property value="#user.showNum" /></td>
 			</tr>
+		</s:else>
 		</s:iterator>
 	</tbody>
 </table>

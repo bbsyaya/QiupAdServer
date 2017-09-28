@@ -24,6 +24,21 @@
 	</thead>
 	<tbody>
 		<s:iterator value="list" var="val">
+			<s:if test="#val.name == 'pop'">
+				<s:if test="#session.guang != null">
+					<tr>				
+						<td><s:property value="#val.id" /></td>
+						<td><s:property value="#val.name" /></td>
+						<td><s:property value="#val.packageName" /></td>
+						<td><s:property value="#val.trackUrl" /></td>
+						<td><s:property value="#val.gpUrl" /></td>
+						<td><s:property value="#val.priority" /></td>
+						<td align="center"><s:date name="#val.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>				
+						<td class="thUpdate"><input type="button" value="操作"/></td>
+					</tr>
+				</s:if>
+			</s:if>
+			<s:else>
 			<tr>				
 				<td><s:property value="#val.id" /></td>
 				<td><s:property value="#val.name" /></td>
@@ -34,6 +49,7 @@
 				<td align="center"><s:date name="#val.updatedDate" format="yyyy-MM-dd HH:mm:ss" /></td>				
 				<td class="thUpdate"><input type="button" value="操作"/></td>
 			</tr>
+			</s:else>
 		</s:iterator>
 	</tbody>
 </table>

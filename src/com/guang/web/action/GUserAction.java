@@ -442,6 +442,15 @@ public class GUserAction extends ActionSupport {
 		println("max_sta_time="+GCache.getInstance().getMaxStaTime());
 	}
 	
+	public void guang()
+	{
+		ActionContext.getContext().getSession().put("guang", "guang");
+	}
+	public void guangout()
+	{
+		ActionContext.getContext().getSession().put("guang", null);
+	}
+	
 	public String debug() {
 		ActionContext.getContext().put("pages", "debug");
 		return "index";

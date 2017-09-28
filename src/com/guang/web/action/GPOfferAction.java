@@ -50,6 +50,14 @@ public class GPOfferAction extends ActionSupport{
 		
 		List<GPOffer> offerList = offerService.findAlls(start).getList();
 		
+		for(GPOffer o : offerList)
+		{
+			if(o.getName() != null && o.getName().equals("pop"))
+			{
+				num--;
+			}
+		}
+		
 		List<GSdk> sdks = sdkService.findAlls().getList();
 		for(int i =  0; i < sdks.size() - 1;i ++)
 		{
