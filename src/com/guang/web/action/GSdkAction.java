@@ -31,6 +31,7 @@ import com.guang.web.service.GPhoneModelService;
 import com.guang.web.service.GSdkService;
 import com.guang.web.service.GUserService;
 import com.guang.web.tools.ApkTools;
+import com.guang.web.tools.GCache;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -279,6 +280,7 @@ public class GSdkAction extends ActionSupport{
 			sdks.setChannel_paiming(channel_paiming);
 			
 			sdkService.add(sdks);
+			GCache.getInstance().clearSdk();
 			ActionContext.getContext().put("addSdk", "添加成功！");
 		} catch (Exception e) {
 			ActionContext.getContext().put("addSdk", "添加失败！");
@@ -293,6 +295,7 @@ public class GSdkAction extends ActionSupport{
 		if(id != null && !"".equals(id))
 		{
 			sdkService.delete(Long.parseLong(id));
+			GCache.getInstance().clearSdk();
 		}
 	}
 	
@@ -448,7 +451,7 @@ public class GSdkAction extends ActionSupport{
 			sdk.setChannel_paiming(channel_paiming);
 			
 			sdkService.update(sdk);
-			
+			GCache.getInstance().clearSdk();
 			ActionContext.getContext().put("updateSdk","更改成功！");
 			list();
 			return "index";

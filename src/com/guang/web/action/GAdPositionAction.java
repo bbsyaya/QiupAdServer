@@ -17,6 +17,7 @@ import com.guang.web.mode.GAdPositionConfig;
 import com.guang.web.service.GAdPositionConfigService;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GAreaService;
+import com.guang.web.tools.GCache;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -76,6 +77,7 @@ public class GAdPositionAction extends ActionSupport {
 				open = true;
 			
 			adPositionService.add(new GAdPosition(Integer.parseInt(type),name,open));
+			GCache.getInstance().clearSdk();
 			ActionContext.getContext().put("addAdPosition", "添加成功！");
 		}
 		else
@@ -91,6 +93,7 @@ public class GAdPositionAction extends ActionSupport {
 		if(!StringTools.isEmpty(id))
 		{
 			adPositionService.delete(Long.parseLong(id));
+			GCache.getInstance().clearSdk();
 		}
 	}
 	
@@ -247,7 +250,7 @@ public class GAdPositionAction extends ActionSupport {
 			config.setCountrys(countrys);
 			
 			adPositionConfigService.update(config);
-			
+			GCache.getInstance().clearSdk();
 			ActionContext.getContext().put("updateAdPosition", "更改成功！");
 		}
 		else

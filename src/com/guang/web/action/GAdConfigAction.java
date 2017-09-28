@@ -25,6 +25,7 @@ import com.guang.web.service.GMediaService;
 import com.guang.web.service.GPhoneModelService;
 import com.guang.web.service.GSdkService;
 import com.guang.web.service.GUserService;
+import com.guang.web.tools.GCache;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -133,7 +134,6 @@ public class GAdConfigAction extends ActionSupport{
 		}
 	}
 	
-	private static List<GSdk> fsdks = new ArrayList<GSdk>();
 	public void findCurrConfig()
 	{
 		String packageName = ServletActionContext.getRequest().getParameter("data");
@@ -181,15 +181,12 @@ public class GAdConfigAction extends ActionSupport{
 			String channel = ServletActionContext.getRequest().getParameter("channel");
 			if(!StringTools.isEmpty(packageName) && !StringTools.isEmpty(channel))
 			{
-				for(GSdk s : fsdks)
+				GSdk s = GCache.getInstance().findSdk(packageName, channel);
+				if(s != null)
 				{
-					if(s.getPackageName().equals(packageName) && s.getChannel().equals(channel))
-					{
-						print(JSONObject.fromObject(s).toString());
-						return;
-					}
+					print(JSONObject.fromObject(s).toString());
+					return;
 				}
-				
 				GSdk sdk = sdkService.findNew2(packageName, channel);
 				if(sdk != null)
 				{
@@ -252,7 +249,7 @@ public class GAdConfigAction extends ActionSupport{
 					}
 					sdk.setModes(modess);
 				}
-				fsdks.add(sdk);
+				GCache.getInstance().addSdk(sdk);
 				print(JSONObject.fromObject(sdk).toString());
 			}
 			else
@@ -369,7 +366,6 @@ public class GAdConfigAction extends ActionSupport{
 		adConfigService.update(adConfig);
 		ActionContext.getContext().put("updateConfig","更新成功！");			
 		
-		fsdks.clear();
 		return list();
 	}
 }

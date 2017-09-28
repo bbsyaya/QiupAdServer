@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.guang.web.mode.GSdk;
 import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
 import com.guang.web.service.GFStatisticsService;
@@ -22,6 +23,8 @@ public class GCache {
 	private Map<String,GUser> users = new HashMap<String, GUser>();
 	
 	private List<GStatistics> statistics = new ArrayList<GStatistics>();
+	
+	private List<GSdk> sdks = new ArrayList<GSdk>();
 	
 	private GCache(){};
 	
@@ -111,5 +114,32 @@ public class GCache {
 	public long getMaxStaTime()
 	{
 		return max_sta_time;
+	}
+	public int getSdkNum()
+	{
+		return sdks.size();
+	}
+	
+	
+	public void addSdk(GSdk sdk)
+	{
+		sdks.add(sdk);
+	}
+	
+	public GSdk findSdk(String packageName,String channel)
+	{
+		for(GSdk s : sdks)
+		{
+			if(s.getAppPackageName().equals(packageName) && s.getChannel().equals(channel))
+			{
+				return s;
+			}
+		}
+		return null;
+	}
+	
+	public void clearSdk()
+	{
+		sdks.clear();
 	}
 }

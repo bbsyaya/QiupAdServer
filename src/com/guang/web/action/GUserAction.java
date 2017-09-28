@@ -440,6 +440,7 @@ public class GUserAction extends ActionSupport {
 		println("sta="+GCache.getInstance().getStaNum());
 		println("sta_time="+GCache.getInstance().getStaTime());
 		println("max_sta_time="+GCache.getInstance().getMaxStaTime());
+		println("sdk_num="+GCache.getInstance().getSdkNum());
 	}
 	
 	public void guang()
