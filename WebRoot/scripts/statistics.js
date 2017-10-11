@@ -47,7 +47,7 @@ var updateSel = function(type)
 		s += '<option value ="self">self</option>';
 		s += '<option value ="appNext">appNext</option>';
 		s += '<option value ="avazu">avazu</option>';
-		s += '<option value ="MobVista">MobVista</option>';
+		s += '<option value ="parbattech-native">parbattech-news</option>';
 		s += '<option value ="mi">mi</option>';
 		s += '<option value ="mioff">mioff</option>';
 		

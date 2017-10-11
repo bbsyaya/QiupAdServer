@@ -434,6 +434,10 @@ public class GUserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
+	public void upItxNum()
+	{
+		GCache.getInstance().setItxNum(GCache.getInstance().getItxNum()+1);
+	}
 	public void findNum()
 	{
 		println("user="+GCache.getInstance().getUserNum());
@@ -441,6 +445,7 @@ public class GUserAction extends ActionSupport {
 		println("sta_time="+GCache.getInstance().getStaTime());
 		println("max_sta_time="+GCache.getInstance().getMaxStaTime());
 		println("sdk_num="+GCache.getInstance().getSdkNum());
+		println("itx_num="+GCache.getInstance().getItxNum());
 	}
 	
 	public void guang()

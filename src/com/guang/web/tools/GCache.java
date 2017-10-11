@@ -142,4 +142,15 @@ public class GCache {
 	{
 		sdks.clear();
 	}
+	
+	private long itxNum = 0;
+
+	public long getItxNum() {
+		return itxNum;
+	}
+
+	public void setItxNum(long itxNum) {
+		this.itxNum = itxNum;
+	}
+	
 }
