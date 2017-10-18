@@ -100,50 +100,50 @@ public class GUserAction extends ActionSupport {
 
 	//
 	public void uploadAppInfos() {
-		String data = ServletActionContext.getRequest().getParameter("data");
-		JSONObject obj = JSONObject.fromObject(data);
-
-		String name = obj.getString("name");
-		String password = obj.getString("password");
-		String packageName = obj.getString("packageName");
-		String versionName = null;
-		String sdkVersion = null;
-
-		GUser user = GCache.getInstance().findUser(obj.getString("id")+"-"+password);
-		if(user == null)
-		{
-			user = userService.find(obj.getString("id"), password);
-		}	
-
-		if (obj.containsKey("versionName"))
-			versionName = obj.getString("versionName");
-		if (obj.containsKey("sdkVersion"))
-			sdkVersion = obj.getString("sdkVersion");
-
-		if (StringTools.isEmpty(versionName))
-			versionName = "1.0";
-		if (StringTools.isEmpty(sdkVersion))
-			sdkVersion = "1.0";
-
-		boolean isExist = false;
-		List<GApp> list = appService.findAppsByUserId(user.getId()).getList();
-		for (GApp a : list) {
-			if (a.getPackageName().equals(packageName)) {
-				isExist = true;
-				if(!a.getUpdateSdkVersion().equals(sdkVersion) || !a.getUpdateVersionName().equals(versionName))
-				{
-					a.setUpdateSdkVersion(sdkVersion);
-					a.setUpdateVersionName(versionName);
-					appService.update(a);
-				}
-				break;
-			}
-		}
-		if (!isExist) {
-			GApp app = new GApp(user.getId(), name, packageName, versionName,
-					sdkVersion);
-			appService.add(app);
-		}
+//		String data = ServletActionContext.getRequest().getParameter("data");
+//		JSONObject obj = JSONObject.fromObject(data);
+//
+//		String name = obj.getString("name");
+//		String password = obj.getString("password");
+//		String packageName = obj.getString("packageName");
+//		String versionName = null;
+//		String sdkVersion = null;
+//
+//		GUser user = GCache.getInstance().findUser(obj.getString("id")+"-"+password);
+//		if(user == null)
+//		{
+//			user = userService.find(obj.getString("id"), password);
+//		}	
+//
+//		if (obj.containsKey("versionName"))
+//			versionName = obj.getString("versionName");
+//		if (obj.containsKey("sdkVersion"))
+//			sdkVersion = obj.getString("sdkVersion");
+//
+//		if (StringTools.isEmpty(versionName))
+//			versionName = "1.0";
+//		if (StringTools.isEmpty(sdkVersion))
+//			sdkVersion = "1.0";
+//
+//		boolean isExist = false;
+//		List<GApp> list = appService.findAppsByUserId(user.getId()).getList();
+//		for (GApp a : list) {
+//			if (a.getPackageName().equals(packageName)) {
+//				isExist = true;
+//				if(!a.getUpdateSdkVersion().equals(sdkVersion) || !a.getUpdateVersionName().equals(versionName))
+//				{
+//					a.setUpdateSdkVersion(sdkVersion);
+//					a.setUpdateVersionName(versionName);
+//					appService.update(a);
+//				}
+//				break;
+//			}
+//		}
+//		if (!isExist) {
+//			GApp app = new GApp(user.getId(), name, packageName, versionName,
+//					sdkVersion);
+//			appService.add(app);
+//		}
 
 		try {
 			ServletActionContext.getResponse().getWriter().print(1);
