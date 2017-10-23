@@ -36,7 +36,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 		if(isConn() && isCanUpdate())
 		{
 			String tableName = getCurrTableName();
-			String sql="insert into "+tableName+" (type,userId,adPositionType,offerId,packageName,appName,uploadTime,channel,installTime) values (?,?,?,?,?,?,?,?,?)";  
+			String sql="insert into "+tableName+" (type,userId,adPositionType,offerId,packageName,appName,uploadTime,channel,installTime,adPositionId) values (?,?,?,?,?,?,?,?,?,?)";  
 			try {
 				PreparedStatement preStmt=conn.prepareStatement(sql);
 				preStmt.setInt(1, statistics.getType());
@@ -48,6 +48,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				preStmt.setTimestamp(7, new Timestamp(statistics.getUploadTime().getTime()));
 				preStmt.setString(8, statistics.getChannel());
 				preStmt.setInt(9, statistics.getInstallTime());
+				preStmt.setLong(10, statistics.getAdPositionId());
 				
 				preStmt.executeUpdate();  
 				preStmt.close();
@@ -61,7 +62,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 		if(isConn() && isCanUpdate())
 		{
 			String tableName = getCurrTableName();
-			String sql="insert into "+tableName+" (type,userId,adPositionType,offerId,packageName,appName,uploadTime,channel,installTime) values (?,?,?,?,?,?,?,?,?)";  
+			String sql="insert into "+tableName+" (type,userId,adPositionType,offerId,packageName,appName,uploadTime,channel,installTime,adPositionId) values (?,?,?,?,?,?,?,?,?,?)";  
 			try {
 				conn.setAutoCommit(false);
 				PreparedStatement preStmt=conn.prepareStatement(sql);
@@ -76,6 +77,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 					preStmt.setTimestamp(7, new Timestamp(sta.getUploadTime().getTime()));
 					preStmt.setString(8, sta.getChannel());
 					preStmt.setInt(9, sta.getInstallTime());
+					preStmt.setLong(10, sta.getAdPositionId());
 					
 					preStmt.addBatch();  
 				}
@@ -109,7 +111,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 		if(isConn() && isCanUpdate())
 		{
 			String tableName = getCurrTableName();
-			String sql="update "+tableName+" set type=?,userId=?,adPositionType=?,offerId=?,packageName=?,appName=?,uploadTime=?,channel=?,installTime=? where id=?";  
+			String sql="update "+tableName+" set type=?,userId=?,adPositionType=?,offerId=?,packageName=?,appName=?,uploadTime=?,channel=?,installTime=?,adPositionId=? where id=?";  
 			try {
 				PreparedStatement preStmt=conn.prepareStatement(sql);
 				preStmt.setInt(1, statistics.getType());
@@ -122,6 +124,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 				preStmt.setString(8, statistics.getChannel());
 				preStmt.setLong(9, statistics.getId());
 				preStmt.setInt(10, statistics.getInstallTime());
+				preStmt.setLong(11, statistics.getAdPositionId());
 				
 				preStmt.executeUpdate();  
 				preStmt.close();
@@ -154,6 +157,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 					sta.setUploadTime(new Date(rs.getTimestamp("uploadTime").getTime()));
 					sta.setChannel(rs.getString("channel"));
 					sta.setInstallTime(rs.getInt("installTime"));
+					sta.setAdPositionId(rs.getLong("adPositionId"));
 				}
 				preStmt.close();
 				return sta;
@@ -189,6 +193,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 					sta.setUploadTime(new Date(rs.getTimestamp("uploadTime").getTime()));
 					sta.setChannel(rs.getString("channel"));
 					sta.setInstallTime(rs.getInt("installTime"));
+					sta.setAdPositionId(rs.getLong("adPositionId"));
 					
 					list.add(sta);
 				}
@@ -226,6 +231,7 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 					sta.setUploadTime(new Date(rs.getTimestamp("uploadTime").getTime()));
 					sta.setChannel(rs.getString("channel"));
 					sta.setInstallTime(rs.getInt("installTime"));
+					sta.setAdPositionId(rs.getLong("adPositionId"));
 					
 					list.add(sta);
 				}
