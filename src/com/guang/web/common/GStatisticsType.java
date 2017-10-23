@@ -31,10 +31,13 @@ public class GStatisticsType {
 	public static final int TODOWNLOAD_GO = 24;//去下载
 	public static final int INSTALL_UI_TIME = 25;//安装界面时间
 	
+	public static final int LOGIN = 26;//
+	
 	public static final String Types[] = {
 		"请求","展示","点击","下载","下载成功","安装","激活",
 		"间接展示","间接点击","间接下载","间接下载成功","间接安装","间接激活",
 		"下载取消","后台下载","安装稍后","去安装","打开取消","打开","下载界面",
-		"安装界面","打开界面","去下载界面","去下载取消","去下载","安装界面时间"
+		"安装界面","打开界面","去下载界面","去下载取消","去下载","安装界面时间",
+		"登录"
 	};
 }

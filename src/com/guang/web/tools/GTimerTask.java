@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
 import com.guang.web.common.GStatisticsType;
 import com.guang.web.mode.GOffer;
 import com.guang.web.mode.GOfferStatistics;
+import com.guang.web.service.GFStatisticsService;
 import com.guang.web.service.GOfferService;
 import com.guang.web.service.GOfferStatisticsService;
-import com.guang.web.service.GStatisticsService;
 
 public class GTimerTask {
 	private final static Logger logger = LoggerFactory.getLogger(GTimerTask.class);
@@ -29,16 +29,24 @@ public class GTimerTask {
 	private ScheduledFuture<?> taskHandle;  
 	private static GOfferStatisticsService offerStatisticsService;
 	private static GOfferService offerService;
-	private static GStatisticsService statisticsService;	
+	private static GFStatisticsService statisticsService;	
+	
+	private final ScheduledExecutorService user_scheduler = Executors.newScheduledThreadPool(1);  
+	private ScheduledFuture<?> user_taskHandle;  
+	
+	private final ScheduledExecutorService sta_scheduler = Executors.newScheduledThreadPool(1);  
+	private ScheduledFuture<?> sta_taskHandle;  
     
 
 	private  void init()
 	{
 		offerStatisticsService = BeanUtils.getBean("GOfferStatisticsServiceImpl");
 		offerService = BeanUtils.getBean("GOfferServiceImpl"); 
-		statisticsService = BeanUtils.getBean("GStatisticsServiceImpl"); 
+		statisticsService = BeanUtils.getBean("GFStatisticsServiceImpl"); 
 		update();
 		start();
+		startUser();
+		startSta();
 	}
 	
 	private void update()
@@ -65,108 +73,108 @@ public class GTimerTask {
 				LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 				
 				colvals.put("offerId =",  "'"+offer.getId()+"'");
-				colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
+//				colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
 				colvals.put("type =", GStatisticsType.REQUEST + "");
-				long requestNum = statisticsService.findAllsNum2(colvals);
+				long requestNum = statisticsService.findNum(colvals,yesterday,yesterday);
 
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.SHOW + "");
-				long showNum = statisticsService.findAllsNum2(colvals);
+				long showNum = statisticsService.findNum(colvals,yesterday,yesterday);
 
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.CLICK + "");
-				long clickNum = statisticsService.findAllsNum2(colvals);
+				long clickNum = statisticsService.findNum(colvals,yesterday,yesterday);
 
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.DOWNLOAD + "");
-				long downloadNum = statisticsService.findAllsNum2(colvals);
+				long downloadNum = statisticsService.findNum(colvals,yesterday,yesterday);
 
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.DOWNLOAD_SUCCESS + "");
-				long downloadSuccessNum = statisticsService.findAllsNum2(colvals);
+				long downloadSuccessNum = statisticsService.findNum(colvals,yesterday,yesterday);
 
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.INSTALL + "");
-				long installNum = statisticsService.findAllsNum2(colvals);
+				long installNum = statisticsService.findNum(colvals,yesterday,yesterday);
 
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.ACTIVATE + "");
-				long activateNum = statisticsService.findAllsNum2(colvals);
+				long activateNum = statisticsService.findNum(colvals,yesterday,yesterday);
 								
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.DOWNLOAD_CANCEL + "");
-				long downloadCancelNum = statisticsService.findAllsNum2(colvals);
+				long downloadCancelNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.DOWNLOAD_BACKGROUND + "");
-				long downloadBackgroundNum = statisticsService.findAllsNum2(colvals);
+				long downloadBackgroundNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.INSTALL_LATER + "");
-				long installLaterNum = statisticsService.findAllsNum2(colvals);
+				long installLaterNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.INSTALL_GO + "");
-				long installGoNum = statisticsService.findAllsNum2(colvals);
+				long installGoNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.OPEN_CANCEL + "");
-				long openCancelNum = statisticsService.findAllsNum2(colvals);
+				long openCancelNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.OPEN_GO + "");
-				long openGoNum = statisticsService.findAllsNum2(colvals);
+				long openGoNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.DOWNLOAD_UI + "");
-				long downloadUiNum = statisticsService.findAllsNum2(colvals);
+				long downloadUiNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.INSTALL_UI + "");
-				long installUiNum = statisticsService.findAllsNum2(colvals);
-				long installUiUserNum = statisticsService.findAllsNum(colvals);
+				long installUiNum = statisticsService.findNum(colvals,yesterday,yesterday);
+				long installUiUserNum = statisticsService.findNum2(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.OPEN_UI + "");
-				long openUiNum = statisticsService.findAllsNum2(colvals);
-				long openUiUserNum = statisticsService.findAllsNum(colvals);
+				long openUiNum = statisticsService.findNum(colvals,yesterday,yesterday);
+				long openUiUserNum = statisticsService.findNum2(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.TODOWNLOAD_UI + "");
-				long toDownloadUiNum = statisticsService.findAllsNum2(colvals);
+				long toDownloadUiNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.TODOWNLOAD_CANCEL + "");
-				long toDownloadCancelNum = statisticsService.findAllsNum2(colvals);
+				long toDownloadCancelNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.TODOWNLOAD_GO + "");
-				long toDownloadGoNum = statisticsService.findAllsNum2(colvals);
+				long toDownloadGoNum = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("type =");
 				colvals.put("type =", GStatisticsType.INSTALL_UI_TIME + "");
 				colvals.put("installTime =", 0 + "");
-				long installTime0 = statisticsService.findAllsNum2(colvals);
+				long installTime0 = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("installTime =");
 				colvals.put("installTime between", 1 + " and " + 4);
-				long installTime1 = statisticsService.findAllsNum2(colvals);
+				long installTime1 = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("installTime between");
 				colvals.put("installTime between", 4 + " and " + 11);
-				long installTime4 = statisticsService.findAllsNum2(colvals);
+				long installTime4 = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("installTime between");
 				colvals.put("installTime between", 11 + " and " + 31);
-				long installTime11 = statisticsService.findAllsNum2(colvals);
+				long installTime11 = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("installTime between");
 				colvals.put("installTime between", 31 + " and " + 61);
-				long installTime31 = statisticsService.findAllsNum2(colvals);
+				long installTime31 = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				colvals.remove("installTime between");
 				colvals.put("installTime >", 60+"");
-				long installTime61 = statisticsService.findAllsNum2(colvals);
+				long installTime61 = statisticsService.findNum(colvals,yesterday,yesterday);
 				
 				
 				float clickRate = showNum!=0 ? (float)clickNum/(float)showNum : 0;
@@ -203,6 +211,11 @@ public class GTimerTask {
 		}
 	}
 	
+	private void update2()
+	{
+		
+	}
+	
 	public void start()
 	{
 		 final Runnable task = new Runnable() {  
@@ -219,11 +232,51 @@ public class GTimerTask {
 	     taskHandle = scheduler.scheduleAtFixedRate(task, initDelay, oneDay, TimeUnit.MILLISECONDS);  
 	}
 	
+	public void startUser()
+	{
+		 final Runnable task = new Runnable() {  
+	            public void run() {  
+	            	GCache.getInstance().updateUser();
+	            }  
+	     };  
+	     
+//	     long oneDay = 24 * 60 * 60 * 1000;  
+//	     long initDelay  = getTimeMillis("05:00:00") - System.currentTimeMillis();  
+//	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
+	     long delay = 30*60*1000;
+	     user_taskHandle = user_scheduler.scheduleAtFixedRate(task, 1000*10, delay, TimeUnit.MILLISECONDS);  
+	}
+
+	public void startSta()
+	{
+		 final Runnable task = new Runnable() {  
+	            public void run() {  
+	            	GCache.getInstance().updateStatistics();
+	            }  
+	     };  
+	     
+//	     long oneDay = 24 * 60 * 60 * 1000;  
+//	     long initDelay  = getTimeMillis("05:00:00") - System.currentTimeMillis();  
+//	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
+	     long delay = 1*60*1000;
+	     sta_taskHandle = sta_scheduler.scheduleAtFixedRate(task, 1000*10, delay, TimeUnit.MILLISECONDS);  
+	}
+	
 	public void stop()
 	{
 		if(taskHandle != null && !taskHandle.isCancelled())
 		{
 			taskHandle.cancel(true);
+		}
+		
+		if(user_taskHandle != null && !user_taskHandle.isCancelled())
+		{
+			user_taskHandle.cancel(true);
+		}
+		
+		if(sta_taskHandle != null && !sta_taskHandle.isCancelled())
+		{
+			sta_taskHandle.cancel(true);
 		}
 	}
 	

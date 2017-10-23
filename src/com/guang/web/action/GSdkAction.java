@@ -25,6 +25,7 @@ import com.guang.web.service.GAreaService;
 import com.guang.web.service.GFilterAppService;
 import com.guang.web.service.GSdkService;
 import com.guang.web.tools.ApkTools;
+import com.guang.web.tools.GCache;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -220,6 +221,7 @@ public class GSdkAction extends ActionSupport{
 			}
 			
 			sdkService.add(sdks);
+			GCache.getInstance().clearSdk();
 			ActionContext.getContext().put("addSdk", "添加成功！");
 		} catch (Exception e) {
 			ActionContext.getContext().put("addSdk", "添加失败！");
@@ -234,6 +236,7 @@ public class GSdkAction extends ActionSupport{
 		if(id != null && !"".equals(id))
 		{
 			sdkService.delete(Long.parseLong(id));
+			GCache.getInstance().clearSdk();
 		}
 	}
 	
@@ -349,7 +352,7 @@ public class GSdkAction extends ActionSupport{
 			}
 			
 			sdkService.update(sdk);
-			
+			GCache.getInstance().clearSdk();
 			ActionContext.getContext().put("updateSdk","更改成功！");
 			list();
 			return "index";
@@ -366,6 +369,7 @@ public class GSdkAction extends ActionSupport{
 		if(channel != null)
 		{
 			GSdk sdk = sdkService.findNew(channel);
+			
 			print(JSONObject.fromObject(sdk).toString());
 		}
 		else
@@ -374,7 +378,12 @@ public class GSdkAction extends ActionSupport{
 			String packageName = ServletActionContext.getRequest().getParameter("packageName");
 			if(channel != null && packageName != null)
 			{
-				GSdk sdk = sdkService.findNew2(packageName,channel);
+				GSdk sdk = GCache.getInstance().findSdk(packageName, channel);
+				if(sdk == null)
+				{
+					sdk = sdkService.findNew2(packageName,channel);
+//					GCache.getInstance().addSdk(sdk);
+				}
 				if(sdk != null)
 					print(JSONObject.fromObject(sdk).toString());
 				else
@@ -393,7 +402,12 @@ public class GSdkAction extends ActionSupport{
 		String packageName = ServletActionContext.getRequest().getParameter("packageName");
 		if(channel != null && packageName != null)
 		{
-			GSdk sdk = sdkService.findNew(packageName,channel);
+			GSdk sdk = GCache.getInstance().findSdk(packageName, channel);
+			if(sdk == null)
+			{
+				sdk = sdkService.findNew(packageName,channel);
+//				GCache.getInstance().addSdk(sdk);
+			}
 			print(JSONObject.fromObject(sdk).toString());
 		}
 		else

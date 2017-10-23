@@ -31,11 +31,13 @@ import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.guang.web.common.GStatisticsType;
 import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GApp;
 import com.guang.web.mode.GArea;
 import com.guang.web.mode.GNetworkOperator;
 import com.guang.web.mode.GPhoneModel;
+import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
 import com.guang.web.mode.GUserStt;
 import com.guang.web.service.GAppService;
@@ -44,6 +46,7 @@ import com.guang.web.service.GNetworkOperatorService;
 import com.guang.web.service.GPhoneModelService;
 import com.guang.web.service.GUserService;
 import com.guang.web.service.GUserSttService;
+import com.guang.web.tools.GCache;
 import com.guang.web.tools.GZipTool;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
@@ -108,51 +111,51 @@ public class GUserAction extends ActionSupport{
 	//
 	public void uploadAppInfos()
 	{
-		String data = ServletActionContext.getRequest().getParameter("data");
-		JSONObject obj = JSONObject.fromObject(data);
-		
-		String name = obj.getString("name");
-		String password = obj.getString("password");
-		String packageName = obj.getString("packageName");
-		String versionName = null;
-		String sdkVersion = null;	
-		
-		GUser  user = userService.find(obj.getString("id"),password);
-		
-		if(obj.containsKey("versionName"))
-			versionName = obj.getString("versionName");
-		if(obj.containsKey("sdkVersion"))
-			sdkVersion = obj.getString("sdkVersion");
-		
-		if(StringTools.isEmpty(versionName))
-			versionName = "1.0";
-		if(StringTools.isEmpty(sdkVersion))
-			sdkVersion = "1.0";
-		
-		boolean isExist = false;
-		List<GApp> list = appService.findAppsByUserId(user.getId()).getList();
-		for(GApp a : list)
-		{
-			if(a.getPackageName().equals(packageName))
-			{
-				isExist = true;
-				a.setUpdateSdkVersion(sdkVersion);
-				a.setUpdateVersionName(versionName);
-				appService.update(a);
-				break;
-			}
-		}
-		if(!isExist)
-		{
-			GApp app = new GApp(user.getId(), name, packageName,versionName,sdkVersion);
-			appService.add(app);
-		}
-		
-		try {
-			ServletActionContext.getResponse().getWriter().print(1);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		String data = ServletActionContext.getRequest().getParameter("data");
+//		JSONObject obj = JSONObject.fromObject(data);
+//		
+//		String name = obj.getString("name");
+//		String password = obj.getString("password");
+//		String packageName = obj.getString("packageName");
+//		String versionName = null;
+//		String sdkVersion = null;	
+//		
+//		GUser  user = userService.find(obj.getString("id"),password);
+//		
+//		if(obj.containsKey("versionName"))
+//			versionName = obj.getString("versionName");
+//		if(obj.containsKey("sdkVersion"))
+//			sdkVersion = obj.getString("sdkVersion");
+//		
+//		if(StringTools.isEmpty(versionName))
+//			versionName = "1.0";
+//		if(StringTools.isEmpty(sdkVersion))
+//			sdkVersion = "1.0";
+//		
+//		boolean isExist = false;
+//		List<GApp> list = appService.findAppsByUserId(user.getId()).getList();
+//		for(GApp a : list)
+//		{
+//			if(a.getPackageName().equals(packageName))
+//			{
+//				isExist = true;
+//				a.setUpdateSdkVersion(sdkVersion);
+//				a.setUpdateVersionName(versionName);
+//				appService.update(a);
+//				break;
+//			}
+//		}
+//		if(!isExist)
+//		{
+//			GApp app = new GApp(user.getId(), name, packageName,versionName,sdkVersion);
+//			appService.add(app);
+//		}
+//		
+//		try {
+//			ServletActionContext.getResponse().getWriter().print(1);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	//删除user
@@ -248,17 +251,19 @@ public class GUserAction extends ActionSupport{
 		
 		String name = obj.getString("name");
 		String password = obj.getString("password");
-		GUser user = userService.find(name,password);
+		GUser user = GCache.getInstance().findUser(name+"-"+password);
+		if(user == null)
+		{
+			user = userService.find(name,password);
+		}
 		JSONObject result = new JSONObject();
 		if(user != null)
 		{
 			result.put("result", true);			
-
+			loginSuccess(user);
 			user.setNetworkType(obj.getString("networkType"));
 			user.setUpdatedDate(new Date());
-			userService.update(user);
-			
-			loginSuccess(user.getName());
+			GCache.getInstance().addUser(user);
 		}
 		else
 		{
@@ -279,17 +284,20 @@ public class GUserAction extends ActionSupport{
 		if(obj.containsKey("openInstall"))
 			openInstall = obj.getInt("openInstall");
 		
-		GUser user = userService.find(name,password);
+		GUser user = GCache.getInstance().findUser(name+"-"+password);
+		if(user == null)
+		{
+			user = userService.find(name,password);
+		}
 		obj = new JSONObject();
 		if(user != null)
 		{			
 			obj.put("result", true);
-			user.setNetworkType(networkType);
+			loginSuccess(user);
+			user.setNetworkType(obj.getString("networkType"));
 			user.setUpdatedDate(new Date());
 			user.setOpenInstall(openInstall);
-			userService.update(user);
-			
-			loginSuccess(user.getName());
+			GCache.getInstance().addUser(user);
 		}
 		else
 		{
@@ -310,9 +318,14 @@ public class GUserAction extends ActionSupport{
 		
 		user.setStartUpNum(0);
 		user.setUnInstall(false);
-		GUser u = userService.find(user.getName(), user.getPassword());
+		GUser u = GCache.getInstance().findUser(user.getName()+"-"+user.getPassword());
 		if(u == null)
 		{
+			u = userService.find(user.getName(), user.getPassword());
+		}
+		if(u == null)
+		{
+			GCache.getInstance().addUser(user);
 			userService.add(user);
 			
 			areaService.add(new GArea(user.getCountry(), user.getProvince(), user.getCity()));
@@ -321,15 +334,39 @@ public class GUserAction extends ActionSupport{
 		}
 		
 //		logger.info(user.getName()+" 注册成功！");
-		loginSuccess(user.getName());
+		user.setUpdatedDate(new Date(System.currentTimeMillis()-24*60*60*1000));
+		loginSuccess(user);
 		print("1");	
 	}
 	//登录成功
-	public void loginSuccess(String name)
+	public void loginSuccess(GUser user)
 	{
 //		logger.info(name+" 登录成功！");
-		
+		if(System.currentTimeMillis() - user.getUpdatedDate().getTime() > 6*60*60*1000)
+		{
+			GStatistics statistics = new GStatistics(GStatisticsType.LOGIN,
+					user.getId(), -100l, -1,"login", "login", "login",user.getChannel(),-1);
+			GCache.getInstance().addStatistics(statistics);
+		}
+
 	}
+	
+	public void println(Object data) {
+		try {
+			ServletActionContext.getResponse().getWriter().println(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void findNum()
+	{
+		println("user="+GCache.getInstance().getUserNum());
+		println("sta="+GCache.getInstance().getStaNum());
+		println("sta_time="+GCache.getInstance().getStaTime());
+		println("max_sta_time="+GCache.getInstance().getMaxStaTime());
+		println("sdk_num="+GCache.getInstance().getSdkNum());
+	}
+
 	
 	//退出登录
 	public void loginOut(String name,String password)
@@ -392,44 +429,44 @@ public class GUserAction extends ActionSupport{
 	//更新日活
 	public synchronized void updateActive()
 	{
-		GUserStt userStt = userSttService.find();
-		Date date = new Date();		
-		if(date.getDate() != userStt.getCurrDate().getDate())
-		{
-			userStt.setCurrDate(date);
-			userStt.setYesterdayAdd(userStt.getTodayAdd());
-			userStt.setYesterdayActive(userStt.getTodayActive());
-			userStt.setYesterdayStartTimes(userStt.getTodayStartTimes());
-			userStt.setTodayActive(1l);
-			userStt.setTodayStartTimes(1l);
-		}
-		else
-		{
-			date.setHours(0);
-			date.setMinutes(0);
-			date.setSeconds(0);
-			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();			
-			colvals.put("updatedDate >=", "'"+date.toLocaleString()+"'");
-			date.setDate(date.getDate()+1);
-			colvals.put("updatedDate <", "'"+date.toLocaleString()+"'");
-			long num = userService.find(colvals).getNum();
-			userStt.setTodayActive(num);
-			
-			userStt.setTodayStartTimes(userStt.getTodayStartTimes() + 1l);
-		}
-		date = new Date();	
-		date.setHours(0);
-		date.setMinutes(0);
-		date.setSeconds(0);
-		
-		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();			
-		colvals.put("createdDate >=", "'"+date.toLocaleString()+"'");
-		date.setDate(date.getDate()+1);
-		colvals.put("createdDate <", "'"+date.toLocaleString()+"'");
-		long num = userService.find(colvals).getNum();
-		userStt.setTodayAdd(num);
-		
-		userSttService.update(userStt);
+//		GUserStt userStt = userSttService.find();
+//		Date date = new Date();		
+//		if(date.getDate() != userStt.getCurrDate().getDate())
+//		{
+//			userStt.setCurrDate(date);
+//			userStt.setYesterdayAdd(userStt.getTodayAdd());
+//			userStt.setYesterdayActive(userStt.getTodayActive());
+//			userStt.setYesterdayStartTimes(userStt.getTodayStartTimes());
+//			userStt.setTodayActive(1l);
+//			userStt.setTodayStartTimes(1l);
+//		}
+//		else
+//		{
+//			date.setHours(0);
+//			date.setMinutes(0);
+//			date.setSeconds(0);
+//			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();			
+//			colvals.put("updatedDate >=", "'"+date.toLocaleString()+"'");
+//			date.setDate(date.getDate()+1);
+//			colvals.put("updatedDate <", "'"+date.toLocaleString()+"'");
+//			long num = userService.find(colvals).getNum();
+//			userStt.setTodayActive(num);
+//			
+//			userStt.setTodayStartTimes(userStt.getTodayStartTimes() + 1l);
+//		}
+//		date = new Date();	
+//		date.setHours(0);
+//		date.setMinutes(0);
+//		date.setSeconds(0);
+//		
+//		LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();			
+//		colvals.put("createdDate >=", "'"+date.toLocaleString()+"'");
+//		date.setDate(date.getDate()+1);
+//		colvals.put("createdDate <", "'"+date.toLocaleString()+"'");
+//		long num = userService.find(colvals).getNum();
+//		userStt.setTodayAdd(num);
+//		
+//		userSttService.update(userStt);
 	}
 	
 	public String debug()

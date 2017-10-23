@@ -68,7 +68,10 @@ public class GUser {
 	private Boolean unInstall;//是否卸载
 	private Integer openInstall;//1：开启未知来源 0：关闭 -1：没有设置
 	
+	private Date lastUpdatedDate = new Date();
+		
 	public GUser() {
+		this.lastUpdatedDate = new Date(System.currentTimeMillis()-24*60*60*1000);
 	}
 
 	public GUser(String name, String password, String deviceId,
@@ -93,6 +96,7 @@ public class GUser {
 		this.channel = "";
 
 		this.updatedDate = new Date();
+		this.lastUpdatedDate = new Date(System.currentTimeMillis()-24*60*60*1000);
 	}
 
 	@Id
@@ -421,6 +425,16 @@ public class GUser {
 
 	public void setOnline(boolean online) {
 		this.online = online;
+	}
+	
+	
+	@Transient
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
 	@Override

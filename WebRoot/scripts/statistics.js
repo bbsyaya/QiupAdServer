@@ -13,6 +13,7 @@ var updateSel = function(type)
 		s += '<option value ="4">下载成功</option>';
 		s += '<option value ="5">安装</option>';
 		s += '<option value ="6">激活</option>';
+		s += '<option value ="26">登录</option>';
 		
 		$("#filed_sel_1").html(s);
 	}
@@ -46,7 +47,9 @@ var updateSel = function(type)
 		s += '<option value ="self">self</option>';
 		s += '<option value ="appNext">appNext</option>';
 		s += '<option value ="avazu">avazu</option>';
-		s += '<option value ="MobVista">MobVista</option>';
+		s += '<option value ="parbattech-native">parbattech-news</option>';
+		s += '<option value ="mi">mi</option>';
+		s += '<option value ="mioff">mioff</option>';
 		
 		$("#filed_sel_3").html(s);
 	}
@@ -178,8 +181,8 @@ $("#oneMonth").click(function(){
 });
 
 $("#find").click(function(){
-	var from = $("#from_date").val() + " 00:00:00";
-	var to = $("#to_date").val() + " 00:00:00";
+	var from = $("#from_date").val();
+	var to = $("#to_date").val();
 	updateTable(from,to);
 });
 

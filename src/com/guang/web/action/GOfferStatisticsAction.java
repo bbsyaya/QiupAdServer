@@ -16,9 +16,9 @@ import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GOfferStatistics;
 import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
+import com.guang.web.service.GFStatisticsService;
 import com.guang.web.service.GOfferService;
 import com.guang.web.service.GOfferStatisticsService;
-import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GUserService;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
@@ -29,7 +29,7 @@ public class GOfferStatisticsAction extends ActionSupport{
 
 	@Resource private GOfferStatisticsService offerStatisticsService;
 	@Resource private GOfferService offerService;
-	@Resource private GStatisticsService statisticsService;	
+	@Resource private GFStatisticsService statisticsService;	
 	@Resource private  GUserService userService;
 	
 	public String list() 
@@ -116,11 +116,11 @@ public class GOfferStatisticsAction extends ActionSupport{
 		if(!StringTools.isEmpty(from) && !StringTools.isEmpty(to))
 		{
 			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
-			colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
+//			colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
 			colvals.put("type =", GStatisticsType.INSTALL_UI_TIME + "");
 			colvals.put("installTime =", 1 + "");
 			
-			List<GStatistics> list = statisticsService.findAlls(colvals).getList();
+			List<GStatistics> list = statisticsService.findAlls(colvals);
 			
 			println("find size:"+list.size());
 			

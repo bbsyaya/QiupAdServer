@@ -21,6 +21,7 @@ import com.guang.web.service.GAdPositionConfigService;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GMediaService;
 import com.guang.web.service.GSdkService;
+import com.guang.web.tools.GCache;
 import com.guang.web.tools.StringTools;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -174,7 +175,13 @@ public class GAdConfigAction extends ActionSupport{
 			String channel = ServletActionContext.getRequest().getParameter("channel");
 			if(!StringTools.isEmpty(packageName) && !StringTools.isEmpty(channel))
 			{
-				GSdk sdk = sdkService.findNew2(packageName, channel);
+				GSdk sdk = GCache.getInstance().findSdk(packageName, channel);
+				if(sdk != null)
+				{
+					print(JSONObject.fromObject(sdk).toString());
+					return;
+				}
+				sdk = sdkService.findNew2(packageName, channel);
 				if(sdk != null)
 				{
 					String adPosition = sdk.getAdPosition();
@@ -208,6 +215,7 @@ public class GAdConfigAction extends ActionSupport{
 					}
 					
 				}
+				GCache.getInstance().addSdk(sdk);
 				print(JSONObject.fromObject(sdk).toString());
 			}
 			else

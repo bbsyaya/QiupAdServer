@@ -14,24 +14,23 @@ import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 
 import com.guang.web.common.GStatisticsType;
-import com.guang.web.dao.QueryResult;
 import com.guang.web.mode.GAdPosition;
-import com.guang.web.mode.GMedia;
 import com.guang.web.mode.GSdk;
 import com.guang.web.mode.GStatistics;
 import com.guang.web.mode.GUser;
 import com.guang.web.service.GAdPositionService;
+import com.guang.web.service.GFStatisticsService;
 import com.guang.web.service.GMediaService;
 import com.guang.web.service.GSdkService;
-import com.guang.web.service.GStatisticsService;
 import com.guang.web.service.GUserService;
+import com.guang.web.tools.GCache;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class GStatisticsAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 
-	@Resource private GStatisticsService statisticsService;
+	@Resource private GFStatisticsService statisticsService;
 	@Resource private GAdPositionService adPositionService;
 	@Resource private GUserService userService;
 	@Resource private GMediaService mediaService;
@@ -39,7 +38,7 @@ public class GStatisticsAction extends ActionSupport{
 	
 	public String list()
 	{
-		Long num  = statisticsService.findAllsNum2(null);
+		Long num  = statisticsService.findAllsNum();
 		
 		String sindex = ServletActionContext.getRequest().getParameter("index");
 		int index = 0;
@@ -50,12 +49,15 @@ public class GStatisticsAction extends ActionSupport{
 			start = 0;
 		}
 		
-		List<GStatistics> list = statisticsService.findAlls(start).getList();
+		List<GStatistics> list = statisticsService.findAlls(start);
 		
 		for(GStatistics statistics : list)
 		{
 			statistics.setStatisticsType(GStatisticsType.Types[statistics.getType()]);
-			statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
+			if(statistics.getAdPositionType() == -1)
+				statistics.setAdPosition("登录");
+			else
+				statistics.setAdPosition(adPositionService.find(statistics.getAdPositionType()).getName());
 		}
 		
 		ActionContext.getContext().put("maxNum", num);
@@ -96,12 +98,18 @@ public class GStatisticsAction extends ActionSupport{
 		if(obj.containsKey("installTime"))
 			installTime = obj.getInt("installTime");
 		
-		GUser user = userService.find(userName,password);
+		GUser user = GCache.getInstance().findUser(userName+"-"+password);
+		if(user == null)
+		{
+			user = userService.find(userName,password);
+			GCache.getInstance().addUser(user);
+		}
 		long userId = user.getId();
 		String channel = user.getChannel();
 		
 		GStatistics statistics = new GStatistics(type, userId,adPositionId, adPositionType, offerId, packageName, appName,channel,installTime);
-		statisticsService.add(statistics);
+//		statisticsService.add(statistics);
+		GCache.getInstance().addStatistics(statistics);
 	}
 	
 	public void print(Object obj)
@@ -163,11 +171,11 @@ public class GStatisticsAction extends ActionSupport{
 		
 		if(!"-1".equals(type1))
 		{
-			colvals.put("type =", "'"+type1+"'");
+			colvals.put("type =", type1+"");
 		}
 		if(!"-1".equals(type2))
 		{
-			colvals.put("adPositionType =", "'"+type2+"'");
+			colvals.put("adPositionType =", type2+"");
 		}
 		if(!"-1".equals(type3))
 		{
@@ -181,10 +189,10 @@ public class GStatisticsAction extends ActionSupport{
 		{
 			colvals.put("channel =", "'"+type5+"'");
 		}
-		colvals.put("uploadTime >=", "'"+from+"'");
-		colvals.put("uploadTime <", "'"+to+"'");
+//		colvals.put("uploadTime >=", "'"+from+"'");
+//		colvals.put("uploadTime <", "'"+to+"'");
 		
-		List<GStatistics> list = statisticsService.findAlls(colvals).getList();
+		List<GStatistics> list = statisticsService.findAlls(colvals);
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for(GStatistics statistics : list)
 		{
