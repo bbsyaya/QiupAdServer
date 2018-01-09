@@ -29,6 +29,7 @@
 			<th>是否上传包</th>
 			<th>循环时间</th>
 			<th>所选广告位</th>
+			<th>下载时间限制</th>
 			<th>下载路径</th>	
 			<th>上线</th>
 			<th>创建日期</th>								
@@ -58,6 +59,7 @@
 				</td>
 				<td><s:property value="#val.loopTime" /> 小时</td>
 				<td><s:property value="#val.adPositionName" /></td>
+				<td><s:property value="#val.updateTimeLimt" />天</td>
 				<td><s:property value="#val.downloadPath" /></td>
 				<td align="center" style="background:<s:if test="#val.sdkType == 'tb'">#adacae</s:if>;">				
 				<s:if test="#val.online == true"> <img src="images/user-online.png" />	</s:if>
@@ -172,6 +174,11 @@
 			<tr >
 				<td>app数量:</td>
 				<td><input name="appNum" style="width:180px;"></input>
+				</td>
+			</tr>
+			<tr >
+				<td>下载时间限制:</td>
+				<td><input name="updateTimeLimt" style="width:180px;"></input>天
 				</td>
 			</tr>
 			
@@ -312,6 +319,11 @@
 			<tr >
 				<td>app数量:</td>
 				<td><input id="update_appNum" name="appNum" style="width:180px;"></input>
+				</td>
+			</tr>
+			<tr >
+				<td>下载时间限制:</td>
+				<td><input id="update_updateTimeLimt" name="updateTimeLimt" style="width:180px;">天</input>
 				</td>
 			</tr>
 			
@@ -582,6 +594,7 @@ $("#find").click(function()
 	$("#update_timeLimt").val(jsonobj.timeLimt);
 	$("#update_newChannelNum").val(jsonobj.newChannelNum);
 	$("#update_appNum").val(jsonobj.appNum);
+	$("#update_updateTimeLimt").val(jsonobj.updateTimeLimt);
 	
 	if(jsonobj.uploadPackage)
 	{

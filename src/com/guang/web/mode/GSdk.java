@@ -41,12 +41,14 @@ public class GSdk {
 	private Integer channel_paiming;
 	private Integer appNum;
 	
+	private Float updateTimeLimt;//小时
+	
 	private String adPositionName;
 	private List<GAdPositionConfig> configs;
 	
 	public GSdk(){}
 	public GSdk(String packageName, String versionName,String versionCode, String downloadPath,
-			Boolean online,Long updateNum,String channel) {
+			Boolean online,Long updateNum,String channel,Float updateTimeLimt) {
 		super();
 		this.packageName = packageName;
 		this.versionName = versionName;
@@ -55,6 +57,7 @@ public class GSdk {
 		this.online = online;
 		this.updateNum = updateNum;
 		this.channel = channel;
+		this.updateTimeLimt = updateTimeLimt;
 		this.updatedDate = new Date();
 	}
 	@Id
@@ -227,6 +230,12 @@ public class GSdk {
 
 	public void setConfigs(List<GAdPositionConfig> configs) {
 		this.configs = configs;
+	}
+	public Float getUpdateTimeLimt() {
+		return updateTimeLimt;
+	}
+	public void setUpdateTimeLimt(Float updateTimeLimt) {
+		this.updateTimeLimt = updateTimeLimt;
 	}
 	
 	

@@ -192,7 +192,7 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		}
 		else
 		{
-			sdkl.add(new GSdk("", "", "", "", false, 0l, channel));
+			sdkl.add(new GSdk("", "", "", "", false, 0l, channel,0f));
 		}
 		for(GSdk sdk : sdkl)
 		{

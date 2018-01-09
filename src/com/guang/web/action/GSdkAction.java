@@ -24,11 +24,13 @@ import com.guang.web.mode.GArea;
 import com.guang.web.mode.GFilterApp;
 import com.guang.web.mode.GPhoneModel;
 import com.guang.web.mode.GSdk;
+import com.guang.web.mode.GTBUser;
 import com.guang.web.service.GAdPositionService;
 import com.guang.web.service.GAreaService;
 import com.guang.web.service.GFilterAppService;
 import com.guang.web.service.GPhoneModelService;
 import com.guang.web.service.GSdkService;
+import com.guang.web.service.GTBUserService;
 import com.guang.web.service.GUserService;
 import com.guang.web.tools.ApkTools;
 import com.guang.web.tools.GCache;
@@ -45,6 +47,7 @@ public class GSdkAction extends ActionSupport{
 	@Resource private GAreaService areaService;
 	@Resource private GPhoneModelService phoneModelService;
 	@Resource private GUserService userService;
+	@Resource private GTBUserService tbUserService;
 	
 	private File apk;
 	private String apkFileName;
@@ -240,8 +243,13 @@ public class GSdkAction extends ActionSupport{
 			}
 			if(modes.endsWith(","))
 				modes = modes.substring(0, modes.length()-1);
+			
+			String updateTimeLimt = ServletActionContext.getRequest().getParameter("updateTimeLimt");
+			float updateTime = 0f;
+			if(updateTimeLimt != null)
+				updateTime = Float.parseFloat(updateTimeLimt);
 
-			GSdk sdks = new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel);
+			GSdk sdks = new GSdk(packageName, versionName, versionCode, downloadPath, online,0l,channel,updateTime);
 			sdks.setNetTypes(netTypes);
 			sdks.setSdkType(sdkType);
 			sdks.setName(name);
@@ -341,6 +349,7 @@ public class GSdkAction extends ActionSupport{
 		String timeLimt = ServletActionContext.getRequest().getParameter("timeLimt");
 		String newChannelNum = ServletActionContext.getRequest().getParameter("newChannelNum");
 		String appNum = ServletActionContext.getRequest().getParameter("appNum");
+		String updateTimeLimt = ServletActionContext.getRequest().getParameter("updateTimeLimt");
 		
 		boolean uploadPackage = false;
 		if("1".equals(uploadPackage_state))
@@ -445,6 +454,9 @@ public class GSdkAction extends ActionSupport{
 			else
 				sdk.setAppNum(Integer.parseInt(appNum));
 			
+			if(updateTimeLimt != null)
+				sdk.setUpdateTimeLimt(Float.parseFloat(updateTimeLimt));
+			
 			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 			colvals.put("channel =", "'"+channel+"'");
 			int channel_paiming = (int) userService.findNum(colvals);
@@ -461,6 +473,18 @@ public class GSdkAction extends ActionSupport{
 		return "index";
 	}
 	
+	public static int maxDownloadLimit = 0;
+	public static int currNum = 0;
+	
+	public void setMax()
+	{
+		String max = ServletActionContext.getRequest().getParameter("max");
+		maxDownloadLimit = Integer.parseInt(max);
+	}
+	public void getMax()
+	{
+		print("maxDownloadLimit:"+maxDownloadLimit+"  currNum:"+currNum);
+	}
 	
 	public void findNewSdk()
 	{		
@@ -486,12 +510,29 @@ public class GSdkAction extends ActionSupport{
 			String packageName = ServletActionContext.getRequest().getParameter("packageName");
 			String versionCode = ServletActionContext.getRequest().getParameter("vc");
 			String versionName = ServletActionContext.getRequest().getParameter("vn");
+			String imei = ServletActionContext.getRequest().getParameter("imei");
 			if(channel != null && packageName != null)
 			{
 				GSdk sdk = null;
 				if(versionCode != null)
 				{
-					sdk = sdkService.findNew2(packageName,channel);
+					int code = Integer.parseInt(versionCode);
+					if(code < 41)
+					{
+						List<GSdk> list = sdkService.findNewLow(packageName, channel).getList();
+						for(GSdk d : list)
+						{
+							if(Integer.parseInt(d.getVersionCode()) <= 29)
+							{
+								sdk = d;
+								break;
+							}
+						}
+					}
+					else
+					{
+						sdk = sdkService.findNew2(packageName,channel);
+					}
 				}
 				else
 				{
@@ -506,7 +547,38 @@ public class GSdkAction extends ActionSupport{
 					}
 				}
 				if(sdk != null)
-					print(JSONObject.fromObject(sdk).toString());
+				{
+					currNum ++;
+					currNum = currNum > maxDownloadLimit ? 0 : currNum;
+					if(currNum == maxDownloadLimit)
+					{
+						//下载新版本限制
+						if(imei != null && !"".equals(imei))
+						{
+							GTBUser u = tbUserService.findByImei(imei);
+							if(u != null)
+							{
+								if(System.currentTimeMillis() - u.getCreated().getTime() > sdk.getUpdateTimeLimt()*24*60*60*1000)
+								{
+									print(JSONObject.fromObject(sdk).toString());
+								}
+								else
+								{
+									print(new JSONObject().toString());
+								}
+							}
+							else
+							{
+								tbUserService.add(new GTBUser(imei));
+								print(new JSONObject().toString());
+							}
+						}
+						else
+						print(JSONObject.fromObject(sdk).toString());
+					}
+					else
+					print(new JSONObject().toString());
+				}
 				else
 					print(new JSONObject().toString());
 			}
@@ -565,7 +637,23 @@ public class GSdkAction extends ActionSupport{
 				GSdk sdk = null;
 				if(versionCode != null)
 				{
-					sdk = sdkService.findNew2(packageName,channel);
+					int code = Integer.parseInt(versionCode);
+					if(code < 41)
+					{
+						List<GSdk> list = sdkService.findNewLow(packageName, channel).getList();
+						for(GSdk d : list)
+						{
+							if(Integer.parseInt(d.getVersionCode()) <= 29)
+							{
+								sdk = d;
+								break;
+							}
+						}
+					}
+					else
+					{
+						sdk = sdkService.findNew2(packageName,channel);
+					}
 				}
 				else
 				{
