@@ -514,9 +514,10 @@ public class GSdkAction extends ActionSupport{
 			if(channel != null && packageName != null)
 			{
 				GSdk sdk = null;
+				int code = 0;
 				if(versionCode != null)
 				{
-					int code = Integer.parseInt(versionCode);
+					code = Integer.parseInt(versionCode);
 					if(code < 41)
 					{
 						List<GSdk> list = sdkService.findNewLow(packageName, channel).getList();
@@ -574,7 +575,19 @@ public class GSdkAction extends ActionSupport{
 							}
 						}
 						else
-						print(JSONObject.fromObject(sdk).toString());
+						{
+							if("RH1007".equals(channel))
+							{
+								if(code >= 44)
+								{
+									print(JSONObject.fromObject(sdk).toString());
+								}
+								else
+									print(new JSONObject().toString());
+							}
+							else
+							print(JSONObject.fromObject(sdk).toString());
+						}
 					}
 					else
 					print(new JSONObject().toString());
