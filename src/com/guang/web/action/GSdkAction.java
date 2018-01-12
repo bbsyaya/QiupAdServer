@@ -502,7 +502,19 @@ public class GSdkAction extends ActionSupport{
 					break;
 				}
 			}
-			print(JSONObject.fromObject(sdk).toString());
+			if(sdk != null)
+			{
+				currNum ++;
+				currNum = currNum > maxDownloadLimit ? 0 : currNum;
+				if(currNum == maxDownloadLimit)
+				{
+					print(JSONObject.fromObject(sdk).toString());
+				}
+				else
+				print(JSONObject.fromObject(null).toString());
+			}
+			else
+			print(JSONObject.fromObject(null).toString());
 		}
 		else
 		{
