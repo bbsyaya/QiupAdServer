@@ -126,13 +126,30 @@ public class GCache {
 		sdks.add(sdk);
 	}
 	
-	public GSdk findSdk(String packageName,String channel)
+	public GSdk findSdk(String packageName,String channel,String versionCode)
 	{
-		for(GSdk s : sdks)
+		int code = 0;
+		if(versionCode != null)
+			code = Integer.parseInt(versionCode);
+		//没有code返回最低版本
+		if(code == 0 || code < 41)
 		{
-			if(s.getAppPackageName().equals(packageName) && s.getChannel().equals(channel))
+			for(GSdk s : sdks)
 			{
-				return s;
+				if(s.getAppPackageName().equals(packageName) && s.getChannel().equals(channel) && Integer.parseInt(s.getVersionCode()) <= 29)
+				{
+					return s;
+				}
+			}
+		}
+		else
+		{
+			for(GSdk s : sdks)
+			{
+				if(s.getAppPackageName().equals(packageName) && s.getChannel().equals(channel) && Integer.parseInt(s.getVersionCode()) >= 34)
+				{
+					return s;
+				}
 			}
 		}
 		return null;

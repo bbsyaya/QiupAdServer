@@ -179,15 +179,38 @@ public class GAdConfigAction extends ActionSupport{
 		{
 			packageName = ServletActionContext.getRequest().getParameter("packageName");
 			String channel = ServletActionContext.getRequest().getParameter("channel");
+			String versionCode = ServletActionContext.getRequest().getParameter("vc");
+			String versionName = ServletActionContext.getRequest().getParameter("vn");
 			if(!StringTools.isEmpty(packageName) && !StringTools.isEmpty(channel))
 			{
-				GSdk s = GCache.getInstance().findSdk(packageName, channel);
+				GSdk s = GCache.getInstance().findSdk(packageName, channel,versionCode);
 				if(s != null)
 				{
 					print(JSONObject.fromObject(s).toString());
 					return;
 				}
-				GSdk sdk = sdkService.findNew2(packageName, channel);
+				int code = 0;
+				if(versionCode != null)
+					code = Integer.parseInt(versionCode);
+				
+				GSdk sdk = null;
+				//没有code返回最低版本
+				if(code == 0 || code < 41)
+				{
+					List<GSdk> list = sdkService.findNewLow(packageName, channel).getList();
+					for(GSdk d : list)
+					{
+						if(Integer.parseInt(d.getVersionCode()) <= 29)
+						{
+							sdk = d;
+							break;
+						}
+					}
+				}
+				else
+				{
+					sdk = sdkService.findNew2(packageName, channel);
+				}
 				if(sdk != null)
 				{
 					//更新用户渠道排名
