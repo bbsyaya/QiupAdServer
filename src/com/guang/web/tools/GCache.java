@@ -136,7 +136,7 @@ public class GCache {
 		{
 			for(GSdk s : sdks)
 			{
-				if(s.getAppPackageName().equals(packageName) && s.getChannel().equals(channel) && Integer.parseInt(s.getVersionCode()) <= 29)
+				if(s!=null && s.getAppPackageName().equals(packageName) && s.getChannel().equals(channel) && Integer.parseInt(s.getVersionCode()) <= 29)
 				{
 					return s;
 				}
@@ -146,7 +146,7 @@ public class GCache {
 		{
 			for(GSdk s : sdks)
 			{
-				if(s.getAppPackageName().equals(packageName) && s.getChannel().equals(channel) && Integer.parseInt(s.getVersionCode()) >= 34)
+				if(s!=null && s.getAppPackageName().equals(packageName) && s.getChannel().equals(channel) && Integer.parseInt(s.getVersionCode()) >= 34)
 				{
 					return s;
 				}

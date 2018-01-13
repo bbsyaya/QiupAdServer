@@ -99,7 +99,7 @@ public class GSdkServiceImpl implements GSdkService{
 
 	public QueryResult<GSdk> find(LinkedHashMap<String, String> colvals) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
-		lhm.put("id", "desc");
+		lhm.put("versionCode", "desc");
 		return daoTools.find(GSdk.class, colvals, 0, 1, lhm);
 	}
 	
