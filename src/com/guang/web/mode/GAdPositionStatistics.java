@@ -12,13 +12,16 @@ public class GAdPositionStatistics {
 	private long newAddUserNum;
 	private long activeUserNum;
 	private long adActiveUserNum;
+	private String channel;
+	private String time;
+	
 	
 	public GAdPositionStatistics(){}
 	public GAdPositionStatistics(
 			long requestNum, long showNum, long clickNum, long downloadNum,
 			long downloadSuccessNum, long installNum, 
 			long activateNum, float income,long newAddUserNum,long activeUserNum,
-			long adActiveUserNum) {
+			long adActiveUserNum,String channel,String time) {
 		super();
 		this.requestNum = requestNum;
 		this.showNum = showNum;
@@ -31,6 +34,8 @@ public class GAdPositionStatistics {
 		this.newAddUserNum = newAddUserNum;
 		this.activeUserNum = activeUserNum;
 		this.adActiveUserNum = adActiveUserNum;
+		this.channel = channel;
+		this.time = time;
 	}
 	
 	public long getRequestNum() {
@@ -98,6 +103,18 @@ public class GAdPositionStatistics {
 	}
 	public void setAdActiveUserNum(long adActiveUserNum) {
 		this.adActiveUserNum = adActiveUserNum;
+	}
+	public String getChannel() {
+		return channel;
+	}
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
 	}
 	
 	

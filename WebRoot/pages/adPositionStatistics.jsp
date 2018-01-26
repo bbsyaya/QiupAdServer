@@ -38,7 +38,8 @@
 </div>
 <table id="tableList" class="tablesorter" cellspacing="1">
 	<thead>
-		<tr>						
+		<tr>	
+			<th>渠道</th>					
 			<th>请求</th>
 			<th>展示</th>
 			<th>点击</th>
@@ -50,11 +51,13 @@
 			<th>新增用户</th>
 			<th>活跃用户</th>
 			<th>广告活跃用户</th>
+			<th>时间</th>
 		</tr>
 	</thead>
 	<tbody id="tbody">
 		<s:iterator value="list" var="user">
-			<tr>								
+			<tr>		
+				<td><s:property value="#user.channel" /></td>						
 				<td><s:property value="#user.requestNum" /></td>
 				<td><s:property value="#user.showNum" /></td>
 				<td><s:property value="#user.clickNum" /></td>
@@ -66,6 +69,7 @@
 				<td><s:property value="#user.newAddUserNum" /></td>
 				<td><s:property value="#user.activeUserNum" /></td>
 				<td><s:property value="#user.adActiveUserNum" /></td>
+				<td><s:property value="#user.time" /></td>
 			</tr>
 		</s:iterator>
 	</tbody>

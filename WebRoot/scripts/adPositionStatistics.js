@@ -20,6 +20,7 @@ var updateTable = function(from,to,adPositionType)
 	for(var i=0;i<data.length;i++)
 	{
 		var s = "<tr>";		
+		s+="<td>" + data[i].channel + "</td>";
 		s+="<td>" + data[i].requestNum + "</td>";
 		s+="<td>" + data[i].showNum + "</td>";
 		s+="<td>" + data[i].clickNum + "</td>";
@@ -31,6 +32,7 @@ var updateTable = function(from,to,adPositionType)
 		s+="<td>" + data[i].newAddUserNum + "</td>";
 		s+="<td>" + data[i].activeUserNum + "</td>";
 		s+="<td>" + data[i].adActiveUserNum + "</td>";
+		s+="<td>" + data[i].time + "</td>";
 		s+= "</tr>";
 			
 		str += s;	

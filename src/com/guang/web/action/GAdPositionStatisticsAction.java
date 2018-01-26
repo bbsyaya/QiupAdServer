@@ -128,8 +128,9 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 //		long activeUserNum = userService.findNum(colvals);
 		
 		
+		formatter = new SimpleDateFormat("yyyy-MM-dd");
 		GAdPositionStatistics adPositionStatistics = new GAdPositionStatistics(requestNum, showNum, clickNum, downloadNum, downloadSuccessNum, installNum, 
-				 activateNum, income, newAddUserNum, activeUserNum, adActiveUserNum);
+				 activateNum, income, newAddUserNum, activeUserNum, adActiveUserNum,"all",formatter.format(new Date()));
 		slist.add(adPositionStatistics);
 		ActionContext.getContext().put("list", slist);
 		ActionContext.getContext().put("adPositions", adPositionService.findAlls().getList());	
@@ -194,62 +195,72 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		{
 			sdkl.add(new GSdk("", "", "", "", false, 0l, channel,0f));
 		}
+		int dayNum = (int) ((t.getTime()-f.getTime())/(24*60*60*1000))+1;
+		Date cf = new Date(f.getTime());
 		for(GSdk sdk : sdkl)
 		{
-			LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
-			
-			if(adPositionType != null && !"0".equals(adPositionType))
-				colvals.put("adPositionType =", adPositionType);
-			if(media != null && !"0".equals(media))
-				colvals.put("packageName =", "'"+media+"'");
-			if(sdk.getChannel() != null && !"0".equals(sdk.getChannel()))
-				colvals.put("channel =", "'"+sdk.getChannel()+"'");
-			
-//			colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
-			colvals.put("type =", GStatisticsType.REQUEST + "");
-			long requestNum = statisticsService.findNum(colvals,new Date(f.getTime()),new Date(t.getTime()));
+			for(int i=0;i<dayNum;i++)
+			{
+				LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+				
+				if(adPositionType != null && !"0".equals(adPositionType))
+					colvals.put("adPositionType =", adPositionType);
+				if(media != null && !"0".equals(media))
+					colvals.put("packageName =", "'"+media+"'");
+				if(sdk.getChannel() != null && !"0".equals(sdk.getChannel()))
+					colvals.put("channel =", "'"+sdk.getChannel()+"'");
+				
+//				colvals.put("uploadTime between", "'"+from+"'" + " and " + "'"+to+"'");
+				colvals.put("type =", GStatisticsType.REQUEST + "");
+				long requestNum = statisticsService.findNum(colvals,new Date(f.getTime()),new Date(t.getTime()));
 
-			colvals.remove("type =");
-			colvals.put("type =", GStatisticsType.SHOW + "");
-			long showNum = statisticsService.findNum(colvals,new Date(f.getTime()),new Date(t.getTime()));
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.SHOW + "");
+				long showNum = statisticsService.findNum(colvals,new Date(f.getTime()),new Date(t.getTime()));
 
-			colvals.remove("type =");
-			colvals.put("type =", GStatisticsType.CLICK + "");
-			long clickNum = statisticsService.findNum(colvals,new Date(f.getTime()),new Date(t.getTime()));
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.CLICK + "");
+				long clickNum = statisticsService.findNum(colvals,new Date(f.getTime()),new Date(t.getTime()));
 
-			long downloadNum = 0;
+				long downloadNum = 0;
 
-			long downloadSuccessNum = 0;
+				long downloadSuccessNum = 0;
 
-			long installNum = 0;
+				long installNum = 0;
 
-			long activateNum = 0;
-			
-			float income = activateNum;
-			
-			colvals.remove("type =");
-			colvals.put("type =", GStatisticsType.LOGIN + "");
-			long activeUserNum = statisticsService.findNum2(colvals,new Date(f.getTime()),new Date(t.getTime()));
-			
-			colvals.remove("type =");
-			colvals.put("type !=", GStatisticsType.LOGIN + "");
-			long adActiveUserNum = statisticsService.findNum2(colvals,new Date(f.getTime()),new Date(t.getTime()));
-			
-			colvals.remove("type !=");
-			colvals.remove("adPositionType =");
-			colvals.remove("packageName =");
-//			colvals.remove("uploadTime between");
-			colvals.remove("channel =");
-			
-			colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
-			if(channel != null && !"0".equals(channel))
-				colvals.put("channel =", "'"+channel+"'");
-			long newAddUserNum = userService.findNum(colvals);
-									
-			
-			GAdPositionStatistics adPositionStatistics = new GAdPositionStatistics(requestNum, showNum, clickNum, downloadNum, downloadSuccessNum, installNum, 
-					 activateNum, income, newAddUserNum, activeUserNum, adActiveUserNum);
-			slist.add(adPositionStatistics);
+				long activateNum = 0;
+				
+				float income = activateNum;
+				
+				colvals.remove("type =");
+				colvals.put("type =", GStatisticsType.LOGIN + "");
+				long activeUserNum = statisticsService.findNum2(colvals,new Date(f.getTime()),new Date(t.getTime()));
+				
+				colvals.remove("type =");
+				colvals.put("type !=", GStatisticsType.LOGIN + "");
+				long adActiveUserNum = statisticsService.findNum2(colvals,new Date(f.getTime()),new Date(t.getTime()));
+				
+				colvals.remove("type !=");
+				colvals.remove("adPositionType =");
+				colvals.remove("packageName =");
+//				colvals.remove("uploadTime between");
+				colvals.remove("channel =");
+				
+				colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
+				if(channel != null && !"0".equals(channel))
+					colvals.put("channel =", "'"+channel+"'");
+				long newAddUserNum = userService.findNum(colvals);
+										
+				
+				if("0".equals(sdk.getChannel()))
+					sdk.setChannel("all");
+				GAdPositionStatistics adPositionStatistics = new GAdPositionStatistics(requestNum, showNum, clickNum, downloadNum, downloadSuccessNum, installNum, 
+						 activateNum, income, newAddUserNum, activeUserNum, adActiveUserNum,sdk.getChannel(),formatter.format(f));
+				slist.add(adPositionStatistics);
+				
+				f.setTime(f.getTime()+24*60*60*1000);
+			}
+			f = new Date(cf.getTime());
 		}
 		
 		print(JSONArray.fromObject(slist).toString());
