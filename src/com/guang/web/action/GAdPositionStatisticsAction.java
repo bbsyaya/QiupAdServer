@@ -201,6 +201,8 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 		{
 			for(int i=0;i<dayNum;i++)
 			{
+				t = new Date(cf.getTime()+24*60*60*1000);
+				
 				LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 				
 				if(adPositionType != null && !"0".equals(adPositionType))
