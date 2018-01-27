@@ -2,6 +2,7 @@ package com.guang.test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,6 +12,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
+
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
+import javax.management.ReflectionException;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -70,10 +80,34 @@ public class GTest {
 //			System.out.println(e.getMessage());
 //		}   
 		
-		for(int i=0;i<100;i++)
-		{
-			int r = (int)(Math.random()*100%20);
-			System.out.println(r);
+		getCurrThreads();
+	}
+	
+	public static void getCurrThreads()
+	{
+		System.out.println("getCurrThreads");
+		MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();  
+		try {
+			Set<ObjectName> ons = beanServer.queryNames(new ObjectName("*:type=ThreadPool,*"), null);
+			for (final ObjectName threadPool : ons) {  
+				int currentThreadsBusy = (Integer) beanServer.getAttribute(threadPool, "currentThreadsBusy");
+				if(threadPool.getCanonicalName() != null && threadPool.getCanonicalName().contains("http"))
+				{
+					System.out.println(threadPool.getCanonicalName()+":"+ currentThreadsBusy);
+					break;
+				}
+				
+	        }  
+		} catch (AttributeNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstanceNotFoundException e) {
+			e.printStackTrace();
+		} catch (MBeanException e) {
+			e.printStackTrace();
+		} catch (ReflectionException e) {
+			e.printStackTrace();
+		} catch (MalformedObjectNameException e) {
+			e.printStackTrace();
 		}
 	}
 	

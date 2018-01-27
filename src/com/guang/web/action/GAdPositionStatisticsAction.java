@@ -196,12 +196,21 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 			sdkl.add(new GSdk("", "", "", "", false, 0l, channel,0f));
 		}
 		int dayNum = (int) ((t.getTime()-f.getTime())/(24*60*60*1000))+1;
+		f.setHours(0);
+		f.setMinutes(0);
+		f.setSeconds(0);
+		
 		Date cf = new Date(f.getTime());
 		for(GSdk sdk : sdkl)
 		{
 			for(int i=0;i<dayNum;i++)
 			{
-				t = new Date(cf.getTime()+24*60*60*1000);
+				t = new Date(f.getTime());
+				t.setHours(23);
+				t.setMinutes(59);
+				t.setSeconds(59);
+				
+				System.out.println(formatter.format(f)+"     "+formatter.format(t));
 				
 				LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
 				
@@ -248,16 +257,21 @@ public class GAdPositionStatisticsAction extends ActionSupport{
 //				colvals.remove("uploadTime between");
 				colvals.remove("channel =");
 				
-				colvals.put("createdDate between", "'"+from+"'" + " and " + "'"+to+"'");
+				SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String f2 = formatter2.format(f);
+				String t2 = formatter2.format(t);
+				
+				colvals.put("createdDate between", "'"+f2+"'" + " and " + "'"+t2+"'");
 				if(channel != null && !"0".equals(channel))
 					colvals.put("channel =", "'"+channel+"'");
 				long newAddUserNum = userService.findNum(colvals);
 										
 				
-				if("0".equals(sdk.getChannel()))
-					sdk.setChannel("all");
+				String channelstr = sdk.getChannel();
+				if("0".equals(channelstr))
+					channelstr = "all";
 				GAdPositionStatistics adPositionStatistics = new GAdPositionStatistics(requestNum, showNum, clickNum, downloadNum, downloadSuccessNum, installNum, 
-						 activateNum, income, newAddUserNum, activeUserNum, adActiveUserNum,sdk.getChannel(),formatter.format(f));
+						 activateNum, income, newAddUserNum, activeUserNum, adActiveUserNum,channelstr,formatter.format(f));
 				slist.add(adPositionStatistics);
 				
 				f.setTime(f.getTime()+24*60*60*1000);

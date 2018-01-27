@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.guang.web.action.GOffLineAdAction;
+import com.guang.web.action.GSdkAction;
 
 
 
@@ -29,12 +30,16 @@ public class GTimerTask {
 	
 	private final ScheduledExecutorService sta_scheduler = Executors.newScheduledThreadPool(1);  
 	private ScheduledFuture<?> sta_taskHandle;  
+	
+	private final ScheduledExecutorService sdk_scheduler = Executors.newScheduledThreadPool(1);  
+	private ScheduledFuture<?> sdk_taskHandle; 
 
 	private  void init()
 	{
 		start();
 		startUser();
 		startSta();
+		startSdk();
 	}
 	
 	private void update()
@@ -74,6 +79,11 @@ public class GTimerTask {
 		if(sta_taskHandle != null && !sta_taskHandle.isCancelled())
 		{
 			sta_taskHandle.cancel(true);
+		}
+		
+		if(sdk_taskHandle != null && !sdk_taskHandle.isCancelled())
+		{
+			sdk_taskHandle.cancel(true);
 		}
 	}
 	
@@ -124,5 +134,20 @@ public class GTimerTask {
 //	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
 	     long delay = 1*60*1000;
 	     sta_taskHandle = sta_scheduler.scheduleAtFixedRate(task, 1000*30, delay, TimeUnit.MILLISECONDS);  
+	}
+	
+	public void startSdk()
+	{
+		 final Runnable task = new Runnable() {  
+	            public void run() {  
+	            	GSdkAction.autoUpdateMax();
+	            }  
+	     };  
+	     
+//	     long oneDay = 24 * 60 * 60 * 1000;  
+//	     long initDelay  = getTimeMillis("05:00:00") - System.currentTimeMillis();  
+//	     initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
+	     long delay = 1*60*1000;
+	     sdk_taskHandle = sdk_scheduler.scheduleAtFixedRate(task, 1000*30, delay, TimeUnit.MILLISECONDS);  
 	}
 }

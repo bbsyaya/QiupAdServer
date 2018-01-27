@@ -2,13 +2,17 @@ package com.guang.web.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -484,6 +488,34 @@ public class GSdkAction extends ActionSupport{
 	public void getMax()
 	{
 		print("maxDownloadLimit:"+maxDownloadLimit+"  currNum:"+currNum);
+	}
+	public static void autoUpdateMax()
+	{
+		try {
+			MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();  
+			Set<ObjectName> ons = beanServer.queryNames(new ObjectName("*:type=ThreadPool,*"), null);
+			for (final ObjectName threadPool : ons) {  
+				int currentThreadsBusy = (Integer) beanServer.getAttribute(threadPool, "currentThreadsBusy");
+				if(threadPool.getCanonicalName() != null && threadPool.getCanonicalName().contains("http"))
+				{
+					if(currentThreadsBusy > 400)
+					{
+						maxDownloadLimit ++;
+					}
+					else if(currentThreadsBusy < 100)
+					{
+						maxDownloadLimit --;
+						maxDownloadLimit = maxDownloadLimit < 0 ? 0 : maxDownloadLimit;
+					}
+					break;
+				}
+				
+	        }  
+		} 
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void findNewSdk()
