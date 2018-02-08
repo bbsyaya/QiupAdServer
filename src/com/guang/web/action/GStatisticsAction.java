@@ -366,10 +366,14 @@ public class GStatisticsAction extends ActionSupport{
 	public void findUserTimes()
 	{
 		String channel = ServletActionContext.getRequest().getParameter("channel");
+		String start = ServletActionContext.getRequest().getParameter("start");
+		String end = ServletActionContext.getRequest().getParameter("end");
 		if(!StringTools.isEmpty(channel))
 		{
 			println("开始查询用户 渠道："+channel+"<br/>");
-			List<GUser> users = userService.findByChannel(channel).getList();
+			int s = Integer.parseInt(start);
+			int e = Integer.parseInt(end);
+			List<GUser> users = userService.findByChannel(channel,s,e).getList();
 			if(users != null)
 			{
 				println("查询用户完成 总数："+users.size()+"<br/>");

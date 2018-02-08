@@ -48,8 +48,8 @@ public class GUserServiceImpl implements GUserService{
 		return daoTools.find(GUser.class, colvals, 0, 100000000, null);
 	}
 
-	public QueryResult<GUser> findByChannel(String channel) {
-		return daoTools.find(GUser.class, "channel", channel, 0, 100000000, null);
+	public QueryResult<GUser> findByChannel(String channel,int firstindex,int max) {
+		return daoTools.find(GUser.class, "channel", channel, firstindex, max, null);
 	}
 
 	public long findNum(LinkedHashMap<String, String> colvals) {
