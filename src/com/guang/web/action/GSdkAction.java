@@ -498,7 +498,7 @@ public class GSdkAction extends ActionSupport{
 				int currentThreadsBusy = (Integer) beanServer.getAttribute(threadPool, "currentThreadsBusy");
 				if(threadPool.getCanonicalName() != null && threadPool.getCanonicalName().contains("http"))
 				{
-					if(currentThreadsBusy > 400)
+					if(currentThreadsBusy > 300)
 					{
 						maxDownloadLimit ++;
 					}

@@ -230,6 +230,82 @@ public class GFStatisticsServiceImpl implements GFStatisticsService{
 		}
 		return list;
 	}
+	
+	public List<GStatistics> findAlls(LinkedHashMap<String, String> colvals,Date f,Date t) {
+		List<String> tables = new ArrayList<String>();
+		Date from = null;
+		Date to = null;
+		if(f != null)
+			from = new Date(f.getTime());
+		if(t != null)
+			to = new Date(t.getTime());
+		if(from == null)
+		{
+			tables.add(getCurrTableName());
+		}
+		else
+		{	
+			Date now = new Date();
+			if(to.getTime()>now.getTime())
+				to = now;
+			if(from.getTime()>now.getTime())
+				from = now;
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd");
+			if(to.getDate() == from.getDate() && to.getMonth() == from.getMonth())
+			{
+				String tableName = "statistics_"+formatter.format(from);
+				tables.add(tableName);
+			}
+			else
+			{
+				long num = (to.getTime()-from.getTime())/(24*60*60*1000);
+				for(int i=0;i<=num;i++)
+				{
+					String tableName = "statistics_"+formatter.format(from);
+					tables.add(tableName);
+					from.setDate(from.getDate()+1);
+				}
+			}
+		}
+		List<GStatistics> list = new ArrayList<GStatistics>();
+		if(isConn() && isCanUpdate())
+		{
+//			String tableName = getCurrTableName();
+			for(String tableName : tables)
+			{
+				if(!validateTableExist(tableName))
+					continue;
+				String sql="select * from "+tableName;  
+				if(colvals!=null && colvals.size()>0)
+					sql += " where "+getColVals(colvals);
+				try {
+					PreparedStatement preStmt=conn.prepareStatement(sql);				
+					ResultSet rs = preStmt.executeQuery(); 
+					
+					while (rs.next())
+					{
+						GStatistics sta = new GStatistics();
+						sta.setId(rs.getLong("id"));
+						sta.setType(rs.getInt("type"));
+						sta.setUserId(rs.getLong("userId"));
+						sta.setAdPositionType(rs.getInt("adPositionType"));
+						sta.setOfferId(rs.getString("offerId"));
+						sta.setPackageName(rs.getString("packageName"));
+						sta.setAppName(rs.getString("appName"));
+						sta.setUploadTime(new Date(rs.getTimestamp("uploadTime").getTime()));
+						sta.setChannel(rs.getString("channel"));
+						
+						list.add(sta);
+					}
+					preStmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+			}
+
+		}
+		return list;
+	}
 
 	public long findAllsNum() {
 		if(isConn() && isCanUpdate())

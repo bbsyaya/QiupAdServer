@@ -1,6 +1,7 @@
 package com.guang.web.action;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -362,9 +363,63 @@ public class GStatisticsAction extends ActionSupport{
 		}
 	}
 	
+	public void findUserTimes()
+	{
+		String channel = ServletActionContext.getRequest().getParameter("channel");
+		if(!StringTools.isEmpty(channel))
+		{
+			println("开始查询用户 渠道："+channel+"<br/>");
+			List<GUser> users = userService.findByChannel(channel).getList();
+			if(users != null)
+			{
+				println("查询用户完成 总数："+users.size()+"<br/>");
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				for(GUser user : users)
+				{
+					LinkedHashMap<String, String> colvals = new LinkedHashMap<String, String>();
+					colvals.put("userId =", user.getId() + "");
+					colvals.put("type =", GStatisticsType.LOGIN + "");
+					
+					Date now = new Date();
+					for(int i=0;i<30;i++)
+					{
+						Date from = new Date(now.getTime());
+						from.setHours(0);
+						from.setMinutes(0);
+						from.setSeconds(0);
+						
+						Date to = new Date(now.getTime());
+						to.setHours(23);
+						to.setMinutes(59);
+						to.setSeconds(59);
+						
+						List<GStatistics> list = statisticsService.findAlls(colvals, from, to);
+						if(list != null && list.size()>0)
+						{
+							GStatistics sta = list.get(0);
+							float t = (System.currentTimeMillis() - sta.getUploadTime().getTime())/24.f/60/60/1000;
+							DecimalFormat df = new DecimalFormat(".00");
+							String ts = df.format(t);
+							println("用户:"+user.getId() +"         imei:"+user.getDeviceId() + "         时间:"+formatter.format(user.getCreatedDate())+"        距离上次登录时间:"+ts+"天<br/>");
+							break;
+						}
+						now.setTime(now.getTime()-24*60*60*1000);
+						if(i == 29)
+						{
+							println("用户:"+user.getId() +"         imei:"+user.getDeviceId() + "         时间:"+formatter.format(user.getCreatedDate())+"        距离上次登录时间:大于30天<br/>");
+						}
+					}
+				}
+				
+			}
+		}
+		
+	}
+	
 	public void println(Object obj)
 	{
 		try {
+			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().println(obj);
 		} catch (IOException e) {
 			e.printStackTrace();

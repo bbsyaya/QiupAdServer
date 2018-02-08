@@ -17,6 +17,7 @@ public interface GFStatisticsService {
 	GStatistics find(Long id);
 	List<GStatistics> findAlls(int firstindex);
 	List<GStatistics> findAlls(LinkedHashMap<String, String> colvals);
+	List<GStatistics> findAlls(LinkedHashMap<String, String> colvals,Date from,Date to);
 	long findAllsNum();
 	long findNum(LinkedHashMap<String, String> colvals,Date from,Date to);
 	long findNum2(LinkedHashMap<String, String> colvals,Date from,Date to);
